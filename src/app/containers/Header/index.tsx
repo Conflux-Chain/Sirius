@@ -28,8 +28,13 @@ import { getLatestNoticeLink } from '../HomePage/Notice';
 import announcementNotification from '../../../images/notice/announcementNotification.png';
 import FAQNotification from '../../../images/notice/FAQNotification.png';
 import updateNotification from '../../../images/notice/updateNotification.png';
+import { useGlobalData, GlobalDataType } from 'utils/hooks/useGlobal';
+import { getNetwork } from 'utils';
 
 export const Header = memo(() => {
+  const [globalData, setGlobalData] = useGlobalData();
+  const { networkId, networks } = globalData as GlobalDataType;
+
   const { t, i18n } = useTranslation();
   const zh = '中文';
   const en = 'EN';
@@ -60,6 +65,8 @@ export const Header = memo(() => {
   const menuClick = () => {
     if (bp === 's' || bp === 'm') toggleMenu(false);
   };
+
+  // console.log('globalData: ', globalData);
 
   const startLinks: HeaderLinks = [
     {
@@ -458,45 +465,38 @@ export const Header = memo(() => {
     {
       // switch network
       name: 'switch-network',
-      title: isTestnet
-        ? t(translations.header.testnet)
-        : t(translations.header.oceanus),
-      children: [
-        {
-          // Tethys
-          title: [
-            t(translations.header.oceanus),
-            !isTestnet && <Check size={18} key="check" />,
-          ],
+      title: getNetwork(networks, networkId).name,
+      children: networks.map(n => {
+        const isMatch = n.id === networkId;
+
+        return {
+          title: [n.name, isMatch && <Check size={18} key="check" />],
           onClick: () => {
             trackEvent({
               category: ScanEvent.preference.category,
               action: ScanEvent.preference.action.changeNet,
-              label: 'Tethys',
+              label: n.name,
             });
+
             menuClick();
-            return isTestnet && toMainnet();
-          },
-          isMatchedFn: () => !isTestnet,
-        },
-        {
-          // testnet
-          title: [
-            t(translations.header.testnet),
-            isTestnet && <Check size={18} key="check" />,
-          ],
-          onClick: () => {
-            trackEvent({
-              category: ScanEvent.preference.category,
-              action: ScanEvent.preference.action.changeNet,
-              label: 'Testnet',
+
+            setGlobalData({
+              ...globalData,
+              networkId: n.id,
             });
-            menuClick();
-            return !isTestnet && toTestnet();
+
+            // if (n.id === 1) {
+            //   toTestnet();
+            // } else if (n.id === 1029) {
+            //   toMainnet();
+            // } else {
+            //   // @todo, should jump to custom network hostname
+            //   // toMainnet();
+            // }
           },
-          isMatchedFn: () => isTestnet,
-        },
-      ],
+          isMatchedFn: () => isMatch,
+        };
+      }),
     },
   ];
 

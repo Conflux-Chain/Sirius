@@ -2,17 +2,20 @@ import {
   addressTypeCommon,
   addressTypeContract,
   addressTypeInternalContract,
+} from './constants';
+import {
   adminControlAddress,
   sponsorWhitelistControlAddress,
   stakingAddress,
   zeroAddress,
-} from './constants';
+} from './cfx';
 import BigNumber from 'bignumber.js';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import fetch from './request';
 import { Buffer } from 'buffer';
 import { cfxAddress, formatAddress } from './cfx';
+import { NetworksType } from './hooks/useGlobal';
 
 dayjs.extend(relativeTime);
 
@@ -715,4 +718,17 @@ export const getInitialDate = (minTimestamp, maxTimestamp) => {
     dMinT: disabledDateD1,
     dMaxT: disabledDateD2,
   };
+};
+
+export const getNetwork = (networks: Array<NetworksType>, id: number) => {
+  let matchs = networks.filter(n => n.id === id);
+  let network: NetworksType;
+
+  if (matchs) {
+    network = matchs[0];
+  } else {
+    network = networks[0];
+  }
+
+  return network;
 };

@@ -4,21 +4,12 @@ import {
   address as cfxAddress,
 } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import Faucet from './sponsorFaucet/faucet';
-import { isTestNetEnv } from './hooks/useTestnet';
-const cfxUrlV2 = window.location.origin + '/rpcv2'; // cip-37
 
-export const isConfluxTestNet = isTestNetEnv();
-const mainNetworkId = 1029;
-const testnetNetworkId = 1;
-// do not support other private network
-const networkId = isConfluxTestNet ? testnetNetworkId : mainNetworkId;
+import { IS_TESTNET, NETWORK_ID, RPC_SERVER } from './constants';
 
 const cfx = new Conflux({
-  url: cfxUrlV2,
-  networkId,
-  // https://github.com/Conflux-Chain/js-conflux-sdk/blob/new-checksum/CHANGE_LOG.md#v150
-  // use hex address to compatible with history function
-  // useHexAddressInParameter: true,
+  url: RPC_SERVER,
+  networkId: NETWORK_ID,
 });
 
 cfx.getClientVersion().then(v => {
@@ -41,12 +32,11 @@ const formatAddress = (address: string | undefined, option: any = {}) => {
   if (address.toLowerCase().startsWith('net')) return '';
   // conflux net must same with address prefix
   // TODO should write contract params follow this rule?
-  if (address.toLowerCase().startsWith('cfx:') && isConfluxTestNet) return '';
-  if (address.toLowerCase().startsWith('cfxtest:') && !isConfluxTestNet)
-    return '';
+  if (address.toLowerCase().startsWith('cfx:') && IS_TESTNET) return '';
+  if (address.toLowerCase().startsWith('cfxtest:') && !IS_TESTNET) return '';
   const addressOptions = Object.assign(
     {
-      networkId,
+      networkId: NETWORK_ID,
       hex: getGlobalShowHexAddress(),
       withType: false,
     },
@@ -79,47 +69,32 @@ const formatAddress = (address: string | undefined, option: any = {}) => {
   }
 };
 
-// faucet address
-
-const mainnetFaucetAddress = formatAddress(
-  '0x829985ed802802e0e4bfbff25f79ccf5236016e9',
-  { hex: true },
-); // cip-37 use hex;
-const mainnetFaucetLastAddress = formatAddress(
-  '0x8d5adbcaf5714924830591586f05302bf87f74bd',
-  { hex: true },
-); // cip-37 use hex;
-const testnetFaucetAddress = formatAddress(
-  '0x8fc71dbd0e0b3be34fbee62796b65e09c8fd19b8',
-  { hex: true },
-); // cip-37 use hex;
-const testnetFaucetLastAddress = formatAddress(
-  '0x8097e818c2c2c1524c41f0fcbda143520046d117',
-  { hex: true },
-); // cip-37 use hex;
-
-const faucetAddress = isConfluxTestNet
-  ? testnetFaucetAddress
-  : mainnetFaucetAddress;
-const faucetLastAddress = isConfluxTestNet
-  ? testnetFaucetLastAddress
-  : mainnetFaucetLastAddress;
-
-// contract manager address
-
-const testnetContractManagerAddress = formatAddress(
-  '0x81bbe80b1282387e19d7e1a57476869081c7d965',
-  { networkId: testnetNetworkId },
+export const adminControlAddress = formatAddress(
+  '0x0888000000000000000000000000000000000000',
 );
-const mainnetContractManagerAddress = formatAddress(
-  '0x81bbe80b1282387e19d7e1a57476869081c7d965',
-  { networkId: mainNetworkId },
+export const sponsorWhitelistControlAddress = formatAddress(
+  '0x0888000000000000000000000000000000000001',
 );
-const contractManagerAddress = isConfluxTestNet
-  ? testnetContractManagerAddress
-  : mainnetContractManagerAddress;
+export const stakingAddress = formatAddress(
+  '0x0888000000000000000000000000000000000002',
+);
+export const zeroAddress = formatAddress(
+  '0x0000000000000000000000000000000000000000',
+);
 
-const faucet = new Faucet(cfxUrlV2, faucetAddress, faucetLastAddress);
+const faucetAddress = IS_TESTNET
+  ? '0x8fc71dbd0e0b3be34fbee62796b65e09c8fd19b8'
+  : '0x829985ed802802e0e4bfbff25f79ccf5236016e9';
+const faucetLastAddress = IS_TESTNET
+  ? '0x8097e818c2c2c1524c41f0fcbda143520046d117'
+  : '0x8d5adbcaf5714924830591586f05302bf87f74bd';
+
+// contract manager address, hex format: 0x81bbe80b1282387e19d7e1a57476869081c7d965
+const contractManagerAddress = IS_TESTNET
+  ? 'cfxtest:aca514ancmbdu9u349u4m7d0u4jjdv83py3muarnv1'
+  : 'cfx:aca514ancmbdu9u349u4m7d0u4jjdv83pyxbdunbz7';
+
+const faucet = new Faucet(RPC_SERVER, faucetAddress, faucetLastAddress);
 
 export const decodeContract = ({ abi, address, transacionData }) => {
   const contract = cfx.Contract({ abi, address, decodeByteToHex: true });
@@ -135,7 +110,4 @@ export {
   cfxFormat,
   cfxAddress,
   contractManagerAddress,
-  networkId,
-  mainNetworkId,
-  testnetNetworkId,
 };

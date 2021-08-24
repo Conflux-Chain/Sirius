@@ -9,8 +9,8 @@ import {
   tranferToLowerCase,
   isSpecialAddress,
 } from 'utils';
-import { zeroAddress } from '../constants';
-import { formatAddress, isConfluxTestNet } from '../cfx';
+import { IS_TESTNET } from '../constants';
+import { formatAddress, zeroAddress } from '../cfx';
 import { trackEvent } from '../ga';
 import { ScanEvent } from '../gaConstants';
 
@@ -44,8 +44,8 @@ export const useSearch = (value?: string) => {
     }
 
     if (
-      (innerValue.toLowerCase().startsWith('cfx:') && isConfluxTestNet) ||
-      (innerValue.toLowerCase().startsWith('cfxtest:') && !isConfluxTestNet)
+      (innerValue.toLowerCase().startsWith('cfx:') && IS_TESTNET) ||
+      (innerValue.toLowerCase().startsWith('cfxtest:') && !IS_TESTNET)
     ) {
       history.push('/networkError');
       return;

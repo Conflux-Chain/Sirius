@@ -11,7 +11,7 @@ import { media } from 'styles/media';
 import { translations } from 'locales/i18n';
 import imgNetworkError from 'images/changeNetwork.png';
 import { useParams } from 'react-router-dom';
-import { isConfluxTestNet } from '../../../utils/cfx';
+import { IS_TESTNET } from 'utils/constants';
 import {
   toMainnet,
   toTestnet,
@@ -26,7 +26,7 @@ export function NetworkError() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { t } = useTranslation();
   const isTestnet = useTestnet();
-  const { network = isConfluxTestNet ? 'Tethys' : 'Testnet' } = useParams<
+  const { network = IS_TESTNET ? 'Tethys' : 'Testnet' } = useParams<
     RouteParams
   >();
 

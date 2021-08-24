@@ -1,23 +1,36 @@
-import { formatAddress } from './cfx';
 import { isTestNetEnv } from './hooks/useTestnet';
+import lodash from 'lodash';
 
-const IS_TESTNET = isTestNetEnv();
+export const RPC_SERVER = window.location.origin + '/rpcv2'; // cip-37
+
+export const IS_TESTNET = isTestNetEnv();
+
+export enum DEFAULT_NETWORK_IDS {
+  mainnet = 1029,
+  testnet = 1,
+}
+
+export const LOCALSTORAGE_KEYS_MAP = {
+  networkId: 'conflux-scan-network-id',
+};
+
+export const NETWORK_ID = (() => {
+  let networkId = IS_TESTNET
+    ? DEFAULT_NETWORK_IDS.testnet
+    : DEFAULT_NETWORK_IDS.mainnet;
+  let cacheNetworkId = Number(
+    localStorage.getItem(LOCALSTORAGE_KEYS_MAP.networkId),
+  );
+
+  if (lodash.isFinite(cacheNetworkId)) {
+    networkId = Number(cacheNetworkId);
+  }
+  return networkId;
+})();
 
 export const addressTypeContract = 'contract';
 export const addressTypeCommon = 'common';
 export const addressTypeInternalContract = 'internalContract';
-export const adminControlAddress = formatAddress(
-  '0x0888000000000000000000000000000000000000',
-);
-export const sponsorWhitelistControlAddress = formatAddress(
-  '0x0888000000000000000000000000000000000001',
-);
-export const stakingAddress = formatAddress(
-  '0x0888000000000000000000000000000000000002',
-);
-export const zeroAddress = formatAddress(
-  '0x0000000000000000000000000000000000000000',
-);
 export const cfxTokenTypes = {
   erc20: 'ERC20',
   erc777: 'ERC777',
@@ -49,15 +62,6 @@ export enum TxnAction {
   swapWCFXToCFX = 107,
   swapCFXToWCFX = 108,
 }
-
-export enum NETWORK_IDS {
-  mainnet = 1029,
-  testnet = 1,
-}
-
-export const NETWORK_ID = IS_TESTNET
-  ? NETWORK_IDS.testnet
-  : NETWORK_IDS.mainnet;
 
 export enum ADDRESS_WCFXS {
   mainnet = 'cfx:acg158kvr8zanb1bs048ryb6rtrhr283ma70vz70tx',

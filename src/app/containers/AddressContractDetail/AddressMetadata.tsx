@@ -9,10 +9,10 @@ import BigNumber from 'bignumber.js';
 import { Text } from 'app/components/Text';
 import { fromDripToCfx, getTimeByBlockInterval } from 'utils';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
-import { cfx } from '../../../utils/cfx';
+import { cfx, stakingAddress } from '../../../utils/cfx';
 import { isTestNetEnv } from '../../../utils/hooks/useTestnet';
 import ViewMore from '../../../images/contract-address/viewmore.png';
-import { governanceAddress, stakingAddress } from '../../../utils/constants';
+import { governanceAddress } from '../../../utils/constants';
 import {
   abi as governanceAbi,
   bytecode as gobernanceBytecode,

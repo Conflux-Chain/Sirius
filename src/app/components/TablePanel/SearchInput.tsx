@@ -6,7 +6,7 @@ import styled from 'styled-components/macro';
 import { tranferToLowerCase } from 'utils';
 import 'utils/lazyJSSDK';
 import { Search as SearchComp } from '../Search/Loadable';
-import { zeroAddress } from 'utils/constants';
+import { zeroAddress } from 'utils/cfx';
 import { ActionButton } from 'app/components/ActionButton';
 import { useClickAway } from '@cfxjs/react-ui';
 import { media, useBreakpoint } from 'styles/media';

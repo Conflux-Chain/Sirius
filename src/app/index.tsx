@@ -27,7 +27,10 @@ import { translations } from 'locales/i18n';
 import { media } from 'styles/media';
 import { GlobalStyle } from 'styles/global-styles';
 import { TxnHistoryProvider } from 'utils/hooks/useTxnHistory';
-import { GlobalProvider } from 'utils/hooks/useGlobal';
+import { GlobalProvider, useGlobalData } from 'utils/hooks/useGlobal';
+import { reqProjectConfig } from 'utils/httpRequest';
+import { Conflux } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
+import { LOCALSTORAGE_KEYS_MAP, NETWORK_ID } from 'utils/constants';
 
 import { Report } from './containers/Report';
 import { Swap } from './containers/Swap';
@@ -97,6 +100,7 @@ window.recaptchaOptions = {
 };
 
 export function App() {
+  const [globalData, setGlobalData] = useGlobalData();
   const { t, i18n } = useTranslation();
   const lang = i18n.language.includes('zh') ? 'zh-cn' : 'en';
 
@@ -112,6 +116,30 @@ export function App() {
 
   const ScrollToTop = withRouter(_ScrollToTop);
 
+  useEffect(() => {
+    reqProjectConfig().then(resp => {
+      // @ts-ignore
+      const networkId = resp?.networkId;
+
+      if (NETWORK_ID !== networkId) {
+        localStorage.setItem(LOCALSTORAGE_KEYS_MAP.networkId, networkId);
+        window.location.reload();
+      }
+
+      setGlobalData({
+        ...globalData,
+        ...(resp as object),
+        cfx: new Conflux({
+          // @todo, should add ts type
+          // @ts-ignore
+          networkId: resp?.networkId,
+        }),
+      });
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // @todo, add loading for request frontend config info
   return (
     <GlobalProvider>
       <ConfigProvider locale={i18n.language.includes('zh') ? zhCN : enUS}>

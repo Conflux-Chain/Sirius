@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import BigNumber from 'bignumber.js';
-import { Conflux } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { usePortal } from 'utils/hooks/usePortal';
 import { abi } from 'utils/contract/wcfx.json';
 import { ADDRESS_WCFX, NETWORK_ID } from 'utils/constants';
@@ -19,6 +18,7 @@ import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
 import { media } from 'styles/media';
 import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
+import { Conflux } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 import imgSwapArrowDown from 'images/swap-arrow-down.png';
 import imgInfo from 'images/info.svg';
@@ -26,17 +26,6 @@ import imgInfo from 'images/info.svg';
 // token decimal
 const MAX_DECIMALS = 18;
 const MAX_FORMAT_DECIMALS = 6;
-
-const cfxProvider = new Conflux({
-  networkId: NETWORK_ID,
-});
-// @ts-ignore
-cfxProvider.provider = window.conflux;
-
-const contract = cfxProvider.Contract({
-  address: ADDRESS_WCFX,
-  abi,
-});
 
 interface SwapItemProps {
   type: string;
@@ -199,6 +188,18 @@ const StyledSwapItemWrapper = styled.div`
 export function Swap() {
   const { t } = useTranslation();
   const { addRecord } = useTxnHistory();
+
+  const cfxProvider = new Conflux({
+    networkId: NETWORK_ID,
+  });
+  // @ts-ignore
+  cfxProvider.provider = window.conflux;
+
+  const contract = cfxProvider.Contract({
+    address: ADDRESS_WCFX,
+    abi,
+  });
+
   const [cfx, setCfx] = useState('0');
   const [wcfx, setWcfx] = useState('0');
   const [submitLoading, setSubmitLoading] = useState(false);
@@ -239,7 +240,7 @@ export function Swap() {
         clearInterval(interval);
       };
     }
-  }, [installed, accounts, connected]);
+  }, [installed, accounts, connected, contract, cfxProvider]);
 
   const handleInputChange = value => {
     setFromToken({

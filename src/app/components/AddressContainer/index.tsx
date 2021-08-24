@@ -5,14 +5,14 @@ import { Link } from '../Link/Loadable';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components/macro';
-import { formatAddress, isConfluxTestNet } from 'utils/cfx';
+import { formatAddress, zeroAddress } from 'utils/cfx';
 import { AlertTriangle } from '@zeit-ui/react-icons';
 import ContractIcon from 'images/contract-icon.png';
 import isMeIcon from 'images/me.png';
 import InternalContractIcon from 'images/internal-contract-icon.png';
 import VerifiedIcon from 'images/verified.png';
 import { media, sizes } from 'styles/media';
-import { zeroAddress } from 'utils/constants';
+import { IS_TESTNET } from 'utils/constants';
 import { monospaceFont } from 'styles/variable';
 
 interface Props {
@@ -31,8 +31,8 @@ interface Props {
 }
 
 const defaultPCMaxWidth = 138;
-const defaultMobileMaxWidth = isConfluxTestNet ? 140 : 106;
-const defaultPCSuffixAddressSize = isConfluxTestNet ? 4 : 8;
+const defaultMobileMaxWidth = IS_TESTNET ? 140 : 106;
+const defaultPCSuffixAddressSize = IS_TESTNET ? 4 : 8;
 const defaultMobileSuffixAddressSize = 4;
 
 // ≈ 2.5 ms

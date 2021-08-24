@@ -37,12 +37,8 @@ import imgWarning from 'images/warning.png';
 import { usePortal } from 'utils/hooks/usePortal';
 import { DappButton } from '../DappButton/Loadable';
 import { packContractAndToken } from '../../../utils/contractManagerTool';
-import {
-  contractManagerAddress,
-  formatAddress,
-  isConfluxTestNet,
-} from '../../../utils/cfx';
-import { TxnAction } from '../../../utils/constants';
+import { contractManagerAddress, formatAddress } from '../../../utils/cfx';
+import { TxnAction, IS_TESTNET } from '../../../utils/constants';
 import { PageHeader } from '../PageHeader/Loadable';
 import { CheckCircleIcon } from 'app/containers/AddressContractDetail/ContractContent';
 import { Text } from 'app/components/Text/Loadable';
@@ -491,7 +487,7 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
                   defaultValue={addressVal}
                   onChange={addressInputChanger}
                   readOnly={addressDisabled}
-                  placeholder={isConfluxTestNet ? 'cfxtest:...' : 'cfx:...'}
+                  placeholder={IS_TESTNET ? 'cfxtest:...' : 'cfx:...'}
                   onBlur={addressOnBlur}
                 />
                 {isVerified ? (

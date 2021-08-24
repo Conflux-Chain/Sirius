@@ -246,3 +246,40 @@ export const reqNFTInfo = (extra?: object) => {
     ...extra,
   });
 };
+
+export const reqProjectConfig = (extra?: object) => {
+  return new Promise((resolve, reject) => {
+    resolve({
+      networks: [
+        {
+          name: 'Conflux Tethys',
+          id: 1029,
+          contracts: {
+            faucet: '0x829985ed802802e0e4bfbff25f79ccf5236016e9',
+            faucetLast: '0x8d5adbcaf5714924830591586f05302bf87f74bd',
+            contractManage: 'cfx:aca514ancmbdu9u349u4m7d0u4jjdv83pyxbdunbz7',
+          },
+        },
+        {
+          name: 'Conflux Testnet',
+          id: 1,
+          contracts: {
+            faucet: '0x8fc71dbd0e0b3be34fbee62796b65e09c8fd19b8',
+            faucetLast: '0x8097e818c2c2c1524c41f0fcbda143520046d117',
+            contractManage:
+              'cfxtest:aca514ancmbdu9u349u4m7d0u4jjdv83py3muarnv1',
+          },
+        },
+        {
+          name: 'Conflux PoS',
+          id: 8888,
+          contracts: {
+            faucet: '',
+            faucetLast: '',
+          },
+        },
+      ],
+      networkId: 1,
+    });
+  });
+};

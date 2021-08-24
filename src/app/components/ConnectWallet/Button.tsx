@@ -16,9 +16,9 @@ import { useCheckHook } from './useCheckHook';
 import BigNumber from 'bignumber.js';
 import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
+import { IS_TESTNET } from 'utils/constants';
 
 import iconLoadingWhite from './assets/loading-white.svg';
-import { isConfluxTestNet } from '../../../utils/cfx';
 
 interface Button {
   className?: string;
@@ -60,7 +60,7 @@ export const Button = ({ className, onClick, showBalance }: Button) => {
           count: pendingRecords.length,
         });
       } else {
-        buttonText = isConfluxTestNet
+        buttonText = IS_TESTNET
           ? accounts[0].replace(/(.*:.{3}).*(.{4})/, '$1...$2')
           : accounts[0].replace(/(.*:.{3}).*(.{8})/, '$1...$2');
         buttonStatus = <span className="button-status-online"></span>;

@@ -3,7 +3,6 @@ import {
   format as cfxFormat,
   address as cfxAddress,
 } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
-import Faucet from './sponsorFaucet/faucet';
 
 import { IS_TESTNET, NETWORK_ID, RPC_SERVER } from './constants';
 
@@ -82,26 +81,9 @@ export const zeroAddress = formatAddress(
   '0x0000000000000000000000000000000000000000',
 );
 
-const faucetAddress = IS_TESTNET
-  ? '0x8fc71dbd0e0b3be34fbee62796b65e09c8fd19b8'
-  : '0x829985ed802802e0e4bfbff25f79ccf5236016e9';
-const faucetLastAddress = IS_TESTNET
-  ? '0x8097e818c2c2c1524c41f0fcbda143520046d117'
-  : '0x8d5adbcaf5714924830591586f05302bf87f74bd';
-
-const faucet = new Faucet(RPC_SERVER, faucetAddress, faucetLastAddress);
-
 export const decodeContract = ({ abi, address, transacionData }) => {
   const contract = cfx.Contract({ abi, address, decodeByteToHex: true });
   return contract.abi.decodeData(transacionData);
 };
 
-export {
-  cfx,
-  formatAddress,
-  faucetAddress,
-  faucetLastAddress,
-  faucet,
-  cfxFormat,
-  cfxAddress,
-};
+export { cfx, formatAddress, cfxFormat, cfxAddress };

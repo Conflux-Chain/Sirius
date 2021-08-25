@@ -70,9 +70,8 @@ export function Sponsor() {
     cfx.getSponsorInfo(address).then(
       resp => {
         const sponsorGasBound = resp.sponsorGasBound.toString();
-        const sponsorForGas = formatAddress(resp.sponsorForGas, {
-          hex: true,
-        });
+        const sponsorForGas = formatAddress(resp.sponsorForGas);
+
         setUpperBound(sponsorGasBound);
         if (
           sponsorForGas === contracts.faucet ||
@@ -88,7 +87,7 @@ export function Sponsor() {
   const getSponsorInfo = async _address => {
     setLoading(true);
     // cip-37 compatible
-    const address = formatAddress(_address, { hex: false });
+    const address = formatAddress(_address);
     const sponsorInfo = await cfx.provider.call('cfx_getSponsorInfo', address);
     const { flag } = await fetchIsAppliable(address);
     setIsFlag(flag);

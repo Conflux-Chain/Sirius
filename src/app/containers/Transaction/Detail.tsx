@@ -20,16 +20,13 @@ import {
   formatBalance,
   formatTimeStamp,
   fromDripToCfx,
-  getAddressType,
   getPercent,
   toThousands,
+  isContractAddress,
+  isInnerContractAddress,
 } from 'utils';
 import { formatAddress } from 'utils/cfx';
-import {
-  addressTypeContract,
-  addressTypeInternalContract,
-  cfxTokenTypes,
-} from 'utils/constants';
+import { cfxTokenTypes } from 'utils/constants';
 import { defaultTokenIcon } from '../../../constants';
 import { AddressContainer } from 'app/components/AddressContainer';
 import clsx from 'clsx';
@@ -141,8 +138,8 @@ export const Detail = () => {
           let toCheckAddress = txDetailDta.to;
 
           if (
-            getAddressType(toCheckAddress) === addressTypeContract ||
-            getAddressType(toCheckAddress) === addressTypeInternalContract
+            isContractAddress(toCheckAddress) ||
+            isInnerContractAddress(toCheckAddress)
           ) {
             setIsContract(true);
             const fields = [

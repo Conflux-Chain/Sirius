@@ -162,12 +162,7 @@ export const Data = ({
           let value: React.ReactNode = <pre>{d.value}</pre>;
 
           if (d.type === 'address') {
-            const contractInfo =
-              contractAndTokenInfo[
-                formatAddress(d.value, {
-                  withType: true,
-                })
-              ];
+            const contractInfo = contractAndTokenInfo[formatAddress(d.value)];
 
             value = (
               <>

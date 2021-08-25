@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getAddressType } from 'utils';
-import {
-  addressTypeContract,
-  addressTypeInternalContract,
-} from 'utils/constants';
+import { isContractAddress, isInnerContractAddress } from 'utils';
 import { reqContract } from 'utils/httpRequest';
 import { cfx } from 'utils/cfx';
 import { Select } from 'app/components/Select';
@@ -68,8 +64,7 @@ export const InputData = ({
           setTip('');
         } else {
           const isContract =
-            getAddressType(toHash) === addressTypeContract ||
-            getAddressType(toHash) === addressTypeInternalContract;
+            isContractAddress(toHash) || isInnerContractAddress(toHash);
 
           if (isContract) {
             let isAbiError = false;

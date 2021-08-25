@@ -75,11 +75,7 @@ export const Topics = ({ data, signature, contractAndTokenInfo }) => {
 
           if (name === 'address') {
             const contractInfo =
-              contractAndTokenInfo[
-                formatAddress(valueMap.decode, {
-                  withType: true,
-                })
-              ];
+              contractAndTokenInfo[formatAddress(valueMap.decode)];
 
             value = (
               <>

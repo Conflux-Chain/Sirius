@@ -30,11 +30,12 @@ import imgWarning from 'images/warning.png';
 import { usePortal } from 'utils/hooks/usePortal';
 import { DappButton } from '../DappButton/Loadable';
 import { packContractAndToken } from '../../../utils/contractManagerTool';
-import { contractManagerAddress, formatAddress } from '../../../utils/cfx';
+import { formatAddress } from '../../../utils/cfx';
 import { TxnAction, IS_TESTNET } from '../../../utils/constants';
 import { PageHeader } from '../PageHeader/Loadable';
 import { CheckCircleIcon } from 'app/containers/AddressContractDetail/ContractContent';
 import { Text } from 'app/components/Text/Loadable';
+import { useGlobalData, GlobalDataType } from 'utils/hooks/useGlobal';
 
 interface Props {
   contractDetail: any;
@@ -62,6 +63,8 @@ export const ContractOrTokenInfo = ({
   address,
   loading,
 }: Props) => {
+  const [globalData] = useGlobalData();
+  const { contracts } = globalData as GlobalDataType;
   const routeMatch = useRouteMatch();
   const updateInfoType = routeMatch.path.startsWith('/contract-info/')
     ? 'contract'
@@ -581,7 +584,7 @@ export const ContractOrTokenInfo = ({
       </TopContainer>
       <div className="submitContainer">
         <DappButton
-          contractAddress={contractManagerAddress}
+          contractAddress={contracts.contractManager}
           data={txData}
           btnDisabled={isDisabled}
           txnAction={TxnAction.contractEdit}

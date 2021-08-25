@@ -42,13 +42,6 @@ export const cfxTokenTypes = {
   crc1155: 'CRC1155',
   cfx: 'CFX',
 };
-export const governanceAddressTestnet =
-  '0x8f3f525d17159351e4b34fe766ef139470da0b02';
-export const governanceAddressMainnet =
-  '0x8f165e7d7dfb02e24300f2c1c476822ba895638e';
-export const governanceAddress = IS_TESTNET
-  ? governanceAddressTestnet
-  : governanceAddressMainnet;
 
 // same as connectWallet.notify.action in i18n file
 export enum TxnAction {

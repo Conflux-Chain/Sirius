@@ -51,6 +51,7 @@ export interface ContractsType {
   faucet: string;
   faucetLast: string;
   wcfx: string;
+  governance: string;
 }
 
 export interface NetworksType {

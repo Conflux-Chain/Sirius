@@ -63,24 +63,6 @@ export enum TxnAction {
   swapCFXToWCFX = 108,
 }
 
-export enum ADDRESS_FCS {
-  mainnet = 'cfx:achc8nxj7r451c223m18w2dwjnmhkd6rxawrvkvsy2',
-  testnet = 'cfxtest:achkx35n7vngfxgrm7akemk3ftzy47t61yk5nn270s',
-}
-
-export const ADDRESS_FC = IS_TESTNET
-  ? ADDRESS_FCS.testnet
-  : ADDRESS_FCS.mainnet;
-
-export enum ADDRESS_CETHS {
-  mainnet = 'cfx:acdrf821t59y12b4guyzckyuw2xf1gfpj2ba0x4sj6',
-  testnet = 'cfxtest:acdrf821t59y12b4guyzckyuw2xf1gfpj2nnfd6ep0',
-}
-
-export const ADDRESS_CETH = IS_TESTNET
-  ? ADDRESS_CETHS.testnet
-  : ADDRESS_CETHS.mainnet;
-
 export enum LOCALSTORAGE_KEYS {
   currency = 'CONFLUX_SCAN_LOCALSTORAGE_KEY_CURRENCY',
 }

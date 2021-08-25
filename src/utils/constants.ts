@@ -5,14 +5,26 @@ export const RPC_SERVER = window.location.origin + '/rpcv2'; // cip-37
 
 export const IS_TESTNET = isTestNetEnv();
 
-export enum DEFAULT_NETWORK_IDS {
+enum DEFAULT_NETWORK_IDS {
   mainnet = 1029,
   testnet = 1,
 }
 
-export const LOCALSTORAGE_KEYS_MAP = {
-  networkId: 'conflux-scan-network-id',
-};
+/**
+ * @todo
+ * 1. setNFTCacheInfo cacheKey
+ * 2. GlobalTip
+ *
+ * @export
+ * @enum {number}
+ */
+export enum LOCALSTORAGE_KEYS_MAP {
+  networkId = 'CONFLUX_SCAN_NETWORK_ID',
+  currency = 'CONFLUX_SCAN_LOCALSTORAGE_KEY_CURRENCY',
+  ageFormat = 'CONFLUX_SCAN_TABLE_AGE_FORMAT',
+  cookieAgreed = 'CONFLUXSCAN_COOKIE_AGREED',
+  txnRecords = 'CONFLUXSCAN_TXN_RECORDS',
+}
 
 export const NETWORK_ID = (() => {
   let networkId = IS_TESTNET
@@ -56,10 +68,6 @@ export enum TxnAction {
   swapCFXToWCFX = 108,
 }
 
-export enum LOCALSTORAGE_KEYS {
-  currency = 'CONFLUX_SCAN_LOCALSTORAGE_KEY_CURRENCY',
-}
-
 export const CURRENCY_SYMBOLS = {
   USD: '$',
   CNY: '¥',
@@ -70,7 +78,7 @@ export const CURRENCY_SYMBOLS = {
 };
 
 export const getCurrency = () => {
-  return localStorage.getItem(LOCALSTORAGE_KEYS.currency) || 'USD';
+  return localStorage.getItem(LOCALSTORAGE_KEYS_MAP.currency) || 'USD';
 };
 
 export const getCurrencySymbol = () => {

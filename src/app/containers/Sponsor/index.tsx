@@ -5,13 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components/macro';
 import { media } from 'styles/media';
-import {
-  cfx,
-  faucet,
-  faucetAddress,
-  formatAddress,
-  faucetLastAddress,
-} from 'utils/cfx';
+import { cfx, formatAddress } from 'utils/cfx';
 import SkelontonContainer from 'app/components/SkeletonContainer';
 import { Text } from 'app/components/Text/Loadable';
 import { Search as SearchComp } from 'app/components/Search/Loadable';
@@ -21,10 +15,12 @@ import { usePortal } from 'utils/hooks/usePortal';
 import { useParams } from 'react-router-dom';
 import imgWarning from 'images/warning.png';
 import { AddressContainer } from 'app/components/AddressContainer';
-import { TxnAction } from 'utils/constants';
+import { TxnAction, RPC_SERVER } from 'utils/constants';
 import { Remark } from 'app/components/Remark';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { reqTokenList } from 'utils/httpRequest';
+import { useGlobalData, GlobalDataType } from 'utils/hooks/useGlobal';
+import Faucet from 'utils/sponsorFaucet/faucet';
 
 interface RouteParams {
   contractAddress: string;
@@ -37,7 +33,11 @@ const errReplaceThird = 'errReplaceThird';
 const errContractNotFound = 'errContractNotFound';
 const errCannotReplaced = 'errCannotReplaced';
 const errUpgraded = 'errUpgraded';
+
 export function Sponsor() {
+  const [globalData] = useGlobalData();
+  const { contracts } = globalData as GlobalDataType;
+  const faucet = new Faucet(RPC_SERVER, contracts.faucet, contracts.faucetLast);
   const { t } = useTranslation();
   const { contractAddress } = useParams<RouteParams>();
   const [storageSponsorAddress, setStorageSponsorAddress] = useState('');
@@ -75,8 +75,8 @@ export function Sponsor() {
         });
         setUpperBound(sponsorGasBound);
         if (
-          sponsorForGas === faucetAddress ||
-          sponsorForGas === faucetLastAddress
+          sponsorForGas === contracts.faucet ||
+          sponsorForGas === contracts.faucetLast
         ) {
           setIsUpperBoundFromFoundation(true);
         }
@@ -453,7 +453,7 @@ export function Sponsor() {
         </BlockContainer>
         <ApplyContainer>
           <DappButton
-            contractAddress={faucetAddress}
+            contractAddress={contracts.faucet}
             data={txData}
             btnDisabled={!canApply}
             connectText={t('sponsor.connectToApply')}

@@ -162,13 +162,7 @@ const EventLog = ({ log }) => {
             >
               <Address
                 address={address}
-                contract={
-                  contractAndTokenInfo[
-                    formatAddress(address, {
-                      withType: true,
-                    })
-                  ]
-                }
+                contract={contractAndTokenInfo[formatAddress(address)]}
               ></Address>
             </Description>
             {fnName ? (

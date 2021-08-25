@@ -1,9 +1,4 @@
 import {
-  addressTypeCommon,
-  addressTypeContract,
-  addressTypeInternalContract,
-} from './constants';
-import {
   adminControlAddress,
   sponsorWhitelistControlAddress,
   stakingAddress,
@@ -19,25 +14,49 @@ import { NetworksType } from './hooks/useGlobal';
 
 dayjs.extend(relativeTime);
 
-export const getAddressType = address => {
+export const getAddressType = (address: string): string => {
   try {
-    const type = cfxAddress.decodeCfxAddress(
-      formatAddress(address, { hex: false }),
-    ).type;
-    switch (type) {
-      case 'user':
-        return addressTypeCommon;
-      case 'contract':
-        return addressTypeContract;
-      case 'builtin':
-        return addressTypeInternalContract;
-      default:
-        return null;
-    }
+    return cfxAddress.decodeCfxAddress(formatAddress(address)).type;
   } catch (e) {
-    return null;
+    return '';
   }
 };
+
+export const isAddress = (str: string) => {
+  return formatAddress(str) !== '';
+};
+
+export function isZeroAddress(str: string) {
+  return formatAddress(str) === zeroAddress;
+}
+
+export function isAccountAddress(str: string) {
+  return getAddressType(str) === 'user' || isZeroAddress(str);
+}
+
+export function isContractAddress(str: string) {
+  return getAddressType(str) === 'contract';
+}
+
+export function isInnerContractAddress(str: string) {
+  return [
+    adminControlAddress,
+    sponsorWhitelistControlAddress,
+    stakingAddress,
+  ].includes(formatAddress(str));
+}
+
+// address start with 0x0, not valid internal contract, but fullnode support
+export function isSpecialAddress(str: string) {
+  return (
+    getAddressType(str) === 'builtin' &&
+    ![
+      adminControlAddress,
+      sponsorWhitelistControlAddress,
+      stakingAddress,
+    ].includes(formatAddress(str))
+  );
+}
 
 /**
  * format util fn
@@ -434,47 +453,6 @@ export const selectText = (element: HTMLElement) => {
     selection.addRange(range);
   }
 };
-
-export const isAddress = (str: string) => {
-  return formatAddress(str) !== '';
-  // return cfxAddress.isValidCfxAddress(str); // only support new address
-  // return /^0x[0-9a-fA-F]{40}$/.test(str);
-};
-
-export function isZeroAddress(str: string) {
-  return formatAddress(str) === zeroAddress;
-}
-
-export function isAccountAddress(str: string) {
-  return getAddressType(str) === addressTypeCommon || isZeroAddress(str);
-}
-
-export function isContractAddress(str: string) {
-  return getAddressType(str) === addressTypeContract;
-}
-
-export function isInnerContractAddress(str: string) {
-  return (
-    getAddressType(str) === addressTypeInternalContract &&
-    [
-      adminControlAddress,
-      sponsorWhitelistControlAddress,
-      stakingAddress,
-    ].includes(formatAddress(str, { hex: false }))
-  );
-}
-
-// address start with 0x0, not valid internal contract, but fullnode support
-export function isSpecialAddress(str: string) {
-  return (
-    getAddressType(str) === addressTypeInternalContract &&
-    ![
-      adminControlAddress,
-      sponsorWhitelistControlAddress,
-      stakingAddress,
-    ].includes(formatAddress(str, { hex: false }))
-  );
-}
 
 export const isHash = (str: string) => {
   return /^0x[0-9a-fA-F]{64}$/.test(str);

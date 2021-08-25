@@ -40,9 +40,6 @@ export const NETWORK_ID = (() => {
   return networkId;
 })();
 
-export const addressTypeContract = 'contract';
-export const addressTypeCommon = 'common';
-export const addressTypeInternalContract = 'internalContract';
 export const cfxTokenTypes = {
   erc20: 'ERC20',
   erc777: 'ERC777',

@@ -67,11 +67,7 @@ export const OptimizationDecode = ({
               let value = a.formattedValue;
               if (a.type === 'address') {
                 const contractInfo =
-                  contractAndTokenInfo[
-                    formatAddress(a.formattedValue, {
-                      withType: true,
-                    })
-                  ];
+                  contractAndTokenInfo[formatAddress(a.formattedValue)];
 
                 value = (
                   <>

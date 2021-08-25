@@ -31,28 +31,13 @@ const formatAddress = (address: string | undefined, option: any = {}) => {
   const addressOptions = Object.assign(
     {
       networkId: NETWORK_ID,
-      hex: false,
-      withType: false,
     },
     option,
   );
   try {
-    if (addressOptions.hex) {
-      return cfxFormat.hexAddress(
-        cfxFormat.address(address, addressOptions.networkId),
-      );
-    }
-    if (!addressOptions.withType) {
-      // TODO simplifyCfxAddress
-      return cfxFormat.address(
-        cfxFormat.hexAddress(address),
-        addressOptions.networkId,
-      );
-    }
     return cfxFormat.address(
-      address,
+      cfxFormat.hexAddress(address),
       addressOptions.networkId,
-      addressOptions.withType,
     );
   } catch (e) {
     console.warn('formatAddress:', address, e.message);

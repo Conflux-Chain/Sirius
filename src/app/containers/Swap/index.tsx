@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import BigNumber from 'bignumber.js';
 import { usePortal } from 'utils/hooks/usePortal';
 import { abi } from 'utils/contract/wcfx.json';
-import { ADDRESS_WCFX, TxnAction } from 'utils/constants';
+import { TxnAction } from 'utils/constants';
 import { isSafeNumberOrNumericStringInput, formatNumber } from 'utils';
 import { useTxnHistory } from 'utils/hooks/useTxnHistory';
 import { trackEvent } from 'utils/ga';
@@ -18,6 +18,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { media } from 'styles/media';
 import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
+import { useGlobalData, GlobalDataType } from 'utils/hooks/useGlobal';
 
 import imgSwapArrowDown from 'images/swap-arrow-down.png';
 import imgInfo from 'images/info.svg';
@@ -185,6 +186,8 @@ const StyledSwapItemWrapper = styled.div`
 `;
 
 export function Swap() {
+  const [globalData] = useGlobalData();
+  const { contracts } = globalData as GlobalDataType;
   const { t } = useTranslation();
   const { addRecord } = useTxnHistory();
 
@@ -192,7 +195,7 @@ export function Swap() {
   cfxProvider.provider = window.conflux;
 
   const contract = cfxProvider.Contract({
-    address: ADDRESS_WCFX,
+    address: contracts.wcfx,
     abi,
   });
 

@@ -89,11 +89,6 @@ const faucetLastAddress = IS_TESTNET
   ? '0x8097e818c2c2c1524c41f0fcbda143520046d117'
   : '0x8d5adbcaf5714924830591586f05302bf87f74bd';
 
-// contract manager address, hex format: 0x81bbe80b1282387e19d7e1a57476869081c7d965
-const contractManagerAddress = IS_TESTNET
-  ? 'cfxtest:aca514ancmbdu9u349u4m7d0u4jjdv83py3muarnv1'
-  : 'cfx:aca514ancmbdu9u349u4m7d0u4jjdv83pyxbdunbz7';
-
 const faucet = new Faucet(RPC_SERVER, faucetAddress, faucetLastAddress);
 
 export const decodeContract = ({ abi, address, transacionData }) => {
@@ -109,5 +104,4 @@ export {
   faucet,
   cfxFormat,
   cfxAddress,
-  contractManagerAddress,
 };

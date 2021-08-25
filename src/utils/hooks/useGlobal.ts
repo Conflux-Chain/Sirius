@@ -47,6 +47,9 @@ export const useGlobal = () => {
 // react-use version, to solve useContext can not update global value in App.ts
 export interface ContractsType {
   [index: string]: string;
+  contractManager: string;
+  faucet: string;
+  faucetLast: string;
 }
 
 export interface NetworksType {
@@ -58,6 +61,7 @@ export interface NetworksType {
 export interface GlobalDataType {
   networks: Array<NetworksType>;
   networkId: number;
+  contracts: ContractsType;
   cfx: any;
 }
 
@@ -82,17 +86,10 @@ export const useGlobalData = createGlobalState<object>({
         faucetLast: '',
       },
     },
-    // {
-    //   name: 'Conflux PoS',
-    //   id: 8888,
-    //   contracts: {
-    //     faucet: '',
-    //     faucetLast: '',
-    //   },
-    // },
   ],
   networkId: DEFAULT_NETWORK_ID,
   cfx: new Conflux({
     networkId: DEFAULT_NETWORK_ID,
   }),
+  contracts: {},
 });

@@ -257,7 +257,7 @@ export const reqProjectConfig = (extra?: object) => {
           contracts: {
             faucet: '0x829985ed802802e0e4bfbff25f79ccf5236016e9',
             faucetLast: '0x8d5adbcaf5714924830591586f05302bf87f74bd',
-            contractManage: 'cfx:aca514ancmbdu9u349u4m7d0u4jjdv83pyxbdunbz7',
+            contractManager: 'cfx:aca514ancmbdu9u349u4m7d0u4jjdv83pyxbdunbz7', // hex format: 0x81bbe80b1282387e19d7e1a57476869081c7d965
           },
         },
         {
@@ -266,8 +266,8 @@ export const reqProjectConfig = (extra?: object) => {
           contracts: {
             faucet: '0x8fc71dbd0e0b3be34fbee62796b65e09c8fd19b8',
             faucetLast: '0x8097e818c2c2c1524c41f0fcbda143520046d117',
-            contractManage:
-              'cfxtest:aca514ancmbdu9u349u4m7d0u4jjdv83py3muarnv1',
+            contractManager:
+              'cfxtest:aca514ancmbdu9u349u4m7d0u4jjdv83py3muarnv1', // hex format: 0x81bbe80b1282387e19d7e1a57476869081c7d965
           },
         },
         {

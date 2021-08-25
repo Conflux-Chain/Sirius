@@ -29,8 +29,9 @@ import { GlobalStyle } from 'styles/global-styles';
 import { TxnHistoryProvider } from 'utils/hooks/useTxnHistory';
 import { GlobalProvider, useGlobalData } from 'utils/hooks/useGlobal';
 import { reqProjectConfig } from 'utils/httpRequest';
-import { Conflux } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { LOCALSTORAGE_KEYS_MAP, NETWORK_ID } from 'utils/constants';
+import { getNetwork } from 'utils';
+import { formatAddress, getGlobalShowHexAddress } from '../utils/cfx';
 
 import { Report } from './containers/Report';
 import { Swap } from './containers/Swap';
@@ -61,7 +62,7 @@ import { AddressContractDetailPage } from './containers/AddressContractDetail/Lo
 import { GlobalNotify } from './containers/GlobalNotify';
 import { Search } from './containers/Search';
 import { AddressConverter } from './containers/AddressConverter';
-import { formatAddress, getGlobalShowHexAddress } from '../utils/cfx';
+
 import { BlocknumberCalc } from './containers/BlocknumberCalc/Loadable';
 import { BroadcastTx } from './containers/BroadcastTx/Loadable';
 import { CookieTip } from './components/CookieTip';
@@ -126,16 +127,16 @@ export function App() {
         window.location.reload();
       }
 
+      // @ts-ignore
+      const network = getNetwork(resp?.networks, networkId);
+
       setGlobalData({
         ...globalData,
         ...(resp as object),
-        cfx: new Conflux({
-          // @todo, should add ts type
-          // @ts-ignore
-          networkId: resp?.networkId,
-        }),
+        contracts: network.contracts,
       });
     });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

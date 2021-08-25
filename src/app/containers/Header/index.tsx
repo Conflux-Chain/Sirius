@@ -66,8 +66,6 @@ export const Header = memo(() => {
     if (bp === 's' || bp === 'm') toggleMenu(false);
   };
 
-  // console.log('globalData: ', globalData);
-
   const startLinks: HeaderLinks = [
     {
       // home
@@ -485,14 +483,14 @@ export const Header = memo(() => {
               networkId: n.id,
             });
 
-            // if (n.id === 1) {
-            //   toTestnet();
-            // } else if (n.id === 1029) {
-            //   toMainnet();
-            // } else {
-            //   // @todo, should jump to custom network hostname
-            //   // toMainnet();
-            // }
+            if (n.id === 1) {
+              toTestnet();
+            } else if (n.id === 1029) {
+              toMainnet();
+            } else {
+              // @todo, should jump to custom network hostname
+              // toMainnet();
+            }
           },
           isMatchedFn: () => isMatch,
         };

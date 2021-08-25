@@ -2,8 +2,12 @@ import React, { useEffect, useState } from 'react';
 import BigNumber from 'bignumber.js';
 import { usePortal } from 'utils/hooks/usePortal';
 import { abi } from 'utils/contract/wcfx.json';
-import { ADDRESS_WCFX, NETWORK_ID } from 'utils/constants';
+import { ADDRESS_WCFX, TxnAction } from 'utils/constants';
 import { isSafeNumberOrNumericStringInput, formatNumber } from 'utils';
+import { useTxnHistory } from 'utils/hooks/useTxnHistory';
+import { trackEvent } from 'utils/ga';
+import { ScanEvent } from 'utils/gaConstants';
+import { cfx as cfxProvider } from 'utils/cfx';
 import { Card } from 'app/components/Card/Loadable';
 import styled from 'styled-components/macro';
 import { ConnectButton } from 'app/components/ConnectWallet';
@@ -12,13 +16,8 @@ import { Input, Button } from '@cfxjs/react-ui';
 import { Tooltip } from 'app/components/Tooltip';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { useTxnHistory } from 'utils/hooks/useTxnHistory';
-import { TxnAction } from 'utils/constants';
-import { trackEvent } from 'utils/ga';
-import { ScanEvent } from 'utils/gaConstants';
 import { media } from 'styles/media';
 import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
-import { Conflux } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 import imgSwapArrowDown from 'images/swap-arrow-down.png';
 import imgInfo from 'images/info.svg';
@@ -189,9 +188,6 @@ export function Swap() {
   const { t } = useTranslation();
   const { addRecord } = useTxnHistory();
 
-  const cfxProvider = new Conflux({
-    networkId: NETWORK_ID,
-  });
   // @ts-ignore
   cfxProvider.provider = window.conflux;
 
@@ -240,7 +236,7 @@ export function Swap() {
         clearInterval(interval);
       };
     }
-  }, [installed, accounts, connected, contract, cfxProvider]);
+  }, [installed, accounts, connected, contract]);
 
   const handleInputChange = value => {
     setFromToken({

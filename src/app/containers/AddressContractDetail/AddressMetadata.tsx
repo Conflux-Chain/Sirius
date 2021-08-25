@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import styled from 'styled-components';
 import { List } from 'app/components/List/';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +12,6 @@ import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { cfx, stakingAddress } from '../../../utils/cfx';
 import { isTestNetEnv } from '../../../utils/hooks/useTestnet';
 import ViewMore from '../../../images/contract-address/viewmore.png';
-import { governanceAddress } from '../../../utils/constants';
 import {
   abi as governanceAbi,
   bytecode as gobernanceBytecode,
@@ -23,6 +22,7 @@ import {
 } from '../../../utils/contract/staking.json';
 import { Tooltip } from '../../components/Tooltip/Loadable';
 import { Link } from '../../components/Link/Loadable';
+import { useGlobalData, GlobalDataType } from 'utils/hooks/useGlobal';
 
 // https://github.com/Conflux-Dev/vote/blob/main/src/pages/staking/index.js
 function getCurrentStakingEarned(list, rate, stakedCfx) {
@@ -44,13 +44,9 @@ const stakingContract = cfx.Contract({
   address: stakingAddress,
 });
 
-const governanceContract = cfx.Contract({
-  abi: governanceAbi,
-  bytecode: gobernanceBytecode,
-  address: governanceAddress,
-});
-
 export function AddressMetadata({ address, accountInfo }) {
+  const [globalData] = useGlobalData();
+  const { contracts } = globalData as GlobalDataType;
   const { t } = useTranslation();
   const loading = accountInfo.name === t(translations.general.loading);
   const skeletonStyle = { height: '1.5714rem' };
@@ -62,7 +58,13 @@ export function AddressMetadata({ address, accountInfo }) {
   const [voteListLoading, setVoteListLoading] = useState<boolean>(true);
   const [modalShown, setModalShown] = useState<boolean>(false);
 
-  // const [] = useState();
+  const governanceContract = useMemo(() => {
+    return cfx.Contract({
+      abi: governanceAbi,
+      bytecode: gobernanceBytecode,
+      address: contracts.governance,
+    });
+  }, [contracts.governance]);
 
   useEffect(() => {
     // get staking info
@@ -123,7 +125,7 @@ export function AddressMetadata({ address, accountInfo }) {
           setVoteListLoading(false);
         });
     }
-  }, [address, accountInfo]);
+  }, [address, accountInfo, governanceContract]);
 
   return (
     <>

@@ -31,7 +31,7 @@ import { GlobalProvider, useGlobalData } from 'utils/hooks/useGlobal';
 import { reqProjectConfig } from 'utils/httpRequest';
 import { LOCALSTORAGE_KEYS_MAP, NETWORK_ID } from 'utils/constants';
 import { getNetwork } from 'utils';
-import { formatAddress, getGlobalShowHexAddress } from '../utils/cfx';
+import { formatAddress } from '../utils/cfx';
 
 import { Report } from './containers/Report';
 import { Swap } from './containers/Swap';
@@ -248,13 +248,9 @@ export function App() {
                           )[1];
                           if (
                             routeProps.match.params.contractAddress &&
-                            ((!getGlobalShowHexAddress() &&
-                              routeProps.match.params.contractAddress.startsWith(
-                                '0x',
-                              )) ||
-                              routeProps.match.params.contractAddress
-                                .toLowerCase()
-                                .indexOf('type.') > -1)
+                            routeProps.match.params.contractAddress
+                              .toLowerCase()
+                              .indexOf('type.') > -1
                           )
                             return (
                               <Redirect
@@ -278,13 +274,9 @@ export function App() {
                         render={(routeProps: any) => {
                           if (
                             routeProps.match.params.tokenAddress &&
-                            ((!getGlobalShowHexAddress() &&
-                              routeProps.match.params.tokenAddress.startsWith(
-                                '0x',
-                              )) ||
-                              routeProps.match.params.tokenAddress
-                                .toLowerCase()
-                                .indexOf('type.') > -1)
+                            routeProps.match.params.tokenAddress
+                              .toLowerCase()
+                              .indexOf('type.') > -1
                           )
                             return (
                               <Redirect
@@ -353,13 +345,9 @@ export function App() {
                         render={(routeProps: any) => {
                           if (
                             routeProps.match.params.contractAddress &&
-                            ((!getGlobalShowHexAddress() &&
-                              routeProps.match.params.contractAddress.startsWith(
-                                '0x',
-                              )) ||
-                              routeProps.match.params.contractAddress
-                                .toLowerCase()
-                                .indexOf('type.') > -1)
+                            routeProps.match.params.contractAddress
+                              .toLowerCase()
+                              .indexOf('type.') > -1
                           )
                             return (
                               <Redirect
@@ -399,13 +387,9 @@ export function App() {
                         render={(routeProps: any) => {
                           if (
                             routeProps.match.params.address &&
-                            ((!getGlobalShowHexAddress() &&
-                              routeProps.match.params.address.startsWith(
-                                '0x',
-                              )) ||
-                              routeProps.match.params.address
-                                .toLowerCase()
-                                .indexOf('type.') > -1)
+                            routeProps.match.params.address
+                              .toLowerCase()
+                              .indexOf('type.') > -1
                           )
                             return (
                               <Redirect

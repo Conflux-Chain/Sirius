@@ -283,7 +283,7 @@ export const reqProjectConfig = (extra?: object) => {
           },
         },
       ],
-      networkId: 1,
+      networkId: 1029,
     });
   });
 };

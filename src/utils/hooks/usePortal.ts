@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import Big from 'bignumber.js';
 import { useEffectOnce } from 'react-use';
 import { useConfluxPortal } from '@cfxjs/react-hooks';
-import { ADDRESS_FC, ADDRESS_CETH } from './../constants';
 
 // alias for window
 const globalThis = window as any;
@@ -159,12 +158,9 @@ export const usePortal = () => {
 
   // TODO cip-37 portal
   const {
-    balances: [balance, [fc, ceth]],
+    balances: [balance],
     // eslint-disable-next-line react-hooks/rules-of-hooks
-  } = useConfluxPortal([
-    ADDRESS_FC, // fc contract address, can be find on confluxscan.io
-    ADDRESS_CETH, // ceth contract address, can be find on confluxscan.io
-  ]);
+  } = useConfluxPortal();
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [chainId] = useChainId();
@@ -178,8 +174,6 @@ export const usePortal = () => {
     chainId, // hex value, 0xNaN mean changing network
     balances: {
       cfx: balance.toString(),
-      fc: fc.toString(),
-      ceth: ceth.toString(),
     },
     // 用户调用这个函数尤其需要小心，因为如果未登录，只要调用函数，就会在钱包上请求一次连接，因尽量在 useEffectOnce 中使用
     login,

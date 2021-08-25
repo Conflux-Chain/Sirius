@@ -76,9 +76,4 @@ export const zeroAddress = formatAddress(
   '0x0000000000000000000000000000000000000000',
 );
 
-export const decodeContract = ({ abi, address, transacionData }) => {
-  const contract = cfx.Contract({ abi, address, decodeByteToHex: true });
-  return contract.abi.decodeData(transacionData);
-};
-
 export { cfx, formatAddress, cfxFormat, cfxAddress };

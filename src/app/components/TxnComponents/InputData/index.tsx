@@ -5,7 +5,7 @@ import {
   addressTypeInternalContract,
 } from 'utils/constants';
 import { reqContract } from 'utils/httpRequest';
-import { decodeContract } from 'utils/cfx';
+import { cfx } from 'utils/cfx';
 import { Select } from 'app/components/Select';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
@@ -87,11 +87,12 @@ export const InputData = ({
             abi = resp['abi'];
 
             try {
-              const decodedBytecode = decodeContract({
+              const contract = cfx.Contract({
                 abi: JSON.parse(abi),
                 address: toHash,
-                transacionData: originalData,
+                decodeByteToHex: true,
               });
+              const decodedBytecode = contract.abi.decodeData(originalData);
 
               setData({
                 ...data,

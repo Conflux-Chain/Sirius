@@ -63,15 +63,6 @@ export enum TxnAction {
   swapCFXToWCFX = 108,
 }
 
-export enum ADDRESS_WCFXS {
-  mainnet = 'cfx:acg158kvr8zanb1bs048ryb6rtrhr283ma70vz70tx',
-  testnet = 'cfxtest:achs3nehae0j6ksvy1bhrffsh1rtfrw1f6w1kzv46t',
-}
-
-export const ADDRESS_WCFX = IS_TESTNET
-  ? ADDRESS_WCFXS.testnet
-  : ADDRESS_WCFXS.mainnet;
-
 export enum ADDRESS_FCS {
   mainnet = 'cfx:achc8nxj7r451c223m18w2dwjnmhkd6rxawrvkvsy2',
   testnet = 'cfxtest:achkx35n7vngfxgrm7akemk3ftzy47t61yk5nn270s',

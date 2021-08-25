@@ -50,6 +50,7 @@ export interface ContractsType {
   contractManager: string;
   faucet: string;
   faucetLast: string;
+  wcfx: string;
 }
 
 export interface NetworksType {

@@ -258,6 +258,7 @@ export const reqProjectConfig = (extra?: object) => {
             faucet: '0x829985ed802802e0e4bfbff25f79ccf5236016e9',
             faucetLast: '0x8d5adbcaf5714924830591586f05302bf87f74bd',
             contractManager: 'cfx:aca514ancmbdu9u349u4m7d0u4jjdv83pyxbdunbz7', // hex format: 0x81bbe80b1282387e19d7e1a57476869081c7d965
+            wcfx: 'cfx:acg158kvr8zanb1bs048ryb6rtrhr283ma70vz70tx',
           },
         },
         {
@@ -268,6 +269,7 @@ export const reqProjectConfig = (extra?: object) => {
             faucetLast: '0x8097e818c2c2c1524c41f0fcbda143520046d117',
             contractManager:
               'cfxtest:aca514ancmbdu9u349u4m7d0u4jjdv83py3muarnv1', // hex format: 0x81bbe80b1282387e19d7e1a57476869081c7d965
+            wcfx: 'cfxtest:achs3nehae0j6ksvy1bhrffsh1rtfrw1f6w1kzv46t',
           },
         },
         {

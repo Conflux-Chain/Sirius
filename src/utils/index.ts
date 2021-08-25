@@ -19,12 +19,6 @@ import { NetworksType } from './hooks/useGlobal';
 
 dayjs.extend(relativeTime);
 
-export const innerContract = [
-  formatAddress('0x0888000000000000000000000000000000000000'),
-  formatAddress('0x0888000000000000000000000000000000000001'),
-  formatAddress('0x0888000000000000000000000000000000000002'),
-];
-
 export const getAddressType = address => {
   try {
     const type = cfxAddress.decodeCfxAddress(

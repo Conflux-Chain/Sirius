@@ -14,14 +14,14 @@ dayjs.extend(relativeTime);
  * @param address origin address
  * @param option address format options
  */
-export const formatAddress = (address: string, option: any = {}) => {
+export const formatAddress = (address: string) => {
   try {
     let formattedAddress = address;
 
     // compatibility with verbose address, will replace with simply address later
-    if (address.slice(0, 3) === 'CFX') {
+    if (typeof address === 'string' && address.slice(0, 3) === 'CFX') {
       formattedAddress = address
-        .replace(/(._):(._):(.\*)/, '$1:$3')
+        .replace(/(.*):(.*):(.*)/, '$1:$3')
         .toLowerCase();
     }
 
@@ -31,9 +31,12 @@ export const formatAddress = (address: string, option: any = {}) => {
       throw new Error('invalid address');
     }
   } catch (e) {
-    console.warn('formatAddress:', address, e.message);
+    console.log('formatAddress:', address, e.message);
+
     // transfer to is not valid conflux address, need show error tip, special for ETH address ?
-    return address.startsWith('0x') && address.length === 42
+    return typeof address === 'string' &&
+      address.startsWith('0x') &&
+      address.length === 42
       ? 'invalid-' + address
       : '';
   }

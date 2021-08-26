@@ -9,7 +9,7 @@ import { PageHeader } from '../../components/PageHeader';
 import { Card } from '../../components/Card';
 import { Input, Button } from '@cfxjs/react-ui';
 import { useParams } from 'react-router-dom';
-import { cfx } from '../../../utils/cfx';
+import { CFX } from '../../../utils/constants';
 import {
   abi as governanceAbi,
   bytecode as gobernanceBytecode,
@@ -25,7 +25,7 @@ export function BlocknumberCalc() {
   const { contracts } = globalData as GlobalDataType;
 
   const governanceContract = useMemo(() => {
-    return cfx.Contract({
+    return CFX.Contract({
       abi: governanceAbi,
       bytecode: gobernanceBytecode,
       address: contracts.governance,

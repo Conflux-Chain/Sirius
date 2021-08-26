@@ -19,7 +19,7 @@ import DownIcon from 'images/token/down.svg';
 import UpIcon from 'images/token/up.svg';
 import FlatIcon from 'images/token/flat.svg';
 import { CopyButton } from 'app/components/CopyButton/Loadable';
-import { formatAddress } from 'utils/cfx';
+import { formatAddress } from 'utils';
 import { Tag } from '@jnoodle/antd';
 import { ProjectInfo } from '../../components/ProjectInfo';
 

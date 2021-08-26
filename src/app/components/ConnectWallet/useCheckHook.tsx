@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import { useTestnet } from 'utils/hooks/useTestnet';
 import { useNotifications } from '@cfxjs/react-ui';
-import { address as utilAddress } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
+import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { usePortal } from 'utils/hooks/usePortal';
 import XCircleFill from '@zeit-ui/react-icons/xCircleFill';
 
@@ -33,7 +33,7 @@ export const useCheckHook = function <Props>(showNotification = false) {
 
   const checkVersionValid = () => {
     if (installed && connected === 1) {
-      return utilAddress.isValidCfxAddress(accounts[0]);
+      return SDK.address.isValidCfxAddress(accounts[0]);
     }
     return true;
   };

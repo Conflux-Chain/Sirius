@@ -29,9 +29,9 @@ import { GlobalStyle } from 'styles/global-styles';
 import { TxnHistoryProvider } from 'utils/hooks/useTxnHistory';
 import { GlobalProvider, useGlobalData } from 'utils/hooks/useGlobal';
 import { reqProjectConfig } from 'utils/httpRequest';
-import { LOCALSTORAGE_KEYS_MAP, NETWORK_ID } from 'utils/constants';
+import { LOCALSTORAGE_KEYS_MAP, NETWORK_ID, CFX } from 'utils/constants';
 import { getNetwork } from 'utils';
-import { formatAddress } from '../utils/cfx';
+import { formatAddress } from '../utils';
 
 import { Report } from './containers/Report';
 import { Swap } from './containers/Swap';
@@ -142,6 +142,12 @@ export function App() {
     });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    CFX.getClientVersion().then(v => {
+      console.log('conflux-network-version:', v);
+    });
   }, []);
 
   // @todo, add loading for request frontend config info

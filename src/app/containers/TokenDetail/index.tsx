@@ -11,7 +11,7 @@ import { Transfers } from './Transfers';
 import { useTokenQuery } from '../../../utils/api';
 import { defaultTokenIcon } from '../../../constants';
 import { Tooltip } from '../../components/Tooltip/Loadable';
-import { formatAddress } from '../../../utils/cfx';
+import { formatAddress } from '../../../utils';
 import { media } from '../../../styles/media';
 import DownIcon from '../../../images/down.png';
 import { MenuWrapper } from '../AddressContractDetail/AddressDetailPage';

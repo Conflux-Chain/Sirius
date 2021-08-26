@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components/macro';
 import { media } from 'styles/media';
-import { cfx, formatAddress } from 'utils/cfx';
+import { formatAddress } from 'utils';
 import SkelontonContainer from 'app/components/SkeletonContainer';
 import { Text } from 'app/components/Text/Loadable';
 import { Search as SearchComp } from 'app/components/Search/Loadable';
@@ -15,7 +15,7 @@ import { usePortal } from 'utils/hooks/usePortal';
 import { useParams } from 'react-router-dom';
 import imgWarning from 'images/warning.png';
 import { AddressContainer } from 'app/components/AddressContainer';
-import { TxnAction, RPC_SERVER } from 'utils/constants';
+import { TxnAction, RPC_SERVER, CFX } from 'utils/constants';
 import { Remark } from 'app/components/Remark';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { reqTokenList } from 'utils/httpRequest';
@@ -67,7 +67,7 @@ export function Sponsor() {
   const { accounts } = usePortal();
 
   const getSponsorFromSDK = address => {
-    cfx.getSponsorInfo(address).then(
+    CFX.getSponsorInfo(address).then(
       resp => {
         const sponsorGasBound = resp.sponsorGasBound.toString();
         const sponsorForGas = formatAddress(resp.sponsorForGas);
@@ -88,7 +88,7 @@ export function Sponsor() {
     setLoading(true);
     // cip-37 compatible
     const address = formatAddress(_address);
-    const sponsorInfo = await cfx.provider.call('cfx_getSponsorInfo', address);
+    const sponsorInfo = await CFX.provider.call('cfx_getSponsorInfo', address);
     const { flag } = await fetchIsAppliable(address);
     setIsFlag(flag);
     if (flag) {

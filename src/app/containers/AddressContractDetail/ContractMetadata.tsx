@@ -20,7 +20,7 @@ import { formatString } from 'utils';
 import { Tooltip } from 'app/components/Tooltip/Loadable';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { AddressContainer } from 'app/components/AddressContainer';
-import { formatAddress } from 'utils/cfx';
+import { formatAddress } from 'utils';
 import { CONTRACTS } from 'utils/constants';
 import { defaultTokenIcon } from '../../../constants';
 import Edit3 from '@zeit-ui/react-icons/edit3';

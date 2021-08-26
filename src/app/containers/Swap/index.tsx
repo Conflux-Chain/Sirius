@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react';
 import BigNumber from 'bignumber.js';
 import { usePortal } from 'utils/hooks/usePortal';
 import { abi } from 'utils/contract/wcfx.json';
-import { TxnAction } from 'utils/constants';
+import { TxnAction, CFX } from 'utils/constants';
 import { isSafeNumberOrNumericStringInput, formatNumber } from 'utils';
 import { useTxnHistory } from 'utils/hooks/useTxnHistory';
 import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
-import { cfx as cfxProvider } from 'utils/cfx';
 import { Card } from 'app/components/Card/Loadable';
 import styled from 'styled-components/macro';
 import { ConnectButton } from 'app/components/ConnectWallet';
@@ -192,9 +191,9 @@ export function Swap() {
   const { addRecord } = useTxnHistory();
 
   // @ts-ignore
-  cfxProvider.provider = window.conflux;
+  CFX.provider = window.conflux;
 
-  const contract = cfxProvider.Contract({
+  const contract = CFX.Contract({
     address: contracts.wcfx,
     abi,
   });
@@ -230,7 +229,7 @@ export function Swap() {
           setWcfx(data.toString());
         });
 
-        cfxProvider.getBalance(accounts[0]).then(balance => {
+        CFX.getBalance(accounts[0]).then(balance => {
           setCfx(balance.toString());
         });
       }, 2000);

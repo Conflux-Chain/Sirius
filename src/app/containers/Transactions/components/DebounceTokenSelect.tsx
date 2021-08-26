@@ -14,7 +14,7 @@ import {
   reqTokenList,
 } from 'utils/httpRequest';
 import qs from 'query-string';
-import { formatAddress } from 'utils/cfx';
+import { formatAddress } from 'utils';
 import { Tooltip } from 'app/components/Tooltip/Loadable';
 import Info from '@zeit-ui/react-icons/info';
 

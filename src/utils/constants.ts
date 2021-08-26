@@ -1,3 +1,4 @@
+import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { isTestNetEnv } from './hooks/useTestnet';
 import lodash from 'lodash';
 
@@ -120,6 +121,11 @@ export const getCurrency = () => {
 export const getCurrencySymbol = () => {
   return CURRENCY_SYMBOLS[getCurrency()];
 };
+
+export const CFX = new SDK.Conflux({
+  url: RPC_SERVER,
+  networkId: NETWORK_ID,
+});
 
 export const CONTRACTS_NAME_LABEL = {
   'cfx:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaaa2mhjju8k': 'AdminControl',

@@ -23,7 +23,7 @@ import {
   checkBytes,
   checkCfxType,
 } from '../../../utils';
-import { formatAddress } from '../../../utils/cfx';
+import { formatAddress } from '../../../utils';
 import { TxnAction } from '../../../utils/constants';
 import { ConnectButton } from '../../components/ConnectWallet';
 import { formatType } from 'js-conflux-sdk/src/contract/abi';

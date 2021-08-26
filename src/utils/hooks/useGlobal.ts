@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { getCurrency } from 'utils/constants';
-import { Conflux } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
+import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 import { createGlobalState } from 'react-use';
 
@@ -90,7 +90,7 @@ export const useGlobalData = createGlobalState<object>({
     },
   ],
   networkId: DEFAULT_NETWORK_ID,
-  cfx: new Conflux({
+  cfx: new SDK.Conflux({
     networkId: DEFAULT_NETWORK_ID,
   }),
   contracts: {},

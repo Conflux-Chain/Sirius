@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { isContractAddress, isInnerContractAddress } from 'utils';
 import { reqContract } from 'utils/httpRequest';
-import { cfx } from 'utils/cfx';
+import { CFX } from 'utils/constants';
 import { Select } from 'app/components/Select';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
@@ -82,7 +82,7 @@ export const InputData = ({
             abi = resp['abi'];
 
             try {
-              const contract = cfx.Contract({
+              const contract = CFX.Contract({
                 abi: JSON.parse(abi),
                 address: toHash,
                 decodeByteToHex: true,

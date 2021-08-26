@@ -1,4 +1,3 @@
-import { cfxAddress, formatAddress } from './cfx';
 import BigNumber from 'bignumber.js';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -6,12 +5,42 @@ import fetch from './request';
 import { Buffer } from 'buffer';
 import { NetworksType } from './hooks/useGlobal';
 import { CONTRACTS } from 'utils/constants';
+import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 dayjs.extend(relativeTime);
 
+/**
+ * format cfx address
+ * @param address origin address
+ * @param option address format options
+ */
+export const formatAddress = (address: string, option: any = {}) => {
+  // if (!address || address.length < 40) return '';
+  // do not support private net
+  // if (address.toLowerCase().startsWith('net')) return '';
+  // conflux net must same with address prefix
+  // TODO should write contract params follow this rule?
+  // if (address.toLowerCase().startsWith('cfx:') && IS_TESTNET) return '';
+  // if (address.toLowerCase().startsWith('cfxtest:') && !IS_TESTNET) return '';
+
+  // @todo, check address is a valid conflux address
+
+  let result = '';
+  try {
+    result = address.replace(/(._):(._):(.\*)/, '$1:$3').toLowerCase();
+    return result;
+  } catch (e) {
+    console.warn('formatAddress:', address, e.message);
+    // transfer to is not valid conflux address, need show error tip
+    return address.startsWith('0x') && address.length === 42
+      ? 'invalid-' + address
+      : '';
+  }
+};
+
 export const getAddressType = (address: string): string => {
   try {
-    return cfxAddress.decodeCfxAddress(formatAddress(address)).type;
+    return SDK.address.decodeCfxAddress(formatAddress(address)).type;
   } catch (e) {
     return '';
   }

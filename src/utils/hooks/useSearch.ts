@@ -10,7 +10,7 @@ import {
   isSpecialAddress,
 } from 'utils';
 import { IS_TESTNET, CONTRACTS } from '../constants';
-import { formatAddress } from '../cfx';
+import { formatAddress } from 'utils';
 import { trackEvent } from '../ga';
 import { ScanEvent } from '../gaConstants';
 

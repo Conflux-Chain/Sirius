@@ -11,7 +11,7 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import { reqReport } from 'utils/httpRequest';
 import { useMessages } from '@cfxjs/react-ui';
 import { IS_TESTNET } from 'utils/constants';
-import { address as sdkAddress } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
+import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 const checkboxStyle = { lineHeight: '2.2857rem', width: '9.1429rem' };
 
@@ -116,7 +116,7 @@ export function Report() {
                 } else if (IS_TESTNET) {
                   if (!address.startsWith('cfxtest:')) {
                     return Promise.reject(textInvalidTestnetAddress);
-                  } else if (sdkAddress.isValidCfxAddress(address)) {
+                  } else if (SDK.address.isValidCfxAddress(address)) {
                     return Promise.resolve();
                   } else {
                     return Promise.reject(textInvalidAddress);
@@ -124,7 +124,7 @@ export function Report() {
                 } else if (!IS_TESTNET) {
                   if (!address.startsWith('cfx:')) {
                     return Promise.reject(textInvalidMainnetAddress);
-                  } else if (sdkAddress.isValidCfxAddress(address)) {
+                  } else if (SDK.address.isValidCfxAddress(address)) {
                     return Promise.resolve();
                   } else {
                     return Promise.reject(textInvalidAddress);

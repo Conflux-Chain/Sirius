@@ -25,7 +25,7 @@ import {
   isContractAddress,
   isInnerContractAddress,
 } from 'utils';
-import { formatAddress } from 'utils/cfx';
+import { formatAddress } from 'utils';
 import { cfxTokenTypes } from 'utils/constants';
 import { defaultTokenIcon } from '../../../constants';
 import { AddressContainer } from 'app/components/AddressContainer';

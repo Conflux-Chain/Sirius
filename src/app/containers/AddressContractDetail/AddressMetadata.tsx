@@ -9,8 +9,7 @@ import BigNumber from 'bignumber.js';
 import { Text } from 'app/components/Text';
 import { fromDripToCfx, getTimeByBlockInterval } from 'utils';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
-import { cfx } from '../../../utils/cfx';
-import { CONTRACTS } from 'utils/constants';
+import { CONTRACTS, CFX } from 'utils/constants';
 import { isTestNetEnv } from '../../../utils/hooks/useTestnet';
 import ViewMore from '../../../images/contract-address/viewmore.png';
 import {
@@ -39,7 +38,7 @@ function getCurrentStakingEarned(list, rate, stakedCfx) {
   return earned;
 }
 
-const stakingContract = cfx.Contract({
+const stakingContract = CFX.Contract({
   abi: stakingAbi,
   bytecode: stakingBytecode,
   address: CONTRACTS.staking,
@@ -60,7 +59,7 @@ export function AddressMetadata({ address, accountInfo }) {
   const [modalShown, setModalShown] = useState<boolean>(false);
 
   const governanceContract = useMemo(() => {
-    return cfx.Contract({
+    return CFX.Contract({
       abi: governanceAbi,
       bytecode: gobernanceBytecode,
       address: contracts.governance,
@@ -72,9 +71,9 @@ export function AddressMetadata({ address, accountInfo }) {
     // TODO batch
     if (accountInfo.address) {
       const proArr: any = [];
-      proArr.push(cfx.getDepositList(address));
-      proArr.push(cfx.getAccumulateInterestRate());
-      proArr.push(cfx.getVoteList(address));
+      proArr.push(CFX.getDepositList(address));
+      proArr.push(CFX.getAccumulateInterestRate());
+      proArr.push(CFX.getVoteList(address));
       proArr.push(governanceContract.getBlockNumber());
       Promise.all(proArr)
         .then(res => {
@@ -103,8 +102,7 @@ export function AddressMetadata({ address, accountInfo }) {
               });
 
             // get locked CFX
-            cfx
-              .InternalContract('Staking')
+            CFX.InternalContract('Staking')
               .getLockedStakingBalance(address, currentBlockN)
               .then(res => {
                 setLockedCFX(res || 0);

@@ -9,7 +9,8 @@ import BigNumber from 'bignumber.js';
 import { Text } from 'app/components/Text';
 import { fromDripToCfx, getTimeByBlockInterval } from 'utils';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
-import { cfx, stakingAddress } from '../../../utils/cfx';
+import { cfx } from '../../../utils/cfx';
+import { CONTRACTS } from 'utils/constants';
 import { isTestNetEnv } from '../../../utils/hooks/useTestnet';
 import ViewMore from '../../../images/contract-address/viewmore.png';
 import {
@@ -41,7 +42,7 @@ function getCurrentStakingEarned(list, rate, stakedCfx) {
 const stakingContract = cfx.Contract({
   abi: stakingAbi,
   bytecode: stakingBytecode,
-  address: stakingAddress,
+  address: CONTRACTS.staking,
 });
 
 export function AddressMetadata({ address, accountInfo }) {

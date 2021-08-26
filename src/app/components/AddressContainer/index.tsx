@@ -5,14 +5,14 @@ import { Link } from '../Link/Loadable';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components/macro';
-import { formatAddress, zeroAddress } from 'utils/cfx';
+import { formatAddress } from 'utils/cfx';
 import { AlertTriangle } from '@zeit-ui/react-icons';
 import ContractIcon from 'images/contract-icon.png';
 import isMeIcon from 'images/me.png';
 import InternalContractIcon from 'images/internal-contract-icon.png';
 import VerifiedIcon from 'images/verified.png';
 import { media, sizes } from 'styles/media';
-import { IS_TESTNET } from 'utils/constants';
+import { IS_TESTNET, CONTRACTS } from 'utils/constants';
 import { monospaceFont } from 'styles/variable';
 
 interface Props {
@@ -119,7 +119,7 @@ export const AddressContainer = withTranslation()(
       const cfxAddress = formatAddress(value);
 
       // zero address auto set alias
-      if (!alias && zeroAddressAutoShowAlias && cfxAddress === zeroAddress) {
+      if (!alias && zeroAddressAutoShowAlias && cfxAddress === CONTRACTS.zero) {
         alias = t(translations.general.zeroAddress);
       }
 

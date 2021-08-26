@@ -543,6 +543,7 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
             name={`minEpochNumber`}
             label={t(translations.general.advancedSearch.label.epochNumber)}
             normalize={normalizeNumericString}
+<<<<<<< HEAD
             // rules={[
             //   ({ getFieldValue }) => ({
             //     validator(_, value) {
@@ -568,6 +569,33 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
             //     },
             //   }),
             // ]}
+=======
+            rules={[
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value) {
+                    return Promise.resolve();
+                  } else {
+                    const maxEpochNumber = getFieldValue('maxEpochNumber');
+
+                    if (maxEpochNumber) {
+                      if (Number(maxEpochNumber) >= Number(value)) {
+                        return Promise.resolve();
+                      } else {
+                        return Promise.reject(
+                          new Error(
+                            'maxEpochNumber should greater than minEpochNumber',
+                          ),
+                        );
+                      }
+                    } else {
+                      return Promise.resolve();
+                    }
+                  }
+                },
+              }),
+            ]}
+>>>>>>> fix: SCAN-2436, add rule to epoch number
           >
             <Input
               placeholder={t(
@@ -584,6 +612,7 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
             label={' '}
             normalize={normalizeNumericString}
             className="advanced-from-maxEpochNumber"
+<<<<<<< HEAD
             // rules={[
             //   ({ getFieldValue }) => ({
             //     validator(_, value) {
@@ -609,6 +638,33 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
             //     },
             //   }),
             // ]}
+=======
+            rules={[
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value) {
+                    return Promise.resolve();
+                  } else {
+                    const minEpochNumber = getFieldValue('minEpochNumber');
+
+                    if (minEpochNumber) {
+                      if (Number(minEpochNumber) <= Number(value)) {
+                        return Promise.resolve();
+                      } else {
+                        return Promise.reject(
+                          new Error(
+                            'minEpochNumber should greater than maxEpochNumber',
+                          ),
+                        );
+                      }
+                    } else {
+                      return Promise.resolve();
+                    }
+                  }
+                },
+              }),
+            ]}
+>>>>>>> fix: SCAN-2436, add rule to epoch number
           >
             <Input
               placeholder={t(

@@ -18,7 +18,7 @@ import { CONST } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 import iconViewTxn from 'images/view-txn.png';
 import iconViewTxnActive from 'images/view-txn-active.svg';
-import { InternalContracts } from '../constants';
+import { CONTRACTS_NAME_LABEL } from '../constants';
 import lodash from 'lodash';
 
 const StyledHashWrapper = styled.span`
@@ -178,7 +178,7 @@ export const to = {
     let alias = '';
     let verify = false;
 
-    if (InternalContracts[value]) alias = InternalContracts[value];
+    if (CONTRACTS_NAME_LABEL[value]) alias = CONTRACTS_NAME_LABEL[value];
     else if (row.toContractInfo && row.toContractInfo.name)
       alias = row.toContractInfo.name;
     else if (row.contractInfo && row.contractInfo.name)

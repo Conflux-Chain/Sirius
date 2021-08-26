@@ -122,13 +122,17 @@ export function App() {
       // @ts-ignore
       const networkId = resp?.networkId;
 
-      if (NETWORK_ID !== networkId) {
-        localStorage.setItem(LOCALSTORAGE_KEYS_MAP.networkId, networkId);
-        window.location.reload();
-      }
-
       // @ts-ignore
       const network = getNetwork(resp?.networks, networkId);
+
+      if (NETWORK_ID !== networkId) {
+        localStorage.setItem(LOCALSTORAGE_KEYS_MAP.networkId, networkId);
+        localStorage.setItem(
+          LOCALSTORAGE_KEYS_MAP.contracts,
+          JSON.stringify(network.contracts),
+        );
+        window.location.reload();
+      }
 
       setGlobalData({
         ...globalData,

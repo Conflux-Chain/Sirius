@@ -266,6 +266,8 @@ export const reqProjectConfig = (extra?: object) => {
             sponsorWhitelistControl:
               'cfx:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaaegg2r16ar', // 0x0888000000000000000000000000000000000001
             staking: 'cfx:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaajrwuc9jnb', // 0x0888000000000000000000000000000000000002
+
+            // zero address
             zero: 'cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2', // 0x0000000000000000000000000000000000000000
           },
         },
@@ -285,6 +287,8 @@ export const reqProjectConfig = (extra?: object) => {
             sponsorWhitelistControl:
               'cfxtest:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaaeprn7v0eh', // 0x0888000000000000000000000000000000000001
             staking: 'cfxtest:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaajh3dw3ctn', // 0x0888000000000000000000000000000000000002
+
+            // zero address
             zero: 'cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw', // 0x0000000000000000000000000000000000000000
           },
         },

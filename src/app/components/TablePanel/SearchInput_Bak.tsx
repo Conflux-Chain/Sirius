@@ -18,8 +18,7 @@ import { isAddress, isHash, tranferToLowerCase } from 'utils';
 // import { useBalance } from '@cfxjs/react-hooks';
 import 'utils/lazyJSSDK';
 import { Search as SearchComp } from '../Search/Loadable';
-import { cfxTokenTypes } from 'utils/constants';
-import { zeroAddress } from 'utils/cfx';
+import { cfxTokenTypes, CONTRACTS } from 'utils/constants';
 import { ActionButton } from '../ActionButton';
 import { useClickAway } from '@cfxjs/react-ui';
 import { media, useBreakpoint } from '../../../styles/media';
@@ -83,9 +82,9 @@ export const TableSearchInput = ({
     }
     // deal with zero address
     if (value === '0x0') {
-      setValue(zeroAddress);
-      if (zeroAddress !== lFilter) {
-        onFilter(zeroAddress);
+      setValue(CONTRACTS.zero);
+      if (CONTRACTS.zero !== lFilter) {
+        onFilter(CONTRACTS.zero);
       }
       return;
     }

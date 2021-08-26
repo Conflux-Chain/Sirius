@@ -1,16 +1,11 @@
-import {
-  adminControlAddress,
-  sponsorWhitelistControlAddress,
-  stakingAddress,
-  zeroAddress,
-} from './cfx';
+import { cfxAddress, formatAddress } from './cfx';
 import BigNumber from 'bignumber.js';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import fetch from './request';
 import { Buffer } from 'buffer';
-import { cfxAddress, formatAddress } from './cfx';
 import { NetworksType } from './hooks/useGlobal';
+import { CONTRACTS } from 'utils/constants';
 
 dayjs.extend(relativeTime);
 
@@ -27,7 +22,7 @@ export const isAddress = (str: string) => {
 };
 
 export function isZeroAddress(str: string) {
-  return formatAddress(str) === zeroAddress;
+  return formatAddress(str) === CONTRACTS.zero;
 }
 
 export function isAccountAddress(str: string) {
@@ -40,9 +35,9 @@ export function isContractAddress(str: string) {
 
 export function isInnerContractAddress(str: string) {
   return [
-    adminControlAddress,
-    sponsorWhitelistControlAddress,
-    stakingAddress,
+    CONTRACTS.adminControl,
+    CONTRACTS.sponsorWhitelistControl,
+    CONTRACTS.staking,
   ].includes(formatAddress(str));
 }
 
@@ -51,9 +46,9 @@ export function isSpecialAddress(str: string) {
   return (
     getAddressType(str) === 'builtin' &&
     ![
-      adminControlAddress,
-      sponsorWhitelistControlAddress,
-      stakingAddress,
+      CONTRACTS.adminControl,
+      CONTRACTS.sponsorWhitelistControl,
+      CONTRACTS.staking,
     ].includes(formatAddress(str))
   );
 }

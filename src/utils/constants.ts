@@ -1,6 +1,18 @@
 import { isTestNetEnv } from './hooks/useTestnet';
 import lodash from 'lodash';
 
+interface ContractsType {
+  faucet: string;
+  faucetLast: string;
+  contractManager: string;
+  wcfx: string;
+  governance: string;
+  adminControl: string;
+  sponsorWhitelistControl: string;
+  staking: string;
+  zero: string;
+}
+
 export const RPC_SERVER = window.location.origin + '/rpcv2'; // cip-37
 
 export const IS_TESTNET = isTestNetEnv();
@@ -20,6 +32,7 @@ enum DEFAULT_NETWORK_IDS {
  */
 export enum LOCALSTORAGE_KEYS_MAP {
   networkId = 'CONFLUX_SCAN_NETWORK_ID',
+  contracts = 'CONFLUX_SCAN_CONTRACTS',
   currency = 'CONFLUX_SCAN_LOCALSTORAGE_KEY_CURRENCY',
   ageFormat = 'CONFLUX_SCAN_TABLE_AGE_FORMAT',
   cookieAgreed = 'CONFLUXSCAN_COOKIE_AGREED',
@@ -38,6 +51,32 @@ export const NETWORK_ID = (() => {
     networkId = Number(cacheNetworkId);
   }
   return networkId;
+})();
+
+export const CONTRACTS: ContractsType = (() => {
+  // initial value used for ts check rule
+  let contracts = {
+    faucet: '',
+    faucetLast: '',
+    contractManager: '',
+    wcfx: '',
+    governance: '',
+    adminControl: '',
+    sponsorWhitelistControl: '',
+    staking: '',
+    zero: '',
+  };
+
+  try {
+    const cachedContracts = JSON.parse(
+      localStorage.getItem(LOCALSTORAGE_KEYS_MAP.contracts) as string,
+    );
+    if (Object.prototype.toString.call(contracts) === '[object Object]') {
+      contracts = cachedContracts;
+    }
+  } catch (e) {}
+
+  return contracts;
 })();
 
 export const cfxTokenTypes = {
@@ -82,12 +121,12 @@ export const getCurrencySymbol = () => {
   return CURRENCY_SYMBOLS[getCurrency()];
 };
 
-export const InternalContracts = {
+export const CONTRACTS_NAME_LABEL = {
   'cfx:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaaa2mhjju8k': 'AdminControl',
-  'CFX:TYPE.BUILTIN:AAEJUAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2MHJJU8K': 'AdminControl',
+  // 'CFX:TYPE.BUILTIN:AAEJUAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2MHJJU8K': 'AdminControl',
   'cfx:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaaegg2r16ar': 'SponsorWhitelistControl',
-  'CFX:TYPE.BUILTIN:AAEJUAAAAAAAAAAAAAAAAAAAAAAAAAAAAEGG2R16AR':
-    'SponsorWhitelistControl',
+  // 'CFX:TYPE.BUILTIN:AAEJUAAAAAAAAAAAAAAAAAAAAAAAAAAAAEGG2R16AR':
+  //   'SponsorWhitelistControl',
   'cfx:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaajrwuc9jnb': 'Staking',
-  'CFX:TYPE.BUILTIN:AAEJUAAAAAAAAAAAAAAAAAAAAAAAAAAAAJRWUC9JNB': 'Staking',
+  // 'CFX:TYPE.BUILTIN:AAEJUAAAAAAAAAAAAAAAAAAAAAAAAAAAAJRWUC9JNB': 'Staking',
 };

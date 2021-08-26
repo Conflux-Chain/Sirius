@@ -127,12 +127,9 @@ export const CFX = new SDK.Conflux({
   networkId: NETWORK_ID,
 });
 
+// @todo, add all contract name label
 export const CONTRACTS_NAME_LABEL = {
   'cfx:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaaa2mhjju8k': 'AdminControl',
-  // 'CFX:TYPE.BUILTIN:AAEJUAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2MHJJU8K': 'AdminControl',
   'cfx:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaaegg2r16ar': 'SponsorWhitelistControl',
-  // 'CFX:TYPE.BUILTIN:AAEJUAAAAAAAAAAAAAAAAAAAAAAAAAAAAEGG2R16AR':
-  //   'SponsorWhitelistControl',
   'cfx:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaajrwuc9jnb': 'Staking',
-  // 'CFX:TYPE.BUILTIN:AAEJUAAAAAAAAAAAAAAAAAAAAAAAAAAAAJRWUC9JNB': 'Staking',
 };

@@ -15,23 +15,24 @@ dayjs.extend(relativeTime);
  * @param option address format options
  */
 export const formatAddress = (address: string, option: any = {}) => {
-  // if (!address || address.length < 40) return '';
-  // do not support private net
-  // if (address.toLowerCase().startsWith('net')) return '';
-  // conflux net must same with address prefix
-  // TODO should write contract params follow this rule?
-  // if (address.toLowerCase().startsWith('cfx:') && IS_TESTNET) return '';
-  // if (address.toLowerCase().startsWith('cfxtest:') && !IS_TESTNET) return '';
-
-  // @todo, check address is a valid conflux address
-
-  let result = '';
   try {
-    result = address.replace(/(._):(._):(.\*)/, '$1:$3').toLowerCase();
-    return result;
+    let formattedAddress = address;
+
+    // compatibility with verbose address, will replace with simply address later
+    if (address.slice(0, 3) === 'CFX') {
+      formattedAddress = address
+        .replace(/(._):(._):(.\*)/, '$1:$3')
+        .toLowerCase();
+    }
+
+    if (SDK.address.isValidCfxAddress(formattedAddress)) {
+      return formattedAddress;
+    } else {
+      throw new Error('invalid address');
+    }
   } catch (e) {
     console.warn('formatAddress:', address, e.message);
-    // transfer to is not valid conflux address, need show error tip
+    // transfer to is not valid conflux address, need show error tip, special for ETH address ?
     return address.startsWith('0x') && address.length === 42
       ? 'invalid-' + address
       : '';

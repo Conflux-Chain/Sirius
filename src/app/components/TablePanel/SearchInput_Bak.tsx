@@ -15,7 +15,6 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { useMessages } from '@cfxjs/react-ui';
 import { isAddress, isHash, tranferToLowerCase } from 'utils';
-// import { useBalance } from '@cfxjs/react-hooks';
 import 'utils/lazyJSSDK';
 import { Search as SearchComp } from '../Search/Loadable';
 import { cfxTokenTypes, CONTRACTS } from 'utils/constants';
@@ -65,16 +64,6 @@ export const TableSearchInput = ({
   useEffect(() => {
     setValue(lFilter);
   }, [lFilter]);
-
-  // let addr: null | string = null;
-  // if (isAddress(lFilter)) {
-  //   addr = lFilter;
-  // }
-
-  // const tokenAddrs = [tokenAddress];
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  // const [, [tokenBalanceRaw]] = useBalance(addr, tokenAddrs);
-  // const tokenBalance = formatBalance(tokenBalanceRaw || '0', decimals);
 
   const onEnterPress = () => {
     if (value === '') {

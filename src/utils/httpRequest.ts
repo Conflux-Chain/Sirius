@@ -296,12 +296,25 @@ export const reqProjectConfig = (extra?: object) => {
           name: 'Conflux PoS',
           id: 8888,
           contracts: {
-            faucet: '',
-            faucetLast: '',
+            faucet: 'cfxtest:acbkxbtruayaf2he1899e1533x4wg2a07e8d57x477', // 0x8fc71dbd0e0b3be34fbee62796b65e09c8fd19b8
+            faucetLast: 'cfxtest:acgzz08m8z2ywkeda0jzu52fgaz9u95y1yv785yanx', // 0x8097e818c2c2c1524c41f0fcbda143520046d117
+            contractManager:
+              'cfxtest:aca514ancmbdu9u349u4m7d0u4jjdv83py3muarnv1', // 0x81bbe80b1282387e19d7e1a57476869081c7d965
+            wcfx: 'cfxtest:achs3nehae0j6ksvy1bhrffsh1rtfrw1f6w1kzv46t', // 0x8eecac87012c8e25d1a5c27694ae3ddaf2b6572f, note: not same as mainnet WCFX ?
+            governance: 'cfxtest:achvp1x7t17uf2wdad3pdvd0ujz4vfndv2duapegub', // 0x8f3f525d17159351e4b34fe766ef139470da0b02
+
+            // inner address
+            adminControl: 'cfxtest:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaaawby2s44d', // 0x0888000000000000000000000000000000000000
+            sponsorWhitelistControl:
+              'cfxtest:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaaeprn7v0eh', // 0x0888000000000000000000000000000000000001
+            staking: 'cfxtest:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaajh3dw3ctn', // 0x0888000000000000000000000000000000000002
+
+            // zero address
+            zero: 'cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw', // 0x0000000000000000000000000000000000000000
           },
         },
       ],
-      networkId: 1029,
+      networkId: 8888,
     });
   });
 };

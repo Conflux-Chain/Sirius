@@ -3,7 +3,6 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "@cfxjs/react-hooks": "2.0.0",
     "@cfxjs/react-ui": "2.0.0-alpha.15",
     "@jnoodle/antd": "1.0.4",
     "@testing-library/jest-dom": "5.1.1",

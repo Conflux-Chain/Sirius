@@ -16,13 +16,12 @@ dayjs.extend(relativeTime);
  */
 export const formatAddress = (address: string) => {
   try {
+    const reg = /(.*):(.*):(.*)/;
     let formattedAddress = address;
 
     // compatibility with verbose address, will replace with simply address later
-    if (typeof address === 'string' && address.slice(0, 3) === 'CFX') {
-      formattedAddress = address
-        .replace(/(.*):(.*):(.*)/, '$1:$3')
-        .toLowerCase();
+    if (typeof address === 'string' && reg.test(address)) {
+      formattedAddress = address.replace(reg, '$1:$3').toLowerCase();
     }
 
     if (SDK.address.isValidCfxAddress(formattedAddress)) {

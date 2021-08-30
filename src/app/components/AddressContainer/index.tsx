@@ -5,7 +5,11 @@ import { Link } from '../Link/Loadable';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components/macro';
-import { formatAddress } from 'utils';
+import {
+  formatAddress,
+  isContractAddress,
+  isInnerContractAddress,
+} from 'utils';
 import { AlertTriangle } from '@zeit-ui/react-icons';
 import ContractIcon from 'images/contract-icon.png';
 import isMeIcon from 'images/me.png';
@@ -187,15 +191,9 @@ export const AddressContainer = withTranslation()(
         });
       }
 
-      // cip-37 use ac/aa/aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaa for speeding up
-      const isContract = cfxAddress.indexOf(':ac') > -1;
-      // TODO support new internal contract
-      const isInternalContract =
-        cfxAddress.indexOf(':aaejuaaaaaaaaaaaaaaaaaaaaaaaaaa') > -1;
-
-      if (isContract || isInternalContract) {
+      if (isContractAddress(cfxAddress) || isInnerContractAddress(cfxAddress)) {
         const typeText = t(
-          isInternalContract
+          isInnerContractAddress(cfxAddress)
             ? translations.general.internalContract
             : verify
             ? translations.general.verifiedContract
@@ -216,7 +214,7 @@ export const AddressContainer = withTranslation()(
             >
               <Text span hoverValue={typeText}>
                 <ImgWrapper>
-                  {isInternalContract ? (
+                  {isInnerContractAddress(cfxAddress) ? (
                     <img src={InternalContractIcon} alt={typeText} />
                   ) : (
                     <>

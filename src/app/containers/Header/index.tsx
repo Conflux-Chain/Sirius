@@ -15,7 +15,7 @@ import { media, useBreakpoint } from 'styles/media';
 import { Nav } from 'app/components/Nav';
 import { genParseLinkFn, HeaderLinks } from './HeaderLink';
 import { Check } from '@zeit-ui/react-icons';
-import { useTestnet, toTestnet, toMainnet } from 'utils/hooks/useTestnet';
+import { toTestnet, toMainnet } from 'utils/hooks/useTestnet';
 import { translations } from 'locales/i18n';
 import { useLocation } from 'react-router';
 import imgConfiPlanet from 'images/confi-planet.png';
@@ -30,6 +30,7 @@ import FAQNotification from '../../../images/notice/FAQNotification.png';
 import updateNotification from '../../../images/notice/updateNotification.png';
 import { useGlobalData, GlobalDataType } from 'utils/hooks/useGlobal';
 import { getNetwork } from 'utils';
+import { IS_TESTNET } from 'utils/constants';
 
 export const Header = memo(() => {
   const [globalData, setGlobalData] = useGlobalData();
@@ -39,7 +40,6 @@ export const Header = memo(() => {
   const zh = '中文';
   const en = 'EN';
   const iszh = i18n.language.includes('zh');
-  const isTestnet = useTestnet();
 
   const location = useLocation();
   // const contractMatched =
@@ -306,10 +306,10 @@ export const Header = memo(() => {
           name: ScanEvent.menu.action.stakingAndGovernance,
           afterClick: menuClick,
           href: iszh
-            ? isTestnet
+            ? IS_TESTNET
               ? 'https://votetest.confluxnetwork.org/zh/'
               : 'https://governance.confluxnetwork.org/zh/'
-            : isTestnet
+            : IS_TESTNET
             ? 'https://votetest.confluxnetwork.org/en/'
             : 'https://governance.confluxnetwork.org/en/',
         },
@@ -585,17 +585,17 @@ export const Header = memo(() => {
       <ImgNotice />
       <div
         className={`content ${
-          (isTestnet ? CurrentTestnetNotice.hot : CurrentTethysNotice.hot)
+          (IS_TESTNET ? CurrentTestnetNotice.hot : CurrentTethysNotice.hot)
             ? 'hot'
             : ''
         }`}
       >
-        {isTestnet
+        {IS_TESTNET
           ? CurrentTestnetNotice[iszh ? 'zh' : 'en']
           : CurrentTethysNotice[iszh ? 'zh' : 'en']}
       </div>
       <Link
-        href={getLatestNoticeLink(iszh ? 'zh' : 'en', isTestnet)}
+        href={getLatestNoticeLink(iszh ? 'zh' : 'en', IS_TESTNET)}
         className="more"
       >
         {t(translations.header.more)}

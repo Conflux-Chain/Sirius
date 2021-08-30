@@ -22,7 +22,7 @@ import { HelmetProvider } from 'react-helmet-async';
 
 // Initialize languages
 import './locales/i18n';
-import { isTestNetEnv } from './utils/hooks/useTestnet';
+import { IS_TESTNET } from 'utils/constants';
 
 const MOUNT_NODE = document.getElementById('root') as HTMLElement;
 
@@ -63,7 +63,7 @@ const brand = `
 └─┘└─┘┘└┘└  ┴─┘└─┘┴ └─  └─┘└─┘┴ ┴┘└┘
  `;
 
-if (isTestNetEnv())
+if (IS_TESTNET)
   console.log &&
     console.log(
       `%c 

@@ -4,7 +4,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import fetch from './request';
 import { Buffer } from 'buffer';
 import { NetworksType } from './hooks/useGlobal';
-import { CONTRACTS } from 'utils/constants';
+import { CONTRACTS, IS_PRE_RELEASE } from 'utils/constants';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 dayjs.extend(relativeTime);
@@ -730,4 +730,22 @@ export const getNetwork = (networks: Array<NetworksType>, id: number) => {
   }
 
   return network;
+};
+
+// @todo, add private chain domain
+export const gotoNetwork = (networkId: number): void => {
+  if (IS_PRE_RELEASE) {
+    // only for confluxscan pre release env
+    if (networkId === 1) {
+      window.location.assign('//testnet-scantest.confluxnetwork.org');
+    } else if (networkId === 1029) {
+      window.location.assign('//scantest.confluxnetwork.org');
+    }
+  } else {
+    if (networkId === 1) {
+      window.location.assign('//testnet.confluxscan.io');
+    } else if (networkId === 1029) {
+      window.location.assign('//confluxscan.io');
+    }
+  }
 };

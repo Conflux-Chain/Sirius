@@ -11,8 +11,8 @@ import { media } from 'styles/media';
 import { translations } from 'locales/i18n';
 import imgNetworkError from 'images/changeNetwork.png';
 import { useParams } from 'react-router-dom';
+import { gotoNetwork } from 'utils';
 import { IS_TESTNET } from 'utils/constants';
-import { toMainnet, toTestnet } from '../../../utils/hooks/useTestnet';
 
 interface RouteParams {
   network: string;
@@ -40,7 +40,7 @@ export function NetworkError() {
           href="#"
           onClick={e => {
             e.preventDefault();
-            IS_TESTNET ? toMainnet() : toTestnet();
+            IS_TESTNET ? gotoNetwork(1029) : gotoNetwork(1);
           }}
         >
           {t(translations.networkError.btn, { network })}

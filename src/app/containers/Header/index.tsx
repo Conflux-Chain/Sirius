@@ -15,7 +15,6 @@ import { media, useBreakpoint } from 'styles/media';
 import { Nav } from 'app/components/Nav';
 import { genParseLinkFn, HeaderLinks } from './HeaderLink';
 import { Check } from '@zeit-ui/react-icons';
-import { toTestnet, toMainnet } from 'utils/hooks/useTestnet';
 import { translations } from 'locales/i18n';
 import { useLocation } from 'react-router';
 import imgConfiPlanet from 'images/confi-planet.png';
@@ -29,7 +28,7 @@ import announcementNotification from '../../../images/notice/announcementNotific
 import FAQNotification from '../../../images/notice/FAQNotification.png';
 import updateNotification from '../../../images/notice/updateNotification.png';
 import { useGlobalData, GlobalDataType } from 'utils/hooks/useGlobal';
-import { getNetwork } from 'utils';
+import { getNetwork, gotoNetwork } from 'utils';
 import { IS_TESTNET } from 'utils/constants';
 
 export const Header = memo(() => {
@@ -484,12 +483,12 @@ export const Header = memo(() => {
             });
 
             if (n.id === 1) {
-              toTestnet();
+              gotoNetwork(1);
             } else if (n.id === 1029) {
-              toMainnet();
+              gotoNetwork(1029);
             } else {
               // @todo, should jump to custom network hostname
-              // toMainnet();
+              // gotoNetwork(1029);
             }
           },
           isMatchedFn: () => isMatch,

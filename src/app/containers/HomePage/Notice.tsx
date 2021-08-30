@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { media } from 'styles/media';
 import clsx from 'clsx';
-import { useTestnet } from 'utils/hooks/useTestnet';
+import { IS_TESTNET } from 'utils/constants';
 import { Link } from 'app/components/Link/Loadable';
 import announcementNotification from 'images/notice/announcementNotification.png';
 import FAQNotification from 'images/notice/FAQNotification.png';
@@ -31,13 +31,13 @@ const NoticeItem = ({ children }) => (
   </StyledNoticeItemWrapper>
 );
 
-export function getLatestNoticeLink(lang, isTestnet): string {
+export function getLatestNoticeLink(lang, IS_TESTNET): string {
   if (lang === 'en') {
-    return isTestnet
+    return IS_TESTNET
       ? 'https://confluxscansupportcenter.zendesk.com/hc/en-us/articles/4406027326235-Aug-16-2021-Aug-30-2021'
       : 'https://confluxscansupportcenter.zendesk.com/hc/en-us/articles/4406027326235-Aug-16-2021-Aug-30-2021';
   } else {
-    return isTestnet
+    return IS_TESTNET
       ? 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/articles/4406027326235-2021-8-16-2021-8-30'
       : 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/articles/4406027326235-2021-8-16-2021-8-30';
   }
@@ -45,7 +45,6 @@ export function getLatestNoticeLink(lang, isTestnet): string {
 
 export function Notice() {
   const { t, i18n } = useTranslation();
-  const isTestnet = useTestnet();
   const lang = i18n.language.indexOf('en') > -1 ? 'en' : 'zh';
   const notices: React.ReactNode[] = [];
 
@@ -53,10 +52,10 @@ export function Notice() {
   // const loadingText = t(translations.general.loading);
   // const version = (v && v?.replace('conflux-rust-', '')) || loadingText;
   // const notices: React.ReactNode[] = [];
-  // const transationsNotice = isTestnet
+  // const transationsNotice = IS_TESTNET
   //   ? translations.notice.testnet
   //   : translations.notice.mainnet;
-  // const transationsNoticeLink = isTestnet
+  // const transationsNoticeLink = IS_TESTNET
   //   ? translations.notice.testnetLink
   //   : translations.notice.link;
   // const isEn = i18n.language.startsWith('en');
@@ -84,18 +83,18 @@ export function Notice() {
     <NoticeItem key="latest">
       <div
         className={`content ${
-          (isTestnet ? CurrentTestnetNotice.hot : CurrentTethysNotice.hot)
+          (IS_TESTNET ? CurrentTestnetNotice.hot : CurrentTethysNotice.hot)
             ? 'hot'
             : ''
         }`}
       >
-        {isTestnet ? CurrentTestnetNotice[lang] : CurrentTethysNotice[lang]}
+        {IS_TESTNET ? CurrentTestnetNotice[lang] : CurrentTethysNotice[lang]}
       </div>
     </NoticeItem>,
   );
   notices.push(
     <NoticeItem key="more">
-      <Link href={getLatestNoticeLink(lang, isTestnet)} className="more">
+      <Link href={getLatestNoticeLink(lang, IS_TESTNET)} className="more">
         {t(translations.header.more)}
       </Link>
     </NoticeItem>,

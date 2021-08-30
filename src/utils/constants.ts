@@ -1,5 +1,4 @@
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
-import { isTestNetEnv } from './hooks/useTestnet';
 import lodash from 'lodash';
 
 interface ContractsType {
@@ -16,7 +15,9 @@ interface ContractsType {
 
 export const RPC_SERVER = window.location.origin + '/rpcv2'; // cip-37
 
-export const IS_TESTNET = isTestNetEnv();
+export const IS_TESTNET =
+  process.env.REACT_APP_TestNet === 'true' ||
+  window.location.hostname.includes('testnet');
 
 enum DEFAULT_NETWORK_IDS {
   mainnet = 1029,

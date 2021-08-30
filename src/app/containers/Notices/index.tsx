@@ -7,17 +7,16 @@ import { translations } from 'locales/i18n';
 import { PageHeader } from 'app/components/PageHeader';
 import { Timeline } from '@jnoodle/antd';
 import { TethysNotices, TestnetNotices } from './notices';
-import { useTestnet } from '../../../utils/hooks/useTestnet';
+import { IS_TESTNET } from '../../../utils/constants';
 import { media } from '../../../styles/media';
 import { useClientVersion } from '../../../utils/api';
 import { monospaceFont } from '../../../styles/variable';
 
 export function Notices() {
   const { t, i18n } = useTranslation();
-  const isTestnet = useTestnet();
   let v = useClientVersion();
   const notices = (
-    (isTestnet ? TestnetNotices : TethysNotices) || []
+    (IS_TESTNET ? TestnetNotices : TethysNotices) || []
   ).sort((a, b) => b.date.localeCompare(a.date));
   const lang = i18n.language.indexOf('en') > -1 ? 'en' : 'zh';
   const loadingText = t(translations.general.loading);

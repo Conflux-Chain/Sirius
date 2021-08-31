@@ -1,7 +1,5 @@
 import React, { useContext } from 'react';
-import { getCurrency } from 'utils/constants';
-import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
-
+import { getCurrency, DEFAULT_NETWORK_IDS } from 'utils/constants';
 import { createGlobalState } from 'react-use';
 
 const defatultGlobalData = {
@@ -64,10 +62,7 @@ export interface GlobalDataType {
   networks: Array<NetworksType>;
   networkId: number;
   contracts: ContractsType;
-  cfx: any;
 }
-
-const DEFAULT_NETWORK_ID = 1029; // mainnet
 
 // @todo, if no default global data, homepage should loading until getProjectConfig return resp
 export const useGlobalData = createGlobalState<object>({
@@ -75,23 +70,14 @@ export const useGlobalData = createGlobalState<object>({
     {
       name: 'Conflux Tethys',
       id: 1029,
-      contracts: {
-        faucet: '',
-        faucetLast: '',
-      },
+      contracts: {},
     },
     {
       name: 'Conflux Testnet',
       id: 1,
-      contracts: {
-        faucet: '',
-        faucetLast: '',
-      },
+      contracts: {},
     },
   ],
-  networkId: DEFAULT_NETWORK_ID,
-  cfx: new SDK.Conflux({
-    networkId: DEFAULT_NETWORK_ID,
-  }),
+  networkId: DEFAULT_NETWORK_IDS.mainnet,
   contracts: {},
 });

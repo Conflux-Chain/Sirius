@@ -16,7 +16,7 @@ import isMeIcon from 'images/me.png';
 import InternalContractIcon from 'images/internal-contract-icon.png';
 import VerifiedIcon from 'images/verified.png';
 import { media, sizes } from 'styles/media';
-import { IS_TESTNET, CONTRACTS } from 'utils/constants';
+import { CONTRACTS, NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 import { monospaceFont } from 'styles/variable';
 
 interface Props {
@@ -35,8 +35,10 @@ interface Props {
 }
 
 const defaultPCMaxWidth = 138;
-const defaultMobileMaxWidth = IS_TESTNET ? 140 : 106;
-const defaultPCSuffixAddressSize = IS_TESTNET ? 4 : 8;
+const defaultMobileMaxWidth =
+  NETWORK_TYPE === NETWORK_TYPES.mainnet ? 106 : 140;
+const defaultPCSuffixAddressSize =
+  NETWORK_TYPE === NETWORK_TYPES.mainnet ? 8 : 4;
 const defaultMobileSuffixAddressSize = 4;
 
 // ≈ 2.5 ms

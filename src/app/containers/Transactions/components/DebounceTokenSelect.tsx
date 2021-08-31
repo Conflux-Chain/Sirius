@@ -4,7 +4,7 @@ import { Select, Spin, Tag, Image } from '@jnoodle/antd';
 import { SelectProps } from '@jnoodle/antd/es/select';
 import debounce from 'lodash/debounce';
 import styled, { createGlobalStyle } from 'styled-components/macro';
-import { defaultTokenIcon } from '../../../../constants';
+import { defaultTokenIcon } from 'utils/constants';
 import { Text } from 'app/components/Text/Loadable';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';

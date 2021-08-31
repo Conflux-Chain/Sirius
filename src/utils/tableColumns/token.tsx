@@ -6,7 +6,7 @@ import { Link } from 'app/components/Link/Loadable';
 import { Text } from 'app/components/Text/Loadable';
 import queryString from 'query-string';
 import { media } from 'styles/media';
-import { defaultTokenIcon } from '../../constants';
+import { defaultTokenIcon } from 'utils/constants';
 import { formatBalance, formatNumber, formatString } from 'utils';
 import imgArrow from 'images/token/arrow.svg';
 import imgOut from 'images/token/out.svg';

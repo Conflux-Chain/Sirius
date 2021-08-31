@@ -7,7 +7,7 @@ import { ChevronUp } from '@zeit-ui/react-icons';
 import { useClickAway, useToggle } from 'react-use';
 import { media } from 'styles/media';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
-import { defaultTokenIcon } from '../../../constants';
+import { defaultTokenIcon } from 'utils/constants';
 import { Link } from 'react-router-dom';
 import { Text } from '../../components/Text';
 import { formatBalance, formatNumber } from 'utils/index';

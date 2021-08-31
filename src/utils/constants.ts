@@ -24,7 +24,7 @@ export const IS_TESTNET =
   process.env.REACT_APP_TestNet === 'true' ||
   window.location.hostname.includes('testnet');
 
-enum DEFAULT_NETWORK_IDS {
+export enum DEFAULT_NETWORK_IDS {
   mainnet = 1029,
   testnet = 1,
 }
@@ -58,6 +58,23 @@ export const NETWORK_ID = (() => {
     networkId = Number(cacheNetworkId);
   }
   return networkId;
+})();
+
+// network type is come from backend network id, now there are three state, can be extended with special case
+export enum NETWORK_TYPES {
+  mainnet = 'MAINNET',
+  testnet = 'TESTNET',
+  privatenet = 'PRIVATENET',
+}
+
+export const NETWORK_TYPE = (() => {
+  if (NETWORK_ID === 1) {
+    return NETWORK_TYPES.testnet;
+  } else if (NETWORK_ID === 1029) {
+    return NETWORK_TYPES.mainnet;
+  } else {
+    return NETWORK_TYPES.privatenet;
+  }
 })();
 
 export const CONTRACTS: ContractsType = (() => {

@@ -15,7 +15,7 @@ import { translations } from 'locales/i18n';
 import { Language } from './Language';
 // import { Currency } from './Currency';
 import { ScanEvent } from 'utils/gaConstants';
-import { useTestnet } from 'utils/hooks/useTestnet';
+import { IS_TESTNET } from 'utils/constants';
 
 import iconTwitter from 'images/footer/twitter.svg';
 import iconTelegram from 'images/footer/telegram.svg';
@@ -34,7 +34,6 @@ import iconWechatQrcode from 'images/footer/wechat-qrcode.png';
 export function Footer() {
   const { t, i18n } = useTranslation();
   const iszh = i18n.language.includes('zh');
-  const isTestnet = useTestnet();
 
   const left = [<TextLogo key="logo" />];
 
@@ -311,7 +310,7 @@ export function Footer() {
       <Link
         className="footer-link"
         href={
-          isTestnet
+          IS_TESTNET
             ? 'https://api-testnet.confluxscan.net/doc'
             : 'https://api.confluxscan.net/doc'
         }

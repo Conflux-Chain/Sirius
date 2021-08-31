@@ -408,7 +408,7 @@ export const Header = memo(() => {
               ],
               name: ScanEvent.menu.action.developerAPI,
               afterClick: menuClick,
-              href: isTestnet
+              href: IS_TESTNET
                 ? 'https://api-testnet.confluxscan.net/doc'
                 : 'https://api.confluxscan.net/doc',
             },

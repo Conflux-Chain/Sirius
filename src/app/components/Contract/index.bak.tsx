@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import { media } from '../../../styles/media';
 import { Input, useMessages } from '@cfxjs/react-ui';
-import { defaultContractIcon, defaultTokenIcon } from '../../../constants';
+import { defaultContractIcon, defaultTokenIcon } from 'utils/constants';
 import {
   byteToKb,
   isContractAddress,

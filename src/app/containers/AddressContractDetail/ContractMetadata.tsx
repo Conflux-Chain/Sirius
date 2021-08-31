@@ -22,7 +22,7 @@ import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { AddressContainer } from 'app/components/AddressContainer';
 import { formatAddress } from 'utils';
 import { CONTRACTS } from 'utils/constants';
-import { defaultTokenIcon } from '../../../constants';
+import { defaultTokenIcon } from 'utils/constants';
 import Edit3 from '@zeit-ui/react-icons/edit3';
 
 const Link = ({ to, children }) => <RouterLink to={to}>{children}</RouterLink>;

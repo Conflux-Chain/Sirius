@@ -27,7 +27,7 @@ import {
 } from 'utils';
 import { formatAddress } from 'utils';
 import { cfxTokenTypes } from 'utils/constants';
-import { defaultTokenIcon } from '../../../constants';
+import { defaultTokenIcon } from 'utils/constants';
 import { AddressContainer } from 'app/components/AddressContainer';
 import clsx from 'clsx';
 import BigNumber from 'bignumber.js';

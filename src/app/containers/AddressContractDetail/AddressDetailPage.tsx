@@ -33,6 +33,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import DownIcon from '../../../images/down.png';
 import styled from 'styled-components';
 import { media } from '../../../styles/media';
+import { formatAddress } from '../../../utils/cfx';
 
 interface RouteParams {
   address: string;
@@ -96,6 +97,7 @@ export const AddressDetailPage = memo(() => {
               </DropdownWrapper>
               {/*<Report address={address} />*/}
             </div>
+            [{formatAddress(address, { hex: true })}]
           </HeadAddressLine>
         </Head>
         <Top>

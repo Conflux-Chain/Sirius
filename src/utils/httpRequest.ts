@@ -284,88 +284,92 @@ export const reqNFTInfo = (extra?: object) => {
 
 export const reqProjectConfig = (extra?: object) => {
   return new Promise((resolve, reject) => {
-    resolve({
-      networks: [
-        {
-          name: 'Conflux Tethys',
-          id: 1029,
-          contracts: {
-            faucet: 'cfx:acbkxbtruayaf2he1899e1533x4wg2a07eyjjrzu31', // 0x829985ed802802e0e4bfbff25f79ccf5236016e9
-            faucetLast: 'cfx:acgzz08m8z2ywkeda0jzu52fgaz9u95y1y50rnwmt3', // 0x8d5adbcaf5714924830591586f05302bf87f74bd
-            contractManager: 'cfx:aca514ancmbdu9u349u4m7d0u4jjdv83pyxbdunbz7', // 0x81bbe80b1282387e19d7e1a57476869081c7d965
-            wcfx: 'cfx:acg158kvr8zanb1bs048ryb6rtrhr283ma70vz70tx', // 0x8d7df9316faa0586e175b5e6d03c6bda76e3d950
-            governance: 'cfx:achvp1x7t17uf2wdad3pdvd0ujz4vfndv2k5x6cpyn', // 0x8f165e7d7dfb02e24300f2c1c476822ba895638e
+    setTimeout(() => {
+      resolve({
+        networks: [
+          {
+            name: 'Conflux Tethys',
+            id: 1029,
+            contracts: {
+              faucet: 'cfx:acbkxbtruayaf2he1899e1533x4wg2a07eyjjrzu31', // 0x829985ed802802e0e4bfbff25f79ccf5236016e9
+              faucetLast: 'cfx:acgzz08m8z2ywkeda0jzu52fgaz9u95y1y50rnwmt3', // 0x8d5adbcaf5714924830591586f05302bf87f74bd
+              contractManager: 'cfx:aca514ancmbdu9u349u4m7d0u4jjdv83pyxbdunbz7', // 0x81bbe80b1282387e19d7e1a57476869081c7d965
+              wcfx: 'cfx:acg158kvr8zanb1bs048ryb6rtrhr283ma70vz70tx', // 0x8d7df9316faa0586e175b5e6d03c6bda76e3d950
+              governance: 'cfx:achvp1x7t17uf2wdad3pdvd0ujz4vfndv2k5x6cpyn', // 0x8f165e7d7dfb02e24300f2c1c476822ba895638e
 
-            // inner address
-            adminControl: 'cfx:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaaa2mhjju8k', // 0x0888000000000000000000000000000000000000
-            sponsorWhitelistControl:
-              'cfx:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaaegg2r16ar', // 0x0888000000000000000000000000000000000001
-            staking: 'cfx:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaajrwuc9jnb', // 0x0888000000000000000000000000000000000002
+              // inner address
+              adminControl: 'cfx:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaaa2mhjju8k', // 0x0888000000000000000000000000000000000000
+              sponsorWhitelistControl:
+                'cfx:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaaegg2r16ar', // 0x0888000000000000000000000000000000000001
+              staking: 'cfx:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaajrwuc9jnb', // 0x0888000000000000000000000000000000000002
 
-            // zero address
-            zero: 'cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2', // 0x0000000000000000000000000000000000000000
+              // zero address
+              zero: 'cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2', // 0x0000000000000000000000000000000000000000
+            },
           },
-        },
-        {
-          name: 'Conflux Testnet',
-          id: 1,
-          contracts: {
-            faucet: 'cfxtest:acbkxbtruayaf2he1899e1533x4wg2a07e8d57x477', // 0x8fc71dbd0e0b3be34fbee62796b65e09c8fd19b8
-            faucetLast: 'cfxtest:acgzz08m8z2ywkeda0jzu52fgaz9u95y1yv785yanx', // 0x8097e818c2c2c1524c41f0fcbda143520046d117
-            contractManager:
-              'cfxtest:aca514ancmbdu9u349u4m7d0u4jjdv83py3muarnv1', // 0x81bbe80b1282387e19d7e1a57476869081c7d965
-            wcfx: 'cfxtest:achs3nehae0j6ksvy1bhrffsh1rtfrw1f6w1kzv46t', // 0x8eecac87012c8e25d1a5c27694ae3ddaf2b6572f, note: not same as mainnet WCFX ?
-            governance: 'cfxtest:achvp1x7t17uf2wdad3pdvd0ujz4vfndv2duapegub', // 0x8f3f525d17159351e4b34fe766ef139470da0b02
+          {
+            name: 'Conflux Testnet',
+            id: 1,
+            contracts: {
+              faucet: 'cfxtest:acbkxbtruayaf2he1899e1533x4wg2a07e8d57x477', // 0x8fc71dbd0e0b3be34fbee62796b65e09c8fd19b8
+              faucetLast: 'cfxtest:acgzz08m8z2ywkeda0jzu52fgaz9u95y1yv785yanx', // 0x8097e818c2c2c1524c41f0fcbda143520046d117
+              contractManager:
+                'cfxtest:aca514ancmbdu9u349u4m7d0u4jjdv83py3muarnv1', // 0x81bbe80b1282387e19d7e1a57476869081c7d965
+              wcfx: 'cfxtest:achs3nehae0j6ksvy1bhrffsh1rtfrw1f6w1kzv46t', // 0x8eecac87012c8e25d1a5c27694ae3ddaf2b6572f, note: not same as mainnet WCFX ?
+              governance: 'cfxtest:achvp1x7t17uf2wdad3pdvd0ujz4vfndv2duapegub', // 0x8f3f525d17159351e4b34fe766ef139470da0b02
 
-            // inner address
-            adminControl: 'cfxtest:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaaawby2s44d', // 0x0888000000000000000000000000000000000000
-            sponsorWhitelistControl:
-              'cfxtest:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaaeprn7v0eh', // 0x0888000000000000000000000000000000000001
-            staking: 'cfxtest:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaajh3dw3ctn', // 0x0888000000000000000000000000000000000002
+              // inner address
+              adminControl:
+                'cfxtest:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaaawby2s44d', // 0x0888000000000000000000000000000000000000
+              sponsorWhitelistControl:
+                'cfxtest:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaaeprn7v0eh', // 0x0888000000000000000000000000000000000001
+              staking: 'cfxtest:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaajh3dw3ctn', // 0x0888000000000000000000000000000000000002
 
-            // zero address
-            zero: 'cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw', // 0x0000000000000000000000000000000000000000
+              // zero address
+              zero: 'cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw', // 0x0000000000000000000000000000000000000000
+            },
           },
-        },
-        {
-          name: 'Conflux PoS',
-          id: 8888,
-          contracts: {
-            faucet: 'net8888:ach6shr7b2fx124t15xctfz0n2e6v9j31ayt6833gh', // 0x8fc71dbd0e0b3be34fbee62796b65e09c8fd19b8
-            faucetLast: 'net8888:acakt4a22nbpcywpjh2t3trbjrkaav0vc6y4mnur6b', // 0x8097e818c2c2c1524c41f0fcbda143520046d117
-            contractManager:
-              'net8888:aca514ancmbdu9u349u4m7d0u4jjdv83pyk5mtkf5u', // 0x81bbe80b1282387e19d7e1a57476869081c7d965
-            wcfx: 'net8888:achs3nehae0j6ksvy1bhrffsh1rtfrw1f6cgx4zy0j', // 0x8eecac87012c8e25d1a5c27694ae3ddaf2b6572f, note: not same as mainnet WCFX ?
-            governance: 'net8888:achx8yw7c6m3gyte0rh8s31tcsmhb0unajzt74tk4s', // 0x8f3f525d17159351e4b34fe766ef139470da0b02
+          {
+            name: 'Conflux PoS',
+            id: 8888,
+            contracts: {
+              faucet: 'net8888:ach6shr7b2fx124t15xctfz0n2e6v9j31ayt6833gh', // 0x8fc71dbd0e0b3be34fbee62796b65e09c8fd19b8
+              faucetLast: 'net8888:acakt4a22nbpcywpjh2t3trbjrkaav0vc6y4mnur6b', // 0x8097e818c2c2c1524c41f0fcbda143520046d117
+              contractManager:
+                'net8888:aca514ancmbdu9u349u4m7d0u4jjdv83pyk5mtkf5u', // 0x81bbe80b1282387e19d7e1a57476869081c7d965
+              wcfx: 'net8888:achs3nehae0j6ksvy1bhrffsh1rtfrw1f6cgx4zy0j', // 0x8eecac87012c8e25d1a5c27694ae3ddaf2b6572f, note: not same as mainnet WCFX ?
+              governance: 'net8888:achx8yw7c6m3gyte0rh8s31tcsmhb0unajzt74tk4s', // 0x8f3f525d17159351e4b34fe766ef139470da0b02
 
-            // inner address
-            adminControl: 'net8888:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaaacus1myue', // 0x0888000000000000000000000000000000000000
-            sponsorWhitelistControl:
-              'net8888:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaae66vwz2sa', // 0x0888000000000000000000000000000000000001
-            staking: 'net8888:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaaj1j377pfp', // 0x0888000000000000000000000000000000000002
+              // inner address
+              adminControl:
+                'net8888:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaaacus1myue', // 0x0888000000000000000000000000000000000000
+              sponsorWhitelistControl:
+                'net8888:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaae66vwz2sa', // 0x0888000000000000000000000000000000000001
+              staking: 'net8888:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaaj1j377pfp', // 0x0888000000000000000000000000000000000002
 
-            // zero address
-            zero: 'net8888:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaapyp8kpez', // 0x0000000000000000000000000000000000000000
+              // zero address
+              zero: 'net8888:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaapyp8kpez', // 0x0000000000000000000000000000000000000000
+            },
           },
+        ],
+        networkId: 8888,
+        contracts: {
+          faucet: 'net8888:ach6shr7b2fx124t15xctfz0n2e6v9j31ayt6833gh', // 0x8fc71dbd0e0b3be34fbee62796b65e09c8fd19b8
+          faucetLast: 'net8888:acakt4a22nbpcywpjh2t3trbjrkaav0vc6y4mnur6b', // 0x8097e818c2c2c1524c41f0fcbda143520046d117
+          contractManager: 'net8888:aca514ancmbdu9u349u4m7d0u4jjdv83pyk5mtkf5u', // 0x81bbe80b1282387e19d7e1a57476869081c7d965
+          wcfx: 'net8888:achs3nehae0j6ksvy1bhrffsh1rtfrw1f6cgx4zy0j', // 0x8eecac87012c8e25d1a5c27694ae3ddaf2b6572f, note: not same as mainnet WCFX ?
+          governance: 'net8888:achx8yw7c6m3gyte0rh8s31tcsmhb0unajzt74tk4s', // 0x8f3f525d17159351e4b34fe766ef139470da0b02
+
+          // inner address
+          adminControl: 'net8888:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaaacus1myue', // 0x0888000000000000000000000000000000000000
+          sponsorWhitelistControl:
+            'net8888:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaae66vwz2sa', // 0x0888000000000000000000000000000000000001
+          staking: 'net8888:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaaj1j377pfp', // 0x0888000000000000000000000000000000000002
+
+          // zero address
+          zero: 'net8888:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaapyp8kpez', // 0x0000000000000000000000000000000000000000
         },
-      ],
-      networkId: 8888,
-      contracts: {
-        faucet: 'net8888:ach6shr7b2fx124t15xctfz0n2e6v9j31ayt6833gh', // 0x8fc71dbd0e0b3be34fbee62796b65e09c8fd19b8
-        faucetLast: 'net8888:acakt4a22nbpcywpjh2t3trbjrkaav0vc6y4mnur6b', // 0x8097e818c2c2c1524c41f0fcbda143520046d117
-        contractManager: 'net8888:aca514ancmbdu9u349u4m7d0u4jjdv83pyk5mtkf5u', // 0x81bbe80b1282387e19d7e1a57476869081c7d965
-        wcfx: 'net8888:achs3nehae0j6ksvy1bhrffsh1rtfrw1f6cgx4zy0j', // 0x8eecac87012c8e25d1a5c27694ae3ddaf2b6572f, note: not same as mainnet WCFX ?
-        governance: 'net8888:achx8yw7c6m3gyte0rh8s31tcsmhb0unajzt74tk4s', // 0x8f3f525d17159351e4b34fe766ef139470da0b02
-
-        // inner address
-        adminControl: 'net8888:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaaacus1myue', // 0x0888000000000000000000000000000000000000
-        sponsorWhitelistControl:
-          'net8888:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaae66vwz2sa', // 0x0888000000000000000000000000000000000001
-        staking: 'net8888:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaaj1j377pfp', // 0x0888000000000000000000000000000000000002
-
-        // zero address
-        zero: 'net8888:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaapyp8kpez', // 0x0000000000000000000000000000000000000000
-      },
-    });
+      });
+    }, 2000);
   });
 };

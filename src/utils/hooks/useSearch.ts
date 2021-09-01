@@ -9,8 +9,8 @@ import {
   tranferToLowerCase,
   isSpecialAddress,
 } from 'utils';
-import { zeroAddress } from '../constants';
-import { formatAddress, isConfluxTestNet } from '../cfx';
+import { IS_TESTNET, CONTRACTS } from '../constants';
+import { formatAddress } from 'utils';
 import { trackEvent } from '../ga';
 import { ScanEvent } from '../gaConstants';
 
@@ -32,9 +32,9 @@ export const useSearch = (value?: string) => {
 
     // zero address support
     if (innerValue === '0x0') {
-      history.push(`/address/${zeroAddress}`);
+      history.push(`/address/${CONTRACTS.zero}`);
       // update searchbar value from 0x0 to zeroAddress
-      setValue && setValue(zeroAddress);
+      setValue && setValue(CONTRACTS.zero);
       trackEvent({
         category: ScanEvent.search.category,
         action: ScanEvent.search.action.zeroAddress,
@@ -44,8 +44,8 @@ export const useSearch = (value?: string) => {
     }
 
     if (
-      (innerValue.toLowerCase().startsWith('cfx:') && isConfluxTestNet) ||
-      (innerValue.toLowerCase().startsWith('cfxtest:') && !isConfluxTestNet)
+      (innerValue.toLowerCase().startsWith('cfx:') && IS_TESTNET) ||
+      (innerValue.toLowerCase().startsWith('cfxtest:') && !IS_TESTNET)
     ) {
       history.push('/networkError');
       return;

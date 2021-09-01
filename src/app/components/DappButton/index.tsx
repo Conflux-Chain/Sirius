@@ -6,7 +6,7 @@ import styled from 'styled-components/macro';
 import { translations } from 'locales/i18n';
 import imgSuccess from 'images/success.png';
 import { ButtonProps } from '@cfxjs/react-ui/dist/button/button';
-import { formatAddress } from 'utils/cfx';
+import { formatAddress } from 'utils';
 import { TxnAction } from 'utils/constants';
 import { AddressContainer } from '../AddressContainer';
 import { useTxnHistory } from 'utils/hooks/useTxnHistory';

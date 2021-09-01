@@ -11,12 +11,8 @@ import { media } from 'styles/media';
 import { translations } from 'locales/i18n';
 import imgNetworkError from 'images/changeNetwork.png';
 import { useParams } from 'react-router-dom';
-import { isConfluxTestNet } from '../../../utils/cfx';
-import {
-  toMainnet,
-  toTestnet,
-  useTestnet,
-} from '../../../utils/hooks/useTestnet';
+import { gotoNetwork } from 'utils';
+import { IS_TESTNET } from 'utils/constants';
 
 interface RouteParams {
   network: string;
@@ -25,8 +21,7 @@ interface RouteParams {
 export function NetworkError() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { t } = useTranslation();
-  const isTestnet = useTestnet();
-  const { network = isConfluxTestNet ? 'Tethys' : 'Testnet' } = useParams<
+  const { network = IS_TESTNET ? 'Tethys' : 'Testnet' } = useParams<
     RouteParams
   >();
 
@@ -45,7 +40,7 @@ export function NetworkError() {
           href="#"
           onClick={e => {
             e.preventDefault();
-            isTestnet ? toMainnet() : toTestnet();
+            IS_TESTNET ? gotoNetwork(1029) : gotoNetwork(1);
           }}
         >
           {t(translations.networkError.btn, { network })}

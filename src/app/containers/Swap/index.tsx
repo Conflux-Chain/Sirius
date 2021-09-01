@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import BigNumber from 'bignumber.js';
-import { Conflux } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { usePortal } from 'utils/hooks/usePortal';
 import { abi } from 'utils/contract/wcfx.json';
-import { ADDRESS_WCFX, NETWORK_ID } from 'utils/constants';
+import { TxnAction, CFX } from 'utils/constants';
 import { isSafeNumberOrNumericStringInput, formatNumber } from 'utils';
+import { useTxnHistory } from 'utils/hooks/useTxnHistory';
+import { trackEvent } from 'utils/ga';
+import { ScanEvent } from 'utils/gaConstants';
 import { Card } from 'app/components/Card/Loadable';
 import styled from 'styled-components/macro';
 import { ConnectButton } from 'app/components/ConnectWallet';
@@ -13,12 +15,9 @@ import { Input, Button } from '@cfxjs/react-ui';
 import { Tooltip } from 'app/components/Tooltip';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { useTxnHistory } from 'utils/hooks/useTxnHistory';
-import { TxnAction } from 'utils/constants';
-import { trackEvent } from 'utils/ga';
-import { ScanEvent } from 'utils/gaConstants';
 import { media } from 'styles/media';
 import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
+import { useGlobalData, GlobalDataType } from 'utils/hooks/useGlobal';
 
 import imgSwapArrowDown from 'images/swap-arrow-down.png';
 import imgInfo from 'images/info.svg';
@@ -26,17 +25,6 @@ import imgInfo from 'images/info.svg';
 // token decimal
 const MAX_DECIMALS = 18;
 const MAX_FORMAT_DECIMALS = 6;
-
-const cfxProvider = new Conflux({
-  networkId: NETWORK_ID,
-});
-// @ts-ignore
-cfxProvider.provider = window.conflux;
-
-const contract = cfxProvider.Contract({
-  address: ADDRESS_WCFX,
-  abi,
-});
 
 interface SwapItemProps {
   type: string;
@@ -197,8 +185,19 @@ const StyledSwapItemWrapper = styled.div`
 `;
 
 export function Swap() {
+  const [globalData] = useGlobalData();
+  const { contracts } = globalData as GlobalDataType;
   const { t } = useTranslation();
   const { addRecord } = useTxnHistory();
+
+  // @ts-ignore
+  CFX.provider = window.conflux;
+
+  const contract = CFX.Contract({
+    address: contracts.wcfx,
+    abi,
+  });
+
   const [cfx, setCfx] = useState('0');
   const [wcfx, setWcfx] = useState('0');
   const [submitLoading, setSubmitLoading] = useState(false);
@@ -230,7 +229,7 @@ export function Swap() {
           setWcfx(data.toString());
         });
 
-        cfxProvider.getBalance(accounts[0]).then(balance => {
+        CFX.getBalance(accounts[0]).then(balance => {
           setCfx(balance.toString());
         });
       }, 2000);
@@ -239,7 +238,7 @@ export function Swap() {
         clearInterval(interval);
       };
     }
-  }, [installed, accounts, connected]);
+  }, [installed, accounts, connected, contract]);
 
   const handleInputChange = value => {
     setFromToken({

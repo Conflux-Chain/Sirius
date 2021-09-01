@@ -15,7 +15,6 @@ import { media, useBreakpoint } from 'styles/media';
 import { Nav } from 'app/components/Nav';
 import { genParseLinkFn, HeaderLinks } from './HeaderLink';
 import { Check } from '@zeit-ui/react-icons';
-import { useTestnet, toTestnet, toMainnet } from 'utils/hooks/useTestnet';
 import { translations } from 'locales/i18n';
 import { useLocation } from 'react-router';
 import imgConfiPlanet from 'images/confi-planet.png';
@@ -28,13 +27,18 @@ import { getLatestNoticeLink } from '../HomePage/Notice';
 import announcementNotification from '../../../images/notice/announcementNotification.png';
 import FAQNotification from '../../../images/notice/FAQNotification.png';
 import updateNotification from '../../../images/notice/updateNotification.png';
+import { useGlobalData, GlobalDataType } from 'utils/hooks/useGlobal';
+import { getNetwork, gotoNetwork } from 'utils';
+import { IS_TESTNET } from 'utils/constants';
 
 export const Header = memo(() => {
+  const [globalData, setGlobalData] = useGlobalData();
+  const { networkId, networks } = globalData as GlobalDataType;
+
   const { t, i18n } = useTranslation();
   const zh = '中文';
   const en = 'EN';
   const iszh = i18n.language.includes('zh');
-  const isTestnet = useTestnet();
 
   const location = useLocation();
   // const contractMatched =
@@ -301,10 +305,10 @@ export const Header = memo(() => {
           name: ScanEvent.menu.action.stakingAndGovernance,
           afterClick: menuClick,
           href: iszh
-            ? isTestnet
+            ? IS_TESTNET
               ? 'https://votetest.confluxnetwork.org/zh/'
               : 'https://governance.confluxnetwork.org/zh/'
-            : isTestnet
+            : IS_TESTNET
             ? 'https://votetest.confluxnetwork.org/en/'
             : 'https://governance.confluxnetwork.org/en/',
         },
@@ -404,7 +408,7 @@ export const Header = memo(() => {
               ],
               name: ScanEvent.menu.action.developerAPI,
               afterClick: menuClick,
-              href: isTestnet
+              href: IS_TESTNET
                 ? 'https://api-testnet.confluxscan.net/doc'
                 : 'https://api.confluxscan.net/doc',
             },
@@ -458,45 +462,38 @@ export const Header = memo(() => {
     {
       // switch network
       name: 'switch-network',
-      title: isTestnet
-        ? t(translations.header.testnet)
-        : t(translations.header.oceanus),
-      children: [
-        {
-          // Tethys
-          title: [
-            t(translations.header.oceanus),
-            !isTestnet && <Check size={18} key="check" />,
-          ],
+      title: getNetwork(networks, networkId).name,
+      children: networks.map(n => {
+        const isMatch = n.id === networkId;
+
+        return {
+          title: [n.name, isMatch && <Check size={18} key="check" />],
           onClick: () => {
             trackEvent({
               category: ScanEvent.preference.category,
               action: ScanEvent.preference.action.changeNet,
-              label: 'Tethys',
+              label: n.name,
             });
+
             menuClick();
-            return isTestnet && toMainnet();
-          },
-          isMatchedFn: () => !isTestnet,
-        },
-        {
-          // testnet
-          title: [
-            t(translations.header.testnet),
-            isTestnet && <Check size={18} key="check" />,
-          ],
-          onClick: () => {
-            trackEvent({
-              category: ScanEvent.preference.category,
-              action: ScanEvent.preference.action.changeNet,
-              label: 'Testnet',
+
+            setGlobalData({
+              ...globalData,
+              networkId: n.id,
             });
-            menuClick();
-            return !isTestnet && toTestnet();
+
+            if (n.id === 1) {
+              gotoNetwork(1);
+            } else if (n.id === 1029) {
+              gotoNetwork(1029);
+            } else {
+              // @todo, should jump to custom network hostname
+              // gotoNetwork(1029);
+            }
           },
-          isMatchedFn: () => isTestnet,
-        },
-      ],
+          isMatchedFn: () => isMatch,
+        };
+      }),
     },
   ];
 
@@ -587,17 +584,17 @@ export const Header = memo(() => {
       <ImgNotice />
       <div
         className={`content ${
-          (isTestnet ? CurrentTestnetNotice.hot : CurrentTethysNotice.hot)
+          (IS_TESTNET ? CurrentTestnetNotice.hot : CurrentTethysNotice.hot)
             ? 'hot'
             : ''
         }`}
       >
-        {isTestnet
+        {IS_TESTNET
           ? CurrentTestnetNotice[iszh ? 'zh' : 'en']
           : CurrentTethysNotice[iszh ? 'zh' : 'en']}
       </div>
       <Link
-        href={getLatestNoticeLink(iszh ? 'zh' : 'en', isTestnet)}
+        href={getLatestNoticeLink(iszh ? 'zh' : 'en', IS_TESTNET)}
         className="more"
       >
         {t(translations.header.more)}

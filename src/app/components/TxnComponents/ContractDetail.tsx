@@ -1,8 +1,8 @@
 import React from 'react';
-import { defaultTokenIcon } from '../../../constants';
+import { defaultTokenIcon } from 'utils/constants';
 import ContractIcon from '../../../images/contract-icon.png';
 import { Link } from 'app/components/Link';
-import { formatAddress } from 'utils/cfx';
+import { formatAddress } from 'utils';
 
 interface Props {
   info: {

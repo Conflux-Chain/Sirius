@@ -6,18 +6,18 @@ import { Link } from 'app/components/Link/Loadable';
 import { Text } from 'app/components/Text/Loadable';
 import queryString from 'query-string';
 import { media } from 'styles/media';
-import { defaultTokenIcon } from '../../constants';
+import { defaultTokenIcon } from 'utils/constants';
 import { formatBalance, formatNumber, formatString } from 'utils';
 import imgArrow from 'images/token/arrow.svg';
 import imgOut from 'images/token/out.svg';
 import imgIn from 'images/token/in.svg';
 import imgInfo from 'images/info.svg';
-import { AddressContainer } from 'app/components/AddressContainer';
-import { formatAddress } from '../cfx';
+import { AddressContainer } from '../../app/components/AddressContainer';
+import { formatAddress } from 'utils';
 import { ColumnAge, ContentWrapper } from './utils';
 import BigNumber from 'bignumber.js';
-import { cfxTokenTypes, InternalContracts } from '../constants';
-import { Tooltip } from 'app/components/Tooltip/Loadable';
+import { cfxTokenTypes, CONTRACTS_NAME_LABEL } from '../constants';
+import { Tooltip } from '../../app/components/Tooltip/Loadable';
 import { TxnHashRenderComponent } from './transaction';
 import { getCurrencySymbol } from 'utils/constants';
 import { NFTPreview } from 'app/components/NFTPreview/Loadable';
@@ -104,13 +104,13 @@ export const renderAddress = (
   let alias = '';
 
   if (type === 'from') {
-    if (InternalContracts[value]) alias = InternalContracts[value];
+    if (CONTRACTS_NAME_LABEL[value]) alias = CONTRACTS_NAME_LABEL[value];
     else if (row.fromContractInfo && row.fromContractInfo.name)
       alias = row.fromContractInfo.name;
     else if (row.fromTokenInfo && row.fromTokenInfo.name)
       alias = `${row.fromTokenInfo.name}`;
   } else if (type === 'to') {
-    if (InternalContracts[value]) alias = InternalContracts[value];
+    if (CONTRACTS_NAME_LABEL[value]) alias = CONTRACTS_NAME_LABEL[value];
     else if (row.toContractInfo && row.toContractInfo.name)
       alias = row.toContractInfo.name;
     else if (row.toTokenInfo && row.toTokenInfo.name)
@@ -153,18 +153,6 @@ export const renderAddress = (
     </>
   );
 };
-
-export const number = (page, pageSize) => ({
-  width: 1,
-  title: (
-    <Translation>{t => t(translations.general.table.token.number)}</Translation>
-  ),
-  dataIndex: 'epochNumber',
-  key: 'epochNumber',
-  render: (value, row, index) => {
-    return (page - 1) * pageSize + index + 1;
-  },
-});
 
 export const token = {
   width: 1,

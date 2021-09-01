@@ -5,7 +5,7 @@ import styled from 'styled-components/macro';
 import { formatBalance } from 'utils';
 import { Link } from 'app/components/Link';
 import { cfxTokenTypes } from 'utils/constants';
-import { defaultTokenIcon } from '../../../constants';
+import { defaultTokenIcon } from 'utils/constants';
 import { AddressContainer } from 'app/components/AddressContainer';
 import { renderAddress } from 'utils/tableColumns/token';
 import clsx from 'clsx';

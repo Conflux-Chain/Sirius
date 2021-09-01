@@ -1,46 +1,89 @@
-import {
-  addressTypeCommon,
-  addressTypeContract,
-  addressTypeInternalContract,
-  adminControlAddress,
-  sponsorWhitelistControlAddress,
-  stakingAddress,
-  zeroAddress,
-} from './constants';
 import BigNumber from 'bignumber.js';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import fetch from './request';
 import { Buffer } from 'buffer';
-import { cfxAddress, formatAddress } from './cfx';
+import { NetworksType } from './hooks/useGlobal';
+import { CONTRACTS, IS_PRE_RELEASE } from 'utils/constants';
+import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 dayjs.extend(relativeTime);
 
-export const innerContract = [
-  formatAddress('0x0888000000000000000000000000000000000000'),
-  formatAddress('0x0888000000000000000000000000000000000001'),
-  formatAddress('0x0888000000000000000000000000000000000002'),
-];
-
-export const getAddressType = address => {
+/**
+ * format cfx address
+ * @param address origin address
+ * @param option address format options
+ */
+export const formatAddress = (address: string) => {
   try {
-    const type = cfxAddress.decodeCfxAddress(
-      formatAddress(address, { hex: false }),
-    ).type;
-    switch (type) {
-      case 'user':
-        return addressTypeCommon;
-      case 'contract':
-        return addressTypeContract;
-      case 'builtin':
-        return addressTypeInternalContract;
-      default:
-        return null;
+    const reg = /(.*):(.*):(.*)/;
+    let formattedAddress = address;
+
+    // compatibility with verbose address, will replace with simply address later
+    if (typeof address === 'string' && reg.test(address)) {
+      formattedAddress = address.replace(reg, '$1:$3').toLowerCase();
+    }
+
+    if (SDK.address.isValidCfxAddress(formattedAddress)) {
+      return formattedAddress;
+    } else {
+      throw new Error('invalid address');
     }
   } catch (e) {
-    return null;
+    console.log('formatAddress:', address, e.message);
+
+    // transfer to is not valid conflux address, need show error tip, special for ETH address ?
+    return typeof address === 'string' &&
+      address.startsWith('0x') &&
+      address.length === 42
+      ? 'invalid-' + address
+      : '';
   }
 };
+
+export const getAddressType = (address: string): string => {
+  try {
+    return SDK.address.decodeCfxAddress(formatAddress(address)).type;
+  } catch (e) {
+    return '';
+  }
+};
+
+export const isAddress = (str: string) => {
+  return formatAddress(str) !== '';
+};
+
+export function isZeroAddress(str: string) {
+  return formatAddress(str) === CONTRACTS.zero;
+}
+
+export function isAccountAddress(str: string) {
+  return getAddressType(str) === 'user' || isZeroAddress(str);
+}
+
+export function isContractAddress(str: string) {
+  return getAddressType(str) === 'contract';
+}
+
+export function isInnerContractAddress(str: string) {
+  return [
+    CONTRACTS.adminControl,
+    CONTRACTS.sponsorWhitelistControl,
+    CONTRACTS.staking,
+  ].includes(formatAddress(str));
+}
+
+// address start with 0x0, not valid internal contract, but fullnode support
+export function isSpecialAddress(str: string) {
+  return (
+    getAddressType(str) === 'builtin' &&
+    ![
+      CONTRACTS.adminControl,
+      CONTRACTS.sponsorWhitelistControl,
+      CONTRACTS.staking,
+    ].includes(formatAddress(str))
+  );
+}
 
 /**
  * format util fn
@@ -438,47 +481,6 @@ export const selectText = (element: HTMLElement) => {
   }
 };
 
-export const isAddress = (str: string) => {
-  return formatAddress(str) !== '';
-  // return cfxAddress.isValidCfxAddress(str); // only support new address
-  // return /^0x[0-9a-fA-F]{40}$/.test(str);
-};
-
-export function isZeroAddress(str: string) {
-  return formatAddress(str) === zeroAddress;
-}
-
-export function isAccountAddress(str: string) {
-  return getAddressType(str) === addressTypeCommon || isZeroAddress(str);
-}
-
-export function isContractAddress(str: string) {
-  return getAddressType(str) === addressTypeContract;
-}
-
-export function isInnerContractAddress(str: string) {
-  return (
-    getAddressType(str) === addressTypeInternalContract &&
-    [
-      adminControlAddress,
-      sponsorWhitelistControlAddress,
-      stakingAddress,
-    ].includes(formatAddress(str, { hex: false }))
-  );
-}
-
-// address start with 0x0, not valid internal contract, but fullnode support
-export function isSpecialAddress(str: string) {
-  return (
-    getAddressType(str) === addressTypeInternalContract &&
-    ![
-      adminControlAddress,
-      sponsorWhitelistControlAddress,
-      stakingAddress,
-    ].includes(formatAddress(str, { hex: false }))
-  );
-}
-
 export const isHash = (str: string) => {
   return /^0x[0-9a-fA-F]{64}$/.test(str);
 };
@@ -715,4 +717,35 @@ export const getInitialDate = (minTimestamp, maxTimestamp) => {
     dMinT: disabledDateD1,
     dMaxT: disabledDateD2,
   };
+};
+
+export const getNetwork = (networks: Array<NetworksType>, id: number) => {
+  let matchs = networks.filter(n => n.id === id);
+  let network: NetworksType;
+
+  if (matchs) {
+    network = matchs[0];
+  } else {
+    network = networks[0];
+  }
+
+  return network;
+};
+
+// @todo, add private chain domain
+export const gotoNetwork = (networkId: number): void => {
+  if (IS_PRE_RELEASE) {
+    // only for confluxscan pre release env
+    if (networkId === 1) {
+      window.location.assign('//testnet-scantest.confluxnetwork.org');
+    } else if (networkId === 1029) {
+      window.location.assign('//scantest.confluxnetwork.org');
+    }
+  } else {
+    if (networkId === 1) {
+      window.location.assign('//testnet.confluxscan.io');
+    } else if (networkId === 1029) {
+      window.location.assign('//confluxscan.io');
+    }
+  }
 };

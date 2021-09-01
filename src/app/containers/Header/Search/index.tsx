@@ -13,8 +13,8 @@ import { useSearch } from 'utils/hooks/useSearch';
 import { AutoComplete, Input, SelectProps, Image } from '@jnoodle/antd';
 import { SearchIcon } from '../../../components/SearchIcon/Loadable';
 import ClearIcon from '../../../../images/clear.png';
-import { defaultTokenIcon } from '../../../../constants';
-import { formatAddress } from '../../../../utils/cfx';
+import { defaultTokenIcon } from 'utils/constants';
+import { formatAddress } from 'utils';
 import _ from 'lodash';
 import fetch from 'utils/request';
 import {

@@ -31,6 +31,7 @@ import {
   isContractAddress,
   isInnerContractAddress,
   isSpecialAddress,
+  toHex,
 } from 'utils';
 import ContractIcon from '../../../images/contract-icon.png';
 import warningInfo from '../../../images/info-white.svg';
@@ -40,7 +41,6 @@ import DownIcon from '../../../images/down.png';
 import { Menu } from '@jnoodle/antd';
 import { DropdownWrapper, MenuWrapper } from './AddressDetailPage';
 import { tokenTypeTag } from '../TokenDetail/Basic';
-import { formatAddress } from '../../../utils/cfx';
 
 interface RouteParams {
   address: string;
@@ -210,7 +210,7 @@ export const ContractDetailPage = memo(() => {
                 </WarningInfoWrapper>
               ) : null}
             </div>
-            [{formatAddress(address, { hex: true })}]
+            [{toHex(address)}]
           </HeadAddressLine>
         </Head>
         <Top key="top">

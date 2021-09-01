@@ -40,7 +40,9 @@ export const formatAddress = (address: string) => {
       : '';
   }
 };
-
+export const toHex = (address: string): string => {
+  return SDK.format.hexAddress(address);
+};
 export const getAddressType = (address: string): string => {
   try {
     return SDK.address.decodeCfxAddress(formatAddress(address)).type;

@@ -26,14 +26,13 @@ import {
   Middle,
 } from './layouts';
 import { AddressMetadata, Table } from './Loadable';
-import { isZeroAddress } from '../../../utils';
+import { isZeroAddress, toHex } from '../../../utils';
 import { useAccount } from '../../../utils/api';
 import { Dropdown, Menu } from '@jnoodle/antd';
 import { Link as RouterLink } from 'react-router-dom';
 import DownIcon from '../../../images/down.png';
 import styled from 'styled-components';
 import { media } from '../../../styles/media';
-import { formatAddress } from '../../../utils/cfx';
 
 interface RouteParams {
   address: string;
@@ -97,7 +96,7 @@ export const AddressDetailPage = memo(() => {
               </DropdownWrapper>
               {/*<Report address={address} />*/}
             </div>
-            [{formatAddress(address, { hex: true })}]
+            [{toHex(address)}]
           </HeadAddressLine>
         </Head>
         <Top>

@@ -31,7 +31,11 @@ import { usePortal } from 'utils/hooks/usePortal';
 import { DappButton } from '../DappButton/Loadable';
 import { packContractAndToken } from '../../../utils/contractManagerTool';
 import { formatAddress } from '../../../utils';
-import { TxnAction, IS_TESTNET } from '../../../utils/constants';
+import {
+  TxnAction,
+  NETWORK_TYPE,
+  NETWORK_TYPES,
+} from '../../../utils/constants';
 import { PageHeader } from '../PageHeader/Loadable';
 import { CheckCircleIcon } from 'app/containers/AddressContractDetail/ContractContent';
 import { Text } from 'app/components/Text/Loadable';
@@ -408,7 +412,13 @@ export const ContractOrTokenInfo = ({
                   defaultValue={addressVal}
                   onChange={addressInputChanger}
                   readOnly={true}
-                  placeholder={IS_TESTNET ? 'cfxtest:...' : 'cfx:...'}
+                  placeholder={
+                    NETWORK_TYPE === NETWORK_TYPES.testnet
+                      ? 'cfxtest:...'
+                      : NETWORK_TYPE === NETWORK_TYPES.mainnet
+                      ? 'cfx:...'
+                      : ''
+                  }
                   onBlur={addressOnBlur}
                 />
                 {isVerified ? (

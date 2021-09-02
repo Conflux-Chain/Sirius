@@ -106,15 +106,11 @@ export function isZeroAddress(address: string): boolean {
 }
 
 export function isAccountAddress(address: string): boolean {
-  const addressInfo = getAddressInfo(address);
-  return (
-    (!!addressInfo && addressInfo.type === 'user') || isZeroAddress(address)
-  );
+  return getAddressInfo(address)?.type === 'user' || isZeroAddress(address);
 }
 
 export function isContractAddress(address: string): boolean {
-  const addressInfo = getAddressInfo(address);
-  return !!addressInfo && addressInfo.type === 'contract';
+  return getAddressInfo(address)?.type === 'contract';
 }
 
 export function isInnerContractAddress(address: string): boolean {
@@ -127,10 +123,8 @@ export function isInnerContractAddress(address: string): boolean {
 
 // address start with 0x0, not valid internal contract, but fullnode support
 export function isSpecialAddress(address: string): boolean {
-  const addressInfo = getAddressInfo(address);
   return (
-    !!addressInfo &&
-    addressInfo.type === 'builtin' &&
+    getAddressInfo(address)?.type === 'builtin' &&
     ![
       CONTRACTS.adminControl,
       CONTRACTS.sponsorWhitelistControl,

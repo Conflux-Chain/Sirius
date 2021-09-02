@@ -2,15 +2,16 @@ import { useHistory } from 'react-router';
 import {
   isAccountAddress,
   isContractAddress,
-  isInnerContractAddress,
   isBlockHash,
   isHash,
   isEpochNumber,
   tranferToLowerCase,
-  isSpecialAddress,
+  formatAddress,
+  getAddressInfo,
+  isAddress,
 } from 'utils';
-import { IS_TESTNET, CONTRACTS } from '../constants';
-import { formatAddress } from 'utils';
+import { CONTRACTS, NETWORK_ID, DEFAULT_NETWORK_IDS } from '../constants';
+import { NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 import { trackEvent } from '../ga';
 import { ScanEvent } from '../gaConstants';
 
@@ -43,21 +44,30 @@ export const useSearch = (value?: string) => {
       return;
     }
 
-    if (
-      (innerValue.toLowerCase().startsWith('cfx:') && IS_TESTNET) ||
-      (innerValue.toLowerCase().startsWith('cfxtest:') && !IS_TESTNET)
-    ) {
-      history.push('/networkError');
-      return;
-    }
+    if (isAddress(innerValue)) {
+      const netId = getAddressInfo(innerValue)?.netId as number;
+      if (netId !== NETWORK_ID) {
+        if (
+          // only search network = 1/1029 in mainnet or testnet environment will go to networkERROR page, others will go to 404
+          [NETWORK_TYPES.mainnet, NETWORK_TYPES.testnet].includes(
+            NETWORK_TYPE,
+          ) &&
+          [DEFAULT_NETWORK_IDS.mainnet, DEFAULT_NETWORK_IDS.testnet].includes(
+            netId,
+          )
+        ) {
+          history.push('/networkError');
 
-    if (
-      isAccountAddress(innerValue) ||
-      isContractAddress(innerValue) ||
-      isInnerContractAddress(innerValue) ||
-      isSpecialAddress(innerValue)
-    ) {
-      history.push(`/address/${formatAddress(innerValue)}`); // cip-37 convert to new format
+          return;
+        } else {
+          history.push('/404');
+
+          return;
+        }
+      }
+
+      history.push(`/address/${formatAddress(innerValue)}`);
+
       trackEvent({
         category: ScanEvent.search.category,
         action: isAccountAddress(innerValue)
@@ -67,6 +77,7 @@ export const useSearch = (value?: string) => {
           : ScanEvent.search.action.innerContract,
         label: innerValue,
       });
+
       return;
     }
 

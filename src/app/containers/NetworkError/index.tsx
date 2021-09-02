@@ -12,18 +12,19 @@ import { translations } from 'locales/i18n';
 import imgNetworkError from 'images/changeNetwork.png';
 import { useParams } from 'react-router-dom';
 import { gotoNetwork } from 'utils';
-import { IS_TESTNET } from 'utils/constants';
+import { NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 
 interface RouteParams {
   network: string;
 }
 
+// only in testnet or mainnet environment will come to this page
 export function NetworkError() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { t } = useTranslation();
-  const { network = IS_TESTNET ? 'Tethys' : 'Testnet' } = useParams<
-    RouteParams
-  >();
+  const {
+    network = NETWORK_TYPE === NETWORK_TYPES.testnet ? 'Tethys' : 'Testnet',
+  } = useParams<RouteParams>();
 
   return (
     <PageWrapper>
@@ -40,7 +41,9 @@ export function NetworkError() {
           href="#"
           onClick={e => {
             e.preventDefault();
-            IS_TESTNET ? gotoNetwork(1029) : gotoNetwork(1);
+            NETWORK_TYPE === NETWORK_TYPES.testnet
+              ? gotoNetwork(1029)
+              : gotoNetwork(1);
           }}
         >
           {t(translations.networkError.btn, { network })}

@@ -46,7 +46,7 @@ export const useSearch = (value?: string) => {
     }
 
     if (isAddress(innerValue)) {
-      if (isCurrentNetworkAddress(innerValue)) {
+      if (!isCurrentNetworkAddress(innerValue)) {
         if (
           // only search network = 1/1029 in mainnet or testnet environment will go to networkERROR page, others will go to 404
           [NETWORK_TYPES.mainnet, NETWORK_TYPES.testnet].includes(

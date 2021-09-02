@@ -133,6 +133,10 @@ export function isSpecialAddress(address: string): boolean {
   );
 }
 
+export function isCurrentNetworkAddress(address: string): boolean {
+  return getAddressInfo(address)?.netId === NETWORK_ID;
+}
+
 /**
  * format cfx address
  * @param address origin address

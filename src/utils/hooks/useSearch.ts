@@ -9,8 +9,9 @@ import {
   formatAddress,
   getAddressInfo,
   isAddress,
+  isCurrentNetworkAddress,
 } from 'utils';
-import { CONTRACTS, NETWORK_ID, DEFAULT_NETWORK_IDS } from '../constants';
+import { CONTRACTS, DEFAULT_NETWORK_IDS } from '../constants';
 import { NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 import { trackEvent } from '../ga';
 import { ScanEvent } from '../gaConstants';
@@ -45,15 +46,14 @@ export const useSearch = (value?: string) => {
     }
 
     if (isAddress(innerValue)) {
-      const netId = getAddressInfo(innerValue)?.netId as number;
-      if (netId !== NETWORK_ID) {
+      if (isCurrentNetworkAddress(innerValue)) {
         if (
           // only search network = 1/1029 in mainnet or testnet environment will go to networkERROR page, others will go to 404
           [NETWORK_TYPES.mainnet, NETWORK_TYPES.testnet].includes(
             NETWORK_TYPE,
           ) &&
           [DEFAULT_NETWORK_IDS.mainnet, DEFAULT_NETWORK_IDS.testnet].includes(
-            netId,
+            getAddressInfo(innerValue)?.netId as number,
           )
         ) {
           history.push('/networkError');

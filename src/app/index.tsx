@@ -66,7 +66,6 @@ import { BlocknumberCalc } from './containers/BlocknumberCalc/Loadable';
 import { BroadcastTx } from './containers/BroadcastTx/Loadable';
 import { CookieTip } from './components/CookieTip';
 import { GlobalTip } from './components/GlobalTip';
-import { Notices } from './containers/Notices/Loadable';
 import { ChartDetail } from './containers/ChartDetail/Loadable';
 import { NetworkError } from './containers/NetworkError/Loadable';
 import { BalanceChecker } from './containers/BalanceChecker/Loadable';
@@ -459,11 +458,6 @@ export function App() {
                           />
                           <Route exact path="/swap" component={Swap} />
                           <Route exact path="/report" component={Report} />
-                          <Route
-                            exact
-                            path={['/notices', '/notice', '/notice/:id']}
-                            component={Notices}
-                          />
                           <Route
                             exact
                             path={['/networkError', '/networkError/:network']}

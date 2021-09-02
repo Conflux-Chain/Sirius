@@ -370,6 +370,6 @@ export const reqProjectConfig = (extra?: object) => {
           zero: 'net8888:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaapyp8kpez', // 0x0000000000000000000000000000000000000000
         },
       });
-    }, 2000);
+    }, 0);
   });
 };

@@ -15,7 +15,7 @@ import { translations } from 'locales/i18n';
 import { Language } from './Language';
 // import { Currency } from './Currency';
 import { ScanEvent } from 'utils/gaConstants';
-import { IS_TESTNET } from 'utils/constants';
+import { NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 
 import iconTwitter from 'images/footer/twitter.svg';
 import iconTelegram from 'images/footer/telegram.svg';
@@ -310,7 +310,7 @@ export function Footer() {
       <Link
         className="footer-link"
         href={
-          IS_TESTNET
+          NETWORK_TYPE === NETWORK_TYPES.testnet
             ? 'https://api-testnet.confluxscan.net/doc'
             : 'https://api.confluxscan.net/doc'
         }
@@ -380,9 +380,12 @@ export function Footer() {
         </FooterContentTitle>
         <FooterContent>
           <FooterContentRow>
-            <FooterContentLink>
-              {developResourceLinks.developerAPI}
-            </FooterContentLink>
+            {NETWORK_TYPE === NETWORK_TYPES.mainnet ||
+            NETWORK_TYPE === NETWORK_TYPES.testnet ? (
+              <FooterContentLink>
+                {developResourceLinks.developerAPI}
+              </FooterContentLink>
+            ) : null}
             <FooterContentLink>
               {developResourceLinks.developerDocuments}
             </FooterContentLink>

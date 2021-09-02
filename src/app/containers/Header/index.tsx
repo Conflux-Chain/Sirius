@@ -20,16 +20,11 @@ import { useLocation } from 'react-router';
 import imgConfiPlanet from 'images/confi-planet.png';
 import { ScanEvent } from 'utils/gaConstants';
 import { trackEvent } from 'utils/ga';
-import { CurrentTestnetNotice, CurrentTethysNotice } from '../Notices/notices';
-import { Link } from '../../components/Link/Loadable';
 import { useToggle } from 'react-use';
-import { getLatestNoticeLink } from '../HomePage/Notice';
-import announcementNotification from '../../../images/notice/announcementNotification.png';
-import FAQNotification from '../../../images/notice/FAQNotification.png';
-import updateNotification from '../../../images/notice/updateNotification.png';
 import { useGlobalData, GlobalDataType } from 'utils/hooks/useGlobal';
 import { getNetwork, gotoNetwork } from 'utils';
-import { IS_TESTNET } from 'utils/constants';
+import { NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
+import { Notices } from 'app/containers/Notices/Loadable';
 
 export const Header = memo(() => {
   const [globalData, setGlobalData] = useGlobalData();
@@ -64,6 +59,86 @@ export const Header = memo(() => {
   const menuClick = () => {
     if (bp === 's' || bp === 'm') toggleMenu(false);
   };
+
+  const supportAndHelpMenuItems = [
+    {
+      title: [
+        t(translations.header.techIssue),
+        <Check size={18} key="check" />,
+      ],
+      name: ScanEvent.menu.action.techIssue,
+      afterClick: menuClick,
+      href: 'https://github.com/Conflux-Chain/sirius/issues',
+    },
+    {
+      title: [t(translations.header.report), <Check size={18} key="check" />],
+      name: ScanEvent.menu.action.report,
+      afterClick: menuClick,
+      href: '/report',
+    },
+    {
+      title: [
+        t(translations.header.supportCenter),
+        <Check size={18} key="check" />,
+      ],
+      name: ScanEvent.menu.action.supportCenter,
+      afterClick: menuClick,
+      href: iszh
+        ? 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn'
+        : 'https://confluxscansupportcenter.zendesk.com/hc/en-us',
+    },
+    {
+      title: [
+        t(translations.header.suggestionBox),
+        <Check size={18} key="check" />,
+      ],
+      name: ScanEvent.menu.action.suggestionBox,
+      afterClick: menuClick,
+      href: iszh
+        ? 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/requests/new'
+        : 'https://confluxscansupportcenter.zendesk.com/hc/en-us/requests/new',
+    },
+  ];
+
+  const ecosystemItems = [
+    {
+      title: [t(translations.header.fcCfx), <Check size={18} key="check" />],
+      name: ScanEvent.menu.action.fcCfx,
+      afterClick: menuClick,
+      href: 'https://fccfx.confluxscan.io/',
+    },
+  ];
+
+  if ([NETWORK_TYPES.mainnet, NETWORK_TYPES.testnet].includes(NETWORK_TYPE)) {
+    supportAndHelpMenuItems.unshift({
+      title: [
+        t(translations.header.developerAPI),
+        <Check size={18} key="check" />,
+      ],
+      name: ScanEvent.menu.action.developerAPI,
+      afterClick: menuClick,
+      href:
+        NETWORK_TYPE === NETWORK_TYPES.testnet
+          ? 'https://api-testnet.confluxscan.net/doc'
+          : 'https://api.confluxscan.net/doc',
+    });
+
+    ecosystemItems.unshift({
+      title: [
+        t(translations.header.stakingAndGovernance),
+        <Check size={18} key="check" />,
+      ],
+      name: ScanEvent.menu.action.stakingAndGovernance,
+      afterClick: menuClick,
+      href: iszh
+        ? NETWORK_TYPE === NETWORK_TYPES.testnet
+          ? 'https://votetest.confluxnetwork.org/zh/'
+          : 'https://governance.confluxnetwork.org/zh/'
+        : NETWORK_TYPE === NETWORK_TYPES.testnet
+        ? 'https://votetest.confluxnetwork.org/en/'
+        : 'https://governance.confluxnetwork.org/en/',
+    });
+  }
 
   const startLinks: HeaderLinks = [
     {
@@ -296,32 +371,7 @@ export const Header = memo(() => {
     {
       title: t(translations.header.ecosystem),
       matched: ecosystemMatched,
-      children: [
-        {
-          title: [
-            t(translations.header.stakingAndGovernance),
-            <Check size={18} key="check" />,
-          ],
-          name: ScanEvent.menu.action.stakingAndGovernance,
-          afterClick: menuClick,
-          href: iszh
-            ? IS_TESTNET
-              ? 'https://votetest.confluxnetwork.org/zh/'
-              : 'https://governance.confluxnetwork.org/zh/'
-            : IS_TESTNET
-            ? 'https://votetest.confluxnetwork.org/en/'
-            : 'https://governance.confluxnetwork.org/en/',
-        },
-        {
-          title: [
-            t(translations.header.fcCfx),
-            <Check size={18} key="check" />,
-          ],
-          name: ScanEvent.menu.action.fcCfx,
-          afterClick: menuClick,
-          href: 'https://fccfx.confluxscan.io/',
-        },
-      ],
+      children: ecosystemItems,
     },
     // more
     {
@@ -391,68 +441,7 @@ export const Header = memo(() => {
           ],
           name: ScanEvent.menu.action.support,
           plain: true,
-          children: [
-            // {
-            //   title: [
-            //     t(translations.header.faq),
-            //     <Check size={18} key="check" />,
-            //   ],
-            //   name: ScanEvent.menu.action.faq,
-            //   afterClick: menuClick,
-            //   href: '/faq',
-            // },
-            {
-              title: [
-                t(translations.header.developerAPI),
-                <Check size={18} key="check" />,
-              ],
-              name: ScanEvent.menu.action.developerAPI,
-              afterClick: menuClick,
-              href: IS_TESTNET
-                ? 'https://api-testnet.confluxscan.net/doc'
-                : 'https://api.confluxscan.net/doc',
-            },
-            {
-              title: [
-                t(translations.header.techIssue),
-                <Check size={18} key="check" />,
-              ],
-              name: ScanEvent.menu.action.techIssue,
-              afterClick: menuClick,
-              href: 'https://github.com/Conflux-Chain/sirius/issues',
-            },
-            {
-              title: [
-                t(translations.header.report),
-                <Check size={18} key="check" />,
-              ],
-              name: ScanEvent.menu.action.report,
-              afterClick: menuClick,
-              href: '/report',
-            },
-            {
-              title: [
-                t(translations.header.supportCenter),
-                <Check size={18} key="check" />,
-              ],
-              name: ScanEvent.menu.action.supportCenter,
-              afterClick: menuClick,
-              href: iszh
-                ? 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn'
-                : 'https://confluxscansupportcenter.zendesk.com/hc/en-us',
-            },
-            {
-              title: [
-                t(translations.header.suggestionBox),
-                <Check size={18} key="check" />,
-              ],
-              name: ScanEvent.menu.action.suggestionBox,
-              afterClick: menuClick,
-              href: iszh
-                ? 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/requests/new'
-                : 'https://confluxscansupportcenter.zendesk.com/hc/en-us/requests/new',
-            },
-          ],
+          children: supportAndHelpMenuItems,
         },
       ],
     },
@@ -568,40 +557,6 @@ export const Header = memo(() => {
     endLinksJSX,
   ];
 
-  const ImgNotice = () => {
-    if (CurrentTethysNotice.type === 'Announcement') {
-      return <img src={announcementNotification} alt="notice indicator" />;
-    } else if (CurrentTethysNotice.type === 'FAQ') {
-      return <img src={FAQNotification} alt="notice indicator" />;
-    } else if (CurrentTethysNotice.type === 'update') {
-      return <img src={updateNotification} alt="notice indicator" />;
-    }
-    return null;
-  };
-  // notice
-  const subMenu = (
-    <NoticeWrapper className="notice">
-      <ImgNotice />
-      <div
-        className={`content ${
-          (IS_TESTNET ? CurrentTestnetNotice.hot : CurrentTethysNotice.hot)
-            ? 'hot'
-            : ''
-        }`}
-      >
-        {IS_TESTNET
-          ? CurrentTestnetNotice[iszh ? 'zh' : 'en']
-          : CurrentTethysNotice[iszh ? 'zh' : 'en']}
-      </div>
-      <Link
-        href={getLatestNoticeLink(iszh ? 'zh' : 'en', IS_TESTNET)}
-        className="more"
-      >
-        {t(translations.header.more)}
-      </Link>
-    </NoticeWrapper>
-  );
-
   return (
     <Wrapper>
       <Nav
@@ -610,7 +565,7 @@ export const Header = memo(() => {
         brand={brand}
         mainMenu={mainMenu}
         topMenu={topMenu}
-        subMenu={subMenu}
+        subMenu={<Notices />}
       />
       {(bp === 's' || bp === 'm') && (
         <SearchWrapper>
@@ -744,42 +699,6 @@ const WalletWrapper = styled.div`
       &:hover {
         //background: #68719c;
       }
-    }
-  }
-`;
-
-const NoticeWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  width: 100%;
-
-  img {
-    width: 16px;
-    height: 16px;
-    margin-right: 10px;
-  }
-
-  .content {
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    color: #6c6d75;
-
-    &.hot {
-      color: #e64e4e;
-    }
-  }
-
-  .more {
-    white-space: nowrap;
-    margin-left: 24px;
-    margin-right: 10px;
-    border-bottom: 1px solid #1e3de4;
-
-    &:hover,
-    &:active {
-      border-bottom: 1px solid #0f23bd;
     }
   }
 `;

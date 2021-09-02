@@ -9,7 +9,7 @@ import BigNumber from 'bignumber.js';
 import { Text } from 'app/components/Text';
 import { fromDripToCfx, getTimeByBlockInterval } from 'utils';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
-import { CONTRACTS, CFX, IS_TESTNET } from 'utils/constants';
+import { CONTRACTS, CFX, NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 import ViewMore from '../../../images/contract-address/viewmore.png';
 import {
   abi as governanceAbi,
@@ -137,7 +137,7 @@ export function AddressMetadata({ address, accountInfo }) {
                 text={
                   <>
                     {t(translations.toolTip.address.stakedBegin)}
-                    {IS_TESTNET ? (
+                    {NETWORK_TYPE === NETWORK_TYPES.testnet ? (
                       <a
                         href="https://votetest.confluxnetwork.org/"
                         target="_blank"
@@ -185,7 +185,7 @@ export function AddressMetadata({ address, accountInfo }) {
                 text={
                   <>
                     {t(translations.toolTip.address.lockedBegin)}
-                    {IS_TESTNET ? (
+                    {NETWORK_TYPE === NETWORK_TYPES.testnet ? (
                       <a
                         href="https://votetest.confluxnetwork.org/"
                         target="_blank"

@@ -4,17 +4,147 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import fetch from './request';
 import { Buffer } from 'buffer';
 import { NetworksType } from './hooks/useGlobal';
-import { CONTRACTS, IS_PRE_RELEASE } from 'utils/constants';
+import { CONTRACTS, IS_PRE_RELEASE, NETWORK_ID } from 'utils/constants';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 dayjs.extend(relativeTime);
+
+export const isHexAddress = (address: string): boolean => {
+  try {
+    if (address.startsWith('0x') && address.length === 42) {
+      // treat as hex40 address
+      return !!SDK.format.hexAddress(address);
+    } else {
+      return false;
+    }
+  } catch (e) {
+    return false;
+  }
+};
+
+export const isBase32Address = (address: string): boolean => {
+  try {
+    return SDK.address.isValidCfxAddress(address);
+  } catch (e) {
+    return false;
+  }
+};
+
+// support hex and base32
+export const isAddress = (address: string): boolean => {
+  try {
+    if (address.startsWith('0x')) {
+      return isHexAddress(address);
+    } else {
+      return isBase32Address(address);
+    }
+  } catch (e) {
+    return false;
+  }
+};
+
+export const formatAddress = (
+  address: string,
+  outputType = 'base32', // base32 or hex
+): string => {
+  const invalidAddressReturnValue = '';
+  try {
+    if (isHexAddress(address)) {
+      if (outputType === 'hex') {
+        return address;
+      } else if (outputType === 'base32') {
+        return SDK.format.address(address, NETWORK_ID);
+      } else {
+        return invalidAddressReturnValue;
+      }
+    } else if (isBase32Address(address)) {
+      if (outputType === 'hex') {
+        return SDK.format.hexAddress(address);
+      } else if (outputType === 'base32') {
+        const reg = /(.*):(.*):(.*)/;
+        let lowercaseAddress = address;
+
+        // compatibility with verbose address, will replace with simply address later
+        if (typeof address === 'string' && reg.test(address)) {
+          lowercaseAddress = address.replace(reg, '$1:$3').toLowerCase();
+        }
+        return lowercaseAddress;
+      } else {
+        return invalidAddressReturnValue;
+      }
+    } else {
+      return invalidAddressReturnValue;
+    }
+  } catch (e) {
+    return invalidAddressReturnValue;
+  }
+};
+
+export const getAddressInfo = (
+  address: string,
+): {
+  netId: number;
+  type: string;
+  hexAddress: ArrayBuffer | string;
+} | null => {
+  try {
+    if (isHexAddress(address)) {
+      const base32Address = formatAddress(address, 'base32');
+      return SDK.address.decodeCfxAddress(base32Address);
+    } else if (isBase32Address(address)) {
+      return SDK.address.decodeCfxAddress(address);
+    } else {
+      return null;
+    }
+  } catch (e) {
+    return null;
+  }
+};
+
+export function isZeroAddress(address: string): boolean {
+  return formatAddress(address, 'base32') === CONTRACTS.zero;
+}
+
+export function isAccountAddress(address: string): boolean {
+  const addressInfo = getAddressInfo(address);
+  return (
+    (!!addressInfo && addressInfo.type === 'user') || isZeroAddress(address)
+  );
+}
+
+export function isContractAddress(address: string): boolean {
+  const addressInfo = getAddressInfo(address);
+  return !!addressInfo && addressInfo.type === 'contract';
+}
+
+export function isInnerContractAddress(address: string): boolean {
+  return [
+    CONTRACTS.adminControl,
+    CONTRACTS.sponsorWhitelistControl,
+    CONTRACTS.staking,
+  ].includes(formatAddress(address, 'base32'));
+}
+
+// address start with 0x0, not valid internal contract, but fullnode support
+export function isSpecialAddress(address: string): boolean {
+  const addressInfo = getAddressInfo(address);
+  return (
+    !!addressInfo &&
+    addressInfo.type === 'builtin' &&
+    ![
+      CONTRACTS.adminControl,
+      CONTRACTS.sponsorWhitelistControl,
+      CONTRACTS.staking,
+    ].includes(formatAddress(address, 'base32'))
+  );
+}
 
 /**
  * format cfx address
  * @param address origin address
  * @param option address format options
  */
-export const formatAddress = (address: string) => {
+export const formatAddressBak = (address: string) => {
   try {
     const reg = /(.*):(.*):(.*)/;
     let formattedAddress = address;
@@ -30,7 +160,7 @@ export const formatAddress = (address: string) => {
       throw new Error('invalid address');
     }
   } catch (e) {
-    console.log('formatAddress:', address, e.message);
+    // console.log('formatAddress:', address, e.message);
 
     // transfer to is not valid conflux address, need show error tip, special for ETH address ?
     return typeof address === 'string' &&
@@ -40,50 +170,6 @@ export const formatAddress = (address: string) => {
       : '';
   }
 };
-
-export const getAddressType = (address: string): string => {
-  try {
-    return SDK.address.decodeCfxAddress(formatAddress(address)).type;
-  } catch (e) {
-    return '';
-  }
-};
-
-export const isAddress = (str: string) => {
-  return formatAddress(str) !== '';
-};
-
-export function isZeroAddress(str: string) {
-  return formatAddress(str) === CONTRACTS.zero;
-}
-
-export function isAccountAddress(str: string) {
-  return getAddressType(str) === 'user' || isZeroAddress(str);
-}
-
-export function isContractAddress(str: string) {
-  return getAddressType(str) === 'contract';
-}
-
-export function isInnerContractAddress(str: string) {
-  return [
-    CONTRACTS.adminControl,
-    CONTRACTS.sponsorWhitelistControl,
-    CONTRACTS.staking,
-  ].includes(formatAddress(str));
-}
-
-// address start with 0x0, not valid internal contract, but fullnode support
-export function isSpecialAddress(str: string) {
-  return (
-    getAddressType(str) === 'builtin' &&
-    ![
-      CONTRACTS.adminControl,
-      CONTRACTS.sponsorWhitelistControl,
-      CONTRACTS.staking,
-    ].includes(formatAddress(str))
-  );
-}
 
 /**
  * format util fn

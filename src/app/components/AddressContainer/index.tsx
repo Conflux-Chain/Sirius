@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text } from '../Text/Loadable';
-import { formatString } from 'utils';
+// import { formatString } from 'utils';
 import { Link } from '../Link/Loadable';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
@@ -9,14 +9,16 @@ import {
   formatAddress,
   isContractAddress,
   isInnerContractAddress,
+  // isAddress,
+  isZeroAddress,
 } from 'utils';
-import { AlertTriangle } from '@zeit-ui/react-icons';
+// import { AlertTriangle } from '@zeit-ui/react-icons';
 import ContractIcon from 'images/contract-icon.png';
 import isMeIcon from 'images/me.png';
 import InternalContractIcon from 'images/internal-contract-icon.png';
 import VerifiedIcon from 'images/verified.png';
 import { media, sizes } from 'styles/media';
-import { CONTRACTS, NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
+import { NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 import { monospaceFont } from 'styles/variable';
 
 interface Props {
@@ -56,7 +58,6 @@ const RenderAddress = ({
   prefix = null,
   suffix = null,
 }: any) => {
-  // return <>test</>;
   return (
     <AddressWrapper>
       {prefix}
@@ -121,15 +122,14 @@ export const AddressContainer = withTranslation()(
           ? defaultMobileSuffixAddressSize
           : defaultPCSuffixAddressSize);
 
-      // ≈ 2 ms
-      const cfxAddress = formatAddress(value);
-
       // zero address auto set alias
-      if (!alias && zeroAddressAutoShowAlias && cfxAddress === CONTRACTS.zero) {
+      if (!alias && zeroAddressAutoShowAlias && isZeroAddress(value)) {
         alias = t(translations.general.zeroAddress);
       }
 
-      if (!value) {
+      const cfxAddress = formatAddress(value);
+
+      if (value === null) {
         const txtContractCreation = t(
           translations.transaction.contractCreation,
         );
@@ -154,7 +154,7 @@ export const AddressContainer = withTranslation()(
             ),
           });
 
-        // If a txn receipth has no 'to' address or 'contractCreated', show -- for temp
+        // If a txn receipt has no 'to' address or 'contractCreated', show -- for temp
         return <>--</>;
         // Contract create fail, no link
         // TODO deal with zero address value
@@ -170,28 +170,32 @@ export const AddressContainer = withTranslation()(
         // );
       }
 
-      if (cfxAddress.startsWith('invalid-')) {
-        const sourceValue = cfxAddress.replace('invalid-', '');
-        const tip = t(translations.general.invalidAddress);
-        return RenderAddress({
-          cfxAddress,
-          alias,
-          hoverValue: `${tip}: ${sourceValue}`,
-          content: alias ? formatString(alias, 'tag') : sourceValue,
-          isLink: false,
-          isFull,
-          maxWidth,
-          suffixSize,
-          style: { color: '#e00909' },
-          prefix: (
-            <IconWrapper className={prefixFloat ? 'float' : ''}>
-              <Text span hoverValue={tip}>
-                <AlertTriangle size={16} color="#e00909" />
-              </Text>
-            </IconWrapper>
-          ),
-        });
+      if (typeof value === 'string' && value.trim() === '') {
+        return <>--</>;
       }
+
+      // if (cfxAddress.startsWith('invalid-')) {
+      //   const sourceValue = cfxAddress.replace('invalid-', '');
+      //   const tip = t(translations.general.invalidAddress);
+      //   return RenderAddress({
+      //     cfxAddress,
+      //     alias,
+      //     hoverValue: `${tip}: ${sourceValue}`,
+      //     content: alias ? formatString(alias, 'tag') : sourceValue,
+      //     isLink: false,
+      //     isFull,
+      //     maxWidth,
+      //     suffixSize,
+      //     style: { color: '#e00909' },
+      //     prefix: (
+      //       <IconWrapper className={prefixFloat ? 'float' : ''}>
+      //         <Text span hoverValue={tip}>
+      //           <AlertTriangle size={16} color="#e00909" />
+      //         </Text>
+      //       </IconWrapper>
+      //     ),
+      //   });
+      // }
 
       if (isContractAddress(cfxAddress) || isInnerContractAddress(cfxAddress)) {
         const typeText = t(

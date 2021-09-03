@@ -10,7 +10,6 @@ import {
   isContractAddress,
   isInnerContractAddress,
   // isAddress,
-  isZeroAddress,
 } from 'utils';
 // import { AlertTriangle } from '@zeit-ui/react-icons';
 import ContractIcon from 'images/contract-icon.png';
@@ -18,7 +17,11 @@ import isMeIcon from 'images/me.png';
 import InternalContractIcon from 'images/internal-contract-icon.png';
 import VerifiedIcon from 'images/verified.png';
 import { media, sizes } from 'styles/media';
-import { NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
+import {
+  NETWORK_TYPE,
+  NETWORK_TYPES,
+  CONTRACTS_NAME_LABEL,
+} from 'utils/constants';
 import { monospaceFont } from 'styles/variable';
 
 interface Props {
@@ -29,7 +32,6 @@ interface Props {
   isFull?: boolean; // show full address, default false
   isLink?: boolean; // add link to address, default true
   isMe?: boolean; // when `address === portal selected address`, set isMe to true to add special tag, default false
-  zeroAddressAutoShowAlias?: boolean; // is auto show zero address alias
   suffixAddressSize?: number; // suffix address size, default is 8
   prefixFloat?: boolean; // prefix icon float or take up space, default false
   showIcon?: boolean; // whether show contract icon, default true
@@ -108,32 +110,30 @@ export const AddressContainer = withTranslation()(
       isFull = false,
       isLink = true,
       isMe = false,
-      zeroAddressAutoShowAlias = true,
       suffixAddressSize,
       prefixFloat = false,
       showIcon = true,
       t,
       verify = false,
     }: Props & WithTranslation) => {
-      // const { t } = useTranslation(); // fix rerender twice
       const suffixSize =
         suffixAddressSize ||
         (window.innerWidth <= sizes.m
           ? defaultMobileSuffixAddressSize
           : defaultPCSuffixAddressSize);
 
-      // zero address auto set alias
-      if (!alias && zeroAddressAutoShowAlias && isZeroAddress(value)) {
-        alias = t(translations.general.zeroAddress);
-      }
-
       const cfxAddress = formatAddress(value);
 
+      if (!alias) {
+        alias = CONTRACTS_NAME_LABEL[cfxAddress];
+      }
+
+      // contract create txn
       if (!value) {
         const txtContractCreation = t(
           translations.transaction.contractCreation,
         );
-        // Contract Registration txn to prop is null
+
         if (contractCreated)
           return RenderAddress({
             cfxAddress,

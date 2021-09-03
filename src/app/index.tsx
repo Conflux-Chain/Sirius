@@ -129,7 +129,29 @@ export function App() {
           localStorage.setItem(LOCALSTORAGE_KEYS_MAP.networkId, networkId);
           localStorage.setItem(
             LOCALSTORAGE_KEYS_MAP.contracts,
-            JSON.stringify(network.contracts),
+            JSON.stringify(
+              // @ts-ignore
+              resp?.contracts.reduce(
+                (prev, curr) => ({
+                  ...prev,
+                  [curr.key]: curr.address,
+                }),
+                {},
+              ),
+            ),
+          );
+          localStorage.setItem(
+            LOCALSTORAGE_KEYS_MAP.contractNameTag,
+            JSON.stringify(
+              // @ts-ignore
+              resp?.contracts.reduce(
+                (prev, curr) => ({
+                  ...prev,
+                  [curr.address]: curr.name,
+                }),
+                {},
+              ),
+            ),
           );
           window.location.reload();
         }

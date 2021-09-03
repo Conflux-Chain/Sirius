@@ -16,7 +16,7 @@ import { AddressContainer } from '../../app/components/AddressContainer';
 import { formatAddress } from 'utils';
 import { ColumnAge, ContentWrapper } from './utils';
 import BigNumber from 'bignumber.js';
-import { cfxTokenTypes, CONTRACTS_NAME_LABEL } from '../constants';
+import { cfxTokenTypes } from '../constants';
 import { Tooltip } from '../../app/components/Tooltip/Loadable';
 import { TxnHashRenderComponent } from './transaction';
 import { getCurrencySymbol } from 'utils/constants';
@@ -104,14 +104,12 @@ export const renderAddress = (
   let alias = '';
 
   if (type === 'from') {
-    if (CONTRACTS_NAME_LABEL[value]) alias = CONTRACTS_NAME_LABEL[value];
-    else if (row.fromContractInfo && row.fromContractInfo.name)
+    if (row.fromContractInfo && row.fromContractInfo.name)
       alias = row.fromContractInfo.name;
     else if (row.fromTokenInfo && row.fromTokenInfo.name)
       alias = `${row.fromTokenInfo.name}`;
   } else if (type === 'to') {
-    if (CONTRACTS_NAME_LABEL[value]) alias = CONTRACTS_NAME_LABEL[value];
-    else if (row.toContractInfo && row.toContractInfo.name)
+    if (row.toContractInfo && row.toContractInfo.name)
       alias = row.toContractInfo.name;
     else if (row.toTokenInfo && row.toTokenInfo.name)
       alias = `${row.toTokenInfo.name}`;

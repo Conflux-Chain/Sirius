@@ -21,7 +21,7 @@ import { Tooltip } from 'app/components/Tooltip/Loadable';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { AddressContainer } from 'app/components/AddressContainer';
 import { isZeroAddress } from 'utils';
-import { defaultTokenIcon } from 'utils/constants';
+import { ICON_DEFAULT_TOKEN } from 'utils/constants';
 import Edit3 from '@zeit-ui/react-icons/edit3';
 
 const Link = ({ to, children }) => <RouterLink to={to}>{children}</RouterLink>;
@@ -216,7 +216,7 @@ export function ContractMetadata({ address, contractInfo }) {
                   src={
                     tokenInfo && tokenInfo.icon
                       ? tokenInfo.icon
-                      : defaultTokenIcon
+                      : ICON_DEFAULT_TOKEN
                   }
                   alt={`${contractInfo.name} logo`}
                 />

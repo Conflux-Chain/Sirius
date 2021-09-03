@@ -13,7 +13,7 @@ import { useSearch } from 'utils/hooks/useSearch';
 import { AutoComplete, Input, SelectProps, Image } from '@jnoodle/antd';
 import { SearchIcon } from '../../../components/SearchIcon/Loadable';
 import ClearIcon from '../../../../images/clear.png';
-import { defaultTokenIcon } from 'utils/constants';
+import { ICON_DEFAULT_TOKEN } from 'utils/constants';
 import { formatAddress } from 'utils';
 import _ from 'lodash';
 import fetch from 'utils/request';
@@ -77,7 +77,7 @@ const searchResult = (list: any[], notAvailable = '-', type = 'token') =>
   list.map(l => {
     const token = {
       ...l,
-      icon: l.icon || defaultTokenIcon,
+      icon: l.icon || ICON_DEFAULT_TOKEN,
       name: l.name || notAvailable,
     };
     return {
@@ -95,8 +95,8 @@ const searchResult = (list: any[], notAvailable = '-', type = 'token') =>
         >
           {type === 'token' && (
             <Image
-              src={token?.icon || defaultTokenIcon}
-              fallback={defaultTokenIcon}
+              src={token?.icon || ICON_DEFAULT_TOKEN}
+              fallback={ICON_DEFAULT_TOKEN}
               alt="token icon"
             />
           )}

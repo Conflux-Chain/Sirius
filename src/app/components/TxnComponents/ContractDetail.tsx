@@ -1,5 +1,5 @@
 import React from 'react';
-import { defaultTokenIcon } from 'utils/constants';
+import { ICON_DEFAULT_TOKEN } from 'utils/constants';
 import ContractIcon from '../../../images/contract-icon.png';
 import { Link } from 'app/components/Link';
 import { formatAddress } from 'utils';
@@ -22,7 +22,7 @@ export const ContractDetail = ({ info, showTokenInfo, showContractInfo }) => {
       const name = token['name'] || '--';
       let symbol = token['symbol'];
       symbol = `(${symbol ? symbol : '--'})`;
-      const icon = token['icon'] || defaultTokenIcon;
+      const icon = token['icon'] || ICON_DEFAULT_TOKEN;
 
       child = (
         <>

@@ -6,7 +6,7 @@ import { Link } from 'app/components/Link/Loadable';
 import { Text } from 'app/components/Text/Loadable';
 import queryString from 'query-string';
 import { media } from 'styles/media';
-import { defaultTokenIcon } from 'utils/constants';
+import { ICON_DEFAULT_TOKEN } from 'utils/constants';
 import { formatBalance, formatNumber, formatString } from 'utils';
 import imgArrow from 'images/token/arrow.svg';
 import imgOut from 'images/token/out.svg';
@@ -16,7 +16,7 @@ import { AddressContainer } from '../../app/components/AddressContainer';
 import { formatAddress } from 'utils';
 import { ColumnAge, ContentWrapper } from './utils';
 import BigNumber from 'bignumber.js';
-import { cfxTokenTypes } from '../constants';
+import { CFX_TOKEN_TYPES } from '../constants';
 import { Tooltip } from '../../app/components/Tooltip/Loadable';
 import { TxnHashRenderComponent } from './transaction';
 import { getCurrencySymbol } from 'utils/constants';
@@ -161,7 +161,7 @@ export const token = {
   render: row => {
     return (
       <StyledIconWrapper>
-        <img src={row?.icon || defaultTokenIcon} alt="token icon" />
+        <img src={row?.icon || ICON_DEFAULT_TOKEN} alt="token icon" />
         <Link href={`/token/${formatAddress(row.address)}`}>
           <Translation>
             {t => (
@@ -205,7 +205,7 @@ const Token2 = ({ row }) => {
         ? [
             <img
               key="img"
-              src={row?.transferTokenInfo?.icon || defaultTokenIcon}
+              src={row?.transferTokenInfo?.icon || ICON_DEFAULT_TOKEN}
               alt="token icon"
             />,
             <Link key="link" href={`/token/${row?.transferTokenInfo?.address}`}>
@@ -537,7 +537,7 @@ export const balance = (decimal, price, transferType) => ({
       <Translation>
         {t => t(translations.general.table.token.quantity)}
       </Translation>
-      {transferType === cfxTokenTypes.erc1155 ? (
+      {transferType === CFX_TOKEN_TYPES.erc1155 ? (
         <ThTipWrap>
           <Text
             span
@@ -564,7 +564,7 @@ export const balance = (decimal, price, transferType) => ({
     return (
       <ContentWrapper right>
         {value != null ? (
-          transferType === cfxTokenTypes.erc20 ? (
+          transferType === CFX_TOKEN_TYPES.erc20 ? (
             +(
               formatBalance(value, decimals, false, {
                 precision: decimals,

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import BigNumber from 'bignumber.js';
 import { usePortal } from 'utils/hooks/usePortal';
 import { abi } from 'utils/contract/wcfx.json';
-import { TxnAction, CFX, CONTRACTS } from 'utils/constants';
+import { TXN_ACTION, CFX, CONTRACTS } from 'utils/constants';
 import { isSafeNumberOrNumericStringInput, formatNumber } from 'utils';
 import { useTxnHistory } from 'utils/hooks/useTxnHistory';
 import { trackEvent } from 'utils/ga';
@@ -279,7 +279,7 @@ export function Swap() {
       status: 'loading',
     });
     if (fromToken.type === 'cfx') {
-      const code = TxnAction.swapCFXToWCFX;
+      const code = TXN_ACTION.swapCFXToWCFX;
       // deposit
       contract
         .deposit()
@@ -331,7 +331,7 @@ export function Swap() {
           });
         });
     } else if (fromToken.type === 'wcfx') {
-      const code = TxnAction.swapWCFXToCFX;
+      const code = TXN_ACTION.swapWCFXToCFX;
       // withdraw
       contract
         .withdraw(value)

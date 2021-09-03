@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import { media } from '../../../styles/media';
 import { Input, useMessages } from '@cfxjs/react-ui';
-import { defaultContractIcon, defaultTokenIcon } from 'utils/constants';
+import { ICON_DEFAULT_CONTRACT, ICON_DEFAULT_TOKEN } from 'utils/constants';
 import {
   byteToKb,
   isContractAddress,
@@ -39,7 +39,7 @@ import { DappButton } from '../DappButton/Loadable';
 import { packContractAndToken } from '../../../utils/contractManagerTool';
 import { formatAddress } from '../../../utils';
 import {
-  TxnAction,
+  TXN_ACTION,
   NETWORK_TYPE,
   NETWORK_TYPES,
   CONTRACTS,
@@ -119,11 +119,11 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
   };
 
   // store txn action name for wallet plugin history
-  let txnAction = TxnAction.default;
+  let txnAction = TXN_ACTION.default;
   if (type === 'create') {
-    txnAction = TxnAction.contractWrite;
+    txnAction = TXN_ACTION.contractWrite;
   } else if (type === 'edit') {
-    txnAction = TxnAction.contractEdit;
+    txnAction = TXN_ACTION.contractEdit;
   }
 
   useEffect(() => {
@@ -607,7 +607,7 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
                 <SkelontonContainer shown={loading}>
                   <div className="iconContainer">
                     <img
-                      src={contractImgSrc || defaultContractIcon}
+                      src={contractImgSrc || ICON_DEFAULT_CONTRACT}
                       className="contractIcon"
                       alt="contract icon"
                     ></img>
@@ -647,7 +647,7 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
                 <SkelontonContainer shown={loading}>
                   <div className="iconContainer">
                     <img
-                      src={tokenImgSrc || defaultTokenIcon}
+                      src={tokenImgSrc || ICON_DEFAULT_TOKEN}
                       className="contractIcon"
                       alt="token icon"
                     ></img>

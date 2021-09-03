@@ -15,7 +15,7 @@ import { usePortal } from 'utils/hooks/usePortal';
 import { useParams } from 'react-router-dom';
 import imgWarning from 'images/warning.png';
 import { AddressContainer } from 'app/components/AddressContainer';
-import { TxnAction, RPC_SERVER, CFX, CONTRACTS } from 'utils/constants';
+import { TXN_ACTION, RPC_SERVER, CFX, CONTRACTS } from 'utils/constants';
 import { Remark } from 'app/components/Remark';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { reqTokenList } from 'utils/httpRequest';
@@ -456,7 +456,7 @@ export function Sponsor() {
             submitText={t('general.apply')}
             failCallback={failCallback}
             closeModalCallback={closeModalCallback}
-            txnAction={TxnAction.sponsorApplication}
+            txnAction={TXN_ACTION.sponsorApplication}
           ></DappButton>
         </ApplyContainer>
 

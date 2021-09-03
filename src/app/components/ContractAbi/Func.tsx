@@ -24,7 +24,7 @@ import {
   checkCfxType,
 } from '../../../utils';
 import { formatAddress } from '../../../utils';
-import { TxnAction } from '../../../utils/constants';
+import { TXN_ACTION } from '../../../utils/constants';
 import { ConnectButton } from '../../components/ConnectWallet';
 import { formatType } from 'js-conflux-sdk/src/contract/abi';
 import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
@@ -150,7 +150,7 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
           setModalShown(true);
           try {
             const txHash = await confluxJS.sendTransaction(txParams);
-            const code = TxnAction.writeContract;
+            const code = TXN_ACTION.writeContract;
 
             // mark txn action to history
             addRecord({

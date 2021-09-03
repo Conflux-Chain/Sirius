@@ -11,8 +11,8 @@ import { useRouteMatch } from 'react-router-dom';
 import { media } from '../../../styles/media';
 import { Input, useMessages } from '@cfxjs/react-ui';
 import {
-  defaultContractIcon,
-  defaultTokenIcon,
+  ICON_DEFAULT_CONTRACT,
+  ICON_DEFAULT_TOKEN,
   CONTRACTS,
 } from 'utils/constants';
 import {
@@ -36,7 +36,7 @@ import { DappButton } from '../DappButton/Loadable';
 import { packContractAndToken } from '../../../utils/contractManagerTool';
 import { formatAddress } from '../../../utils';
 import {
-  TxnAction,
+  TXN_ACTION,
   NETWORK_TYPE,
   NETWORK_TYPES,
 } from '../../../utils/constants';
@@ -533,7 +533,7 @@ export const ContractOrTokenInfo = ({
                   <SkelontonContainer shown={loading}>
                     <div className="iconContainer">
                       <img
-                        src={contractImgSrc || defaultContractIcon}
+                        src={contractImgSrc || ICON_DEFAULT_CONTRACT}
                         className="contractIcon"
                         alt="contract icon"
                       ></img>
@@ -581,7 +581,7 @@ export const ContractOrTokenInfo = ({
                   <SkelontonContainer shown={loading}>
                     <div className="iconContainer">
                       <img
-                        src={tokenImgSrc || defaultTokenIcon}
+                        src={tokenImgSrc || ICON_DEFAULT_TOKEN}
                         className="contractIcon"
                         alt="token icon"
                       ></img>
@@ -598,7 +598,7 @@ export const ContractOrTokenInfo = ({
           contractAddress={CONTRACTS.contractManager}
           data={txData}
           btnDisabled={isDisabled}
-          txnAction={TxnAction.contractEdit}
+          txnAction={TXN_ACTION.contractEdit}
         ></DappButton>
         <div
           className={`warningContainer ${warningMessage ? 'shown' : 'hidden'}`}

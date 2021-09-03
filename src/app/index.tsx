@@ -60,6 +60,7 @@ import { AddressContractDetailPage } from './containers/AddressContractDetail/Lo
 import { GlobalNotify } from './containers/GlobalNotify';
 import { Search } from './containers/Search';
 import { AddressConverter } from './containers/AddressConverter';
+import Loading from 'app/components/Loading';
 
 import { BlocknumberCalc } from './containers/BlocknumberCalc/Loadable';
 import { BroadcastTx } from './containers/BroadcastTx/Loadable';
@@ -73,7 +74,7 @@ import ScanBenchmark from './containers/_Benchmark';
 import enUS from '@jnoodle/antd/lib/locale/en_US';
 import zhCN from '@jnoodle/antd/lib/locale/zh_CN';
 import moment from 'moment';
-import { ConfigProvider, Spin } from '@jnoodle/antd';
+import { ConfigProvider } from '@jnoodle/antd';
 import 'moment/locale/zh-cn';
 
 // WebFontLoader.load({
@@ -253,7 +254,8 @@ export function App() {
                 </Helmet>
                 {loading ? (
                   <StyledMaskWrapper>
-                    <Spin spinning={loading} tip="Welcome to ConfluxScan" />
+                    {/* <Spin spinning={loading} tip="Welcome to ConfluxScan" /> */}
+                    <Loading></Loading>
                   </StyledMaskWrapper>
                 ) : (
                   <>
@@ -547,7 +549,7 @@ const StyledMaskWrapper = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: #eee;
+  background-color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;

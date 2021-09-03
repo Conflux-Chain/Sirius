@@ -15,11 +15,10 @@ import { usePortal } from 'utils/hooks/usePortal';
 import { useParams } from 'react-router-dom';
 import imgWarning from 'images/warning.png';
 import { AddressContainer } from 'app/components/AddressContainer';
-import { TxnAction, RPC_SERVER, CFX } from 'utils/constants';
+import { TxnAction, RPC_SERVER, CFX, CONTRACTS } from 'utils/constants';
 import { Remark } from 'app/components/Remark';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { reqTokenList } from 'utils/httpRequest';
-import { useGlobalData, GlobalDataType } from 'utils/hooks/useGlobal';
 import Faucet from 'utils/sponsorFaucet/faucet';
 
 interface RouteParams {
@@ -35,9 +34,7 @@ const errCannotReplaced = 'errCannotReplaced';
 const errUpgraded = 'errUpgraded';
 
 export function Sponsor() {
-  const [globalData] = useGlobalData();
-  const { contracts } = globalData as GlobalDataType;
-  const faucet = new Faucet(RPC_SERVER, contracts.faucet, contracts.faucetLast);
+  const faucet = new Faucet(RPC_SERVER, CONTRACTS.faucet, CONTRACTS.faucetLast);
   const { t } = useTranslation();
   const { contractAddress } = useParams<RouteParams>();
   const [storageSponsorAddress, setStorageSponsorAddress] = useState('');
@@ -74,8 +71,8 @@ export function Sponsor() {
 
         setUpperBound(sponsorGasBound);
         if (
-          sponsorForGas === contracts.faucet ||
-          sponsorForGas === contracts.faucetLast
+          sponsorForGas === CONTRACTS.faucet ||
+          sponsorForGas === CONTRACTS.faucetLast
         ) {
           setIsUpperBoundFromFoundation(true);
         }
@@ -452,7 +449,7 @@ export function Sponsor() {
         </BlockContainer>
         <ApplyContainer>
           <DappButton
-            contractAddress={contracts.faucet}
+            contractAddress={CONTRACTS.faucet}
             data={txData}
             btnDisabled={!canApply}
             connectText={t('sponsor.connectToApply')}

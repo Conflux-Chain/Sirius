@@ -10,7 +10,11 @@ import { translations } from '../../../locales/i18n';
 import { useRouteMatch } from 'react-router-dom';
 import { media } from '../../../styles/media';
 import { Input, useMessages } from '@cfxjs/react-ui';
-import { defaultContractIcon, defaultTokenIcon } from 'utils/constants';
+import {
+  defaultContractIcon,
+  defaultTokenIcon,
+  CONTRACTS,
+} from 'utils/constants';
 import {
   byteToKb,
   isContractAddress,
@@ -39,7 +43,6 @@ import {
 import { PageHeader } from '../PageHeader/Loadable';
 import { CheckCircleIcon } from 'app/containers/AddressContractDetail/ContractContent';
 import { Text } from 'app/components/Text/Loadable';
-import { useGlobalData, GlobalDataType } from 'utils/hooks/useGlobal';
 
 interface Props {
   contractDetail: any;
@@ -67,8 +70,6 @@ export const ContractOrTokenInfo = ({
   address,
   loading,
 }: Props) => {
-  const [globalData] = useGlobalData();
-  const { contracts } = globalData as GlobalDataType;
   const routeMatch = useRouteMatch();
   const updateInfoType = routeMatch.path.startsWith('/contract-info/')
     ? 'contract'
@@ -594,7 +595,7 @@ export const ContractOrTokenInfo = ({
       </TopContainer>
       <div className="submitContainer">
         <DappButton
-          contractAddress={contracts.contractManager}
+          contractAddress={CONTRACTS.contractManager}
           data={txData}
           btnDisabled={isDisabled}
           txnAction={TxnAction.contractEdit}

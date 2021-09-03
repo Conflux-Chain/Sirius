@@ -29,7 +29,7 @@ import { TxnHistoryProvider } from 'utils/hooks/useTxnHistory';
 import { GlobalProvider, useGlobalData } from 'utils/hooks/useGlobal';
 import { reqProjectConfig } from 'utils/httpRequest';
 import { LOCALSTORAGE_KEYS_MAP, NETWORK_ID, CFX } from 'utils/constants';
-import { getNetwork, formatAddress, isSimplyBase32Address } from 'utils';
+import { formatAddress, isSimplyBase32Address } from 'utils';
 
 import { Report } from './containers/Report';
 import { Swap } from './containers/Swap';
@@ -122,9 +122,6 @@ export function App() {
         // @ts-ignore
         const networkId = resp?.networkId;
 
-        // @ts-ignore
-        const network = getNetwork(resp?.networks, networkId);
-
         if (NETWORK_ID !== networkId) {
           localStorage.setItem(LOCALSTORAGE_KEYS_MAP.networkId, networkId);
           localStorage.setItem(
@@ -159,7 +156,6 @@ export function App() {
         setGlobalData({
           ...globalData,
           ...(resp as object),
-          contracts: network.contracts,
         });
       })
       .finally(() => {

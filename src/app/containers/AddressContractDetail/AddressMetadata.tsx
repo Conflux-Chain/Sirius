@@ -21,7 +21,6 @@ import {
 } from '../../../utils/contract/staking.json';
 import { Tooltip } from '../../components/Tooltip/Loadable';
 import { Link } from '../../components/Link/Loadable';
-import { useGlobalData, GlobalDataType } from 'utils/hooks/useGlobal';
 
 // https://github.com/Conflux-Dev/vote/blob/main/src/pages/staking/index.js
 function getCurrentStakingEarned(list, rate, stakedCfx) {
@@ -44,8 +43,6 @@ const stakingContract = CFX.Contract({
 });
 
 export function AddressMetadata({ address, accountInfo }) {
-  const [globalData] = useGlobalData();
-  const { contracts } = globalData as GlobalDataType;
   const { t } = useTranslation();
   const loading = accountInfo.name === t(translations.general.loading);
   const skeletonStyle = { height: '1.5714rem' };
@@ -61,9 +58,9 @@ export function AddressMetadata({ address, accountInfo }) {
     return CFX.Contract({
       abi: governanceAbi,
       bytecode: gobernanceBytecode,
-      address: contracts.governance,
+      address: CONTRACTS.governance,
     });
-  }, [contracts.governance]);
+  }, []);
 
   useEffect(() => {
     // get staking info

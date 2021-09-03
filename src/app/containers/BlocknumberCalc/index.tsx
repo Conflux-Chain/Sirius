@@ -9,7 +9,7 @@ import { PageHeader } from '../../components/PageHeader';
 import { Card } from '../../components/Card';
 import { Input, Button } from '@cfxjs/react-ui';
 import { useParams } from 'react-router-dom';
-import { CFX } from '../../../utils/constants';
+import { CFX, CONTRACTS } from '../../../utils/constants';
 import {
   abi as governanceAbi,
   bytecode as gobernanceBytecode,
@@ -18,19 +18,15 @@ import { getTimeByBlockInterval } from '../../../utils';
 import { Countdown } from './Countdown';
 import { trackEvent } from '../../../utils/ga';
 import { ScanEvent } from '../../../utils/gaConstants';
-import { useGlobalData, GlobalDataType } from 'utils/hooks/useGlobal';
 
 export function BlocknumberCalc() {
-  const [globalData] = useGlobalData();
-  const { contracts } = globalData as GlobalDataType;
-
   const governanceContract = useMemo(() => {
     return CFX.Contract({
       abi: governanceAbi,
       bytecode: gobernanceBytecode,
-      address: contracts.governance,
+      address: CONTRACTS.governance,
     });
-  }, [contracts.governance]);
+  }, []);
 
   const maxBlocknumber = 10000000000000;
   const { block: routeBlockNumber = '' } = useParams<{

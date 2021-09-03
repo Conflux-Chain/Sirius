@@ -42,11 +42,11 @@ import {
   TxnAction,
   NETWORK_TYPE,
   NETWORK_TYPES,
+  CONTRACTS,
 } from '../../../utils/constants';
 import { PageHeader } from '../PageHeader/Loadable';
 import { CheckCircleIcon } from 'app/containers/AddressContractDetail/ContractContent';
 import { Text } from 'app/components/Text/Loadable';
-import { useGlobalData, GlobalDataType } from 'utils/hooks/useGlobal';
 
 interface Props {
   contractDetail: any;
@@ -72,8 +72,6 @@ const fieldsContract = [
   'typeCode',
 ];
 export const Contract = ({ contractDetail, type, address, loading }: Props) => {
-  const [globalData] = useGlobalData();
-  const { contracts } = globalData as GlobalDataType;
   const { t, i18n } = useTranslation();
   const lang = i18n.language.includes('zh') ? 'zh' : 'en';
   const { accounts } = usePortal();
@@ -735,7 +733,7 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
       </TabContainer>
       <div className="submitContainer">
         <DappButton
-          contractAddress={contracts.contractManager}
+          contractAddress={CONTRACTS.contractManager}
           data={txData}
           btnDisabled={!btnShouldClick}
           txnAction={txnAction}

@@ -29,8 +29,7 @@ import { TxnHistoryProvider } from 'utils/hooks/useTxnHistory';
 import { GlobalProvider, useGlobalData } from 'utils/hooks/useGlobal';
 import { reqProjectConfig } from 'utils/httpRequest';
 import { LOCALSTORAGE_KEYS_MAP, NETWORK_ID, CFX } from 'utils/constants';
-import { getNetwork } from 'utils';
-import { formatAddress } from '../utils';
+import { getNetwork, formatAddress, isSimplyBase32Address } from 'utils';
 
 import { Report } from './containers/Report';
 import { Swap } from './containers/Swap';
@@ -266,20 +265,18 @@ export function App() {
                               const path = routeProps.match.path.match(
                                 /(\/.*\/)/,
                               )[1];
-                              if (
-                                routeProps.match.params.contractAddress &&
-                                routeProps.match.params.contractAddress
-                                  .toLowerCase()
-                                  .indexOf('type.') > -1
-                              )
+
+                              const address =
+                                routeProps.match.params.contractAddress;
+                              if (isSimplyBase32Address(address)) {
+                                return <Contract {...routeProps} />;
+                              } else {
                                 return (
                                   <Redirect
-                                    to={`${path}${formatAddress(
-                                      routeProps.match.params.contractAddress,
-                                    )}`}
+                                    to={`${path}${formatAddress(address)}`}
                                   />
                                 );
-                              return <Contract {...routeProps} />;
+                              }
                             }}
                           />
                           <Route
@@ -296,20 +293,17 @@ export function App() {
                             exact
                             path="/token/:tokenAddress"
                             render={(routeProps: any) => {
-                              if (
-                                routeProps.match.params.tokenAddress &&
-                                routeProps.match.params.tokenAddress
-                                  .toLowerCase()
-                                  .indexOf('type.') > -1
-                              )
+                              const address =
+                                routeProps.match.params.tokenAddress;
+                              if (isSimplyBase32Address(address)) {
+                                return <TokenDetail {...routeProps} />;
+                              } else {
                                 return (
                                   <Redirect
-                                    to={`/token/${formatAddress(
-                                      routeProps.match.params.tokenAddress,
-                                    )}`}
+                                    to={`/token/${formatAddress(address)}`}
                                   />
                                 );
-                              return <TokenDetail {...routeProps} />;
+                              }
                             }}
                           />
                           {/* compatible for previous user bookmark */}
@@ -367,20 +361,17 @@ export function App() {
                             exact
                             path="/sponsor/:contractAddress"
                             render={(routeProps: any) => {
-                              if (
-                                routeProps.match.params.contractAddress &&
-                                routeProps.match.params.contractAddress
-                                  .toLowerCase()
-                                  .indexOf('type.') > -1
-                              )
+                              const address =
+                                routeProps.match.params.contractAddress;
+                              if (isSimplyBase32Address(address)) {
+                                return <Sponsor {...routeProps} />;
+                              } else {
                                 return (
                                   <Redirect
-                                    to={`/sponsor/${formatAddress(
-                                      routeProps.match.params.contractAddress,
-                                    )}`}
+                                    to={`/sponsor/${formatAddress(address)}`}
                                   />
                                 );
-                              return <Sponsor {...routeProps} />;
+                              }
                             }}
                           />
                           <Route path="/charts" component={Chart} />
@@ -415,22 +406,18 @@ export function App() {
                           <Route
                             path="/address/:address"
                             render={(routeProps: any) => {
-                              if (
-                                routeProps.match.params.address &&
-                                routeProps.match.params.address
-                                  .toLowerCase()
-                                  .indexOf('type.') > -1
-                              )
+                              const address = routeProps.match.params.address;
+                              if (isSimplyBase32Address(address)) {
+                                return (
+                                  <AddressContractDetailPage {...routeProps} />
+                                );
+                              } else {
                                 return (
                                   <Redirect
-                                    to={`/address/${formatAddress(
-                                      routeProps.match.params.address,
-                                    )}`}
+                                    to={`/address/${formatAddress(address)}`}
                                   />
                                 );
-                              return (
-                                <AddressContractDetailPage {...routeProps} />
-                              );
+                              }
                             }}
                           />
                           <Route path="/search/:text" component={Search} />
@@ -471,7 +458,20 @@ export function App() {
                           <Route
                             exact
                             path={['/nft-checker', '/nft-checker/:address']}
-                            component={NFTChecker}
+                            render={(routeProps: any) => {
+                              const address = routeProps.match.params.address;
+                              if (address && !isSimplyBase32Address(address)) {
+                                return (
+                                  <Redirect
+                                    to={`/nft-checker/${formatAddress(
+                                      address,
+                                    )}`}
+                                  />
+                                );
+                              } else {
+                                return <NFTChecker {...routeProps} />;
+                              }
+                            }}
                           />
                           <Route
                             exact

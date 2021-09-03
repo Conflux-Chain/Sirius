@@ -43,7 +43,7 @@ module.exports = app => {
   app.use(
     '/rpc',
     createProxyMiddleware({
-      target: 'http://101.132.158.162:12537/rpc', // pos test rpc
+      target: 'http://39.100.97.209:12537/rpc', // pos test rpc
       // target:
       //   process.env.REACT_APP_TestNet === 'true'
       //     ? 'https://testnet-scantest.confluxnetwork.org/rpc'
@@ -55,7 +55,7 @@ module.exports = app => {
   app.use(
     '/rpcv2',
     createProxyMiddleware({
-      target: 'http://101.132.158.162:12537/rpc', // pos test rpc
+      target: 'http://39.100.97.209:12537/rpc', // pos test rpc
       // target:
       //   process.env.REACT_APP_TestNet === 'true'
       //     ? 'https://testnet-scantest.confluxnetwork.org/rpcv2'

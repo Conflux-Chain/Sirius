@@ -30,6 +30,14 @@ export const isBase32Address = (address: string): boolean => {
   }
 };
 
+export const isSimplyBase32Address = (address: string): boolean => {
+  try {
+    return isBase32Address(address) && /[a-z0-9]:[a-z0-9]/.test(address);
+  } catch (e) {
+    return false;
+  }
+};
+
 // support hex and base32
 export const isAddress = (address: string): boolean => {
   try {

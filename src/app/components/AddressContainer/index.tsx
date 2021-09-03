@@ -129,7 +129,7 @@ export const AddressContainer = withTranslation()(
 
       const cfxAddress = formatAddress(value);
 
-      if (value === null) {
+      if (!value) {
         const txtContractCreation = t(
           translations.transaction.contractCreation,
         );
@@ -168,10 +168,6 @@ export const AddressContainer = withTranslation()(
         //     <Text span>{txtContractCreation}</Text>
         //   </AddressWrapper>
         // );
-      }
-
-      if (typeof value === 'string' && value.trim() === '') {
-        return <>--</>;
       }
 
       // if (cfxAddress.startsWith('invalid-')) {
@@ -276,6 +272,7 @@ export const AddressContainer = withTranslation()(
     },
   ),
 );
+
 const ImgWrapper = styled.span`
   position: relative;
   width: 16px;

@@ -146,38 +146,6 @@ export function isCurrentNetworkAddress(address: string): boolean {
 }
 
 /**
- * format cfx address
- * @param address origin address
- * @param option address format options
- */
-export const formatAddressBak = (address: string) => {
-  try {
-    const reg = /(.*):(.*):(.*)/;
-    let formattedAddress = address;
-
-    // compatibility with verbose address, will replace with simply address later
-    if (typeof address === 'string' && reg.test(address)) {
-      formattedAddress = address.replace(reg, '$1:$3').toLowerCase();
-    }
-
-    if (SDK.address.isValidCfxAddress(formattedAddress)) {
-      return formattedAddress;
-    } else {
-      throw new Error('invalid address');
-    }
-  } catch (e) {
-    // console.log('formatAddress:', address, e.message);
-
-    // transfer to is not valid conflux address, need show error tip, special for ETH address ?
-    return typeof address === 'string' &&
-      address.startsWith('0x') &&
-      address.length === 42
-      ? 'invalid-' + address
-      : '';
-  }
-};
-
-/**
  * format util fn
  */
 

@@ -4,7 +4,7 @@ import lodash from 'lodash';
 interface ContractsType {
   faucet: string;
   faucetLast: string;
-  contractManager: string;
+  announcement: string;
   wcfx: string;
   governance: string;
   adminControl: string;
@@ -87,7 +87,7 @@ export const CONTRACTS: ContractsType = (() => {
   let contracts = {
     faucet: '',
     faucetLast: '',
-    contractManager: '',
+    announcement: '',
     wcfx: '',
     governance: '',
     adminControl: '',

@@ -248,75 +248,8 @@ export const reqNFTInfo = (extra?: object) => {
 };
 
 export const reqProjectConfig = (extra?: object) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve({
-        networks: [
-          {
-            name: 'Conflux Tethys',
-            id: 1029,
-          },
-          {
-            name: 'Conflux Testnet',
-            id: 1,
-          },
-          {
-            name: 'Conflux PoS',
-            id: 8888,
-          },
-        ],
-        networkId: 8888,
-        contracts: [
-          {
-            key: 'faucet',
-            name: 'Faucet',
-            address: 'net8888:ach6shr7b2fx124t15xctfz0n2e6v9j31ayt6833gh', // 0x8fc71dbd0e0b3be34fbee62796b65e09c8fd19b8
-          },
-          {
-            key: 'faucetLast',
-            name: 'Faucet Last',
-            address: 'net8888:acakt4a22nbpcywpjh2t3trbjrkaav0vc6y4mnur6b', // 0x8097e818c2c2c1524c41f0fcbda143520046d117
-          },
-          {
-            key: 'contractManager',
-            name: 'Contract Manager',
-            address: 'net8888:aca514ancmbdu9u349u4m7d0u4jjdv83pyk5mtkf5u', // 0x81bbe80b1282387e19d7e1a57476869081c7d965
-          },
-          {
-            key: 'wcfx',
-            name: 'Wcfx',
-            address: 'net8888:achs3nehae0j6ksvy1bhrffsh1rtfrw1f6cgx4zy0j', // 0x8eecac87012c8e25d1a5c27694ae3ddaf2b6572f, note: not same as mainnet WCFX ?
-          },
-          {
-            key: 'governance',
-            name: 'Governance',
-            address: 'net8888:achx8yw7c6m3gyte0rh8s31tcsmhb0unajzt74tk4s', // 0x8f3f525d17159351e4b34fe766ef139470da0b02
-          },
-          {
-            // inner address
-            key: 'adminControl',
-            name: 'Admin Control',
-            address: 'net8888:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaaacus1myue', // 0x0888000000000000000000000000000000000000
-          },
-          {
-            key: 'sponsorWhitelistControl',
-            name: 'Sponsor Whitelist Control',
-            address: 'net8888:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaae66vwz2sa', // 0x0888000000000000000000000000000000000001
-          },
-          {
-            key: 'staking',
-            name: 'Staking',
-            address: 'net8888:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaaj1j377pfp', // 0x0888000000000000000000000000000000000002
-          },
-          {
-            // zero address
-            key: 'zero',
-            name: 'Zero',
-            address: 'net8888:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaapyp8kpez', // 0x0000000000000000000000000000000000000000
-          },
-          {},
-        ],
-      });
-    }, 200);
+  return sendRequest({
+    url: '/frontend',
+    ...extra,
   });
 };

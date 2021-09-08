@@ -109,6 +109,35 @@ export const Header = memo(() => {
     },
   ];
 
+  const contractItems = [
+    {
+      // deploy
+      title: [
+        t(translations.header.contractDeployment),
+        <Check size={18} key="check" />,
+      ],
+      name: ScanEvent.menu.action.contractDeployment,
+      afterClick: menuClick,
+      href: '/contract-deployment',
+    },
+    {
+      // contract verification
+      title: [
+        t(translations.header.contractVerification),
+        <Check size={18} key="check" />,
+      ],
+      name: ScanEvent.menu.action.contractVerification,
+      afterClick: menuClick,
+      href: '/contract-verification',
+    },
+    {
+      title: t(translations.header.contracts),
+      name: ScanEvent.menu.action.contractsList,
+      afterClick: menuClick,
+      href: '/contracts',
+    },
+  ];
+
   if ([NETWORK_TYPES.mainnet, NETWORK_TYPES.testnet].includes(NETWORK_TYPE)) {
     supportAndHelpMenuItems.unshift({
       title: [
@@ -137,6 +166,17 @@ export const Header = memo(() => {
         : NETWORK_TYPE === NETWORK_TYPES.testnet
         ? 'https://votetest.confluxnetwork.org/en/'
         : 'https://governance.confluxnetwork.org/en/',
+    });
+
+    contractItems.splice(2, 0, {
+      // sponsor
+      title: [
+        t(translations.header.contractSponsor),
+        <Check size={18} key="check" />,
+      ],
+      name: ScanEvent.menu.action.sponsor,
+      afterClick: menuClick,
+      href: '/sponsor',
     });
   }
 
@@ -210,54 +250,7 @@ export const Header = memo(() => {
             <Check size={18} key="check" />,
           ],
           plain: true,
-          children: [
-            {
-              // deploy
-              title: [
-                t(translations.header.contractDeployment),
-                <Check size={18} key="check" />,
-              ],
-              name: ScanEvent.menu.action.contractDeployment,
-              afterClick: menuClick,
-              href: '/contract-deployment',
-            },
-            // {
-            //   // create contract
-            //   title: [
-            //     t(translations.header.contractCreation),
-            //     <Check size={18} key="check" />,
-            //   ],
-            //   name: ScanEvent.menu.action.contractReg,
-            //   afterClick: menuClick,
-            //   href: '/contract',
-            // },
-            {
-              // contract verification
-              title: [
-                t(translations.header.contractVerification),
-                <Check size={18} key="check" />,
-              ],
-              name: ScanEvent.menu.action.contractVerification,
-              afterClick: menuClick,
-              href: '/contract-verification',
-            },
-            {
-              // sponsor
-              title: [
-                t(translations.header.contractSponsor),
-                <Check size={18} key="check" />,
-              ],
-              name: ScanEvent.menu.action.sponsor,
-              afterClick: menuClick,
-              href: '/sponsor',
-            },
-            {
-              title: t(translations.header.contracts),
-              name: ScanEvent.menu.action.contractsList,
-              afterClick: menuClick,
-              href: '/contracts',
-            },
-          ],
+          children: contractItems,
         },
       ],
     },

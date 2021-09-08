@@ -217,7 +217,7 @@ export function AddressConverter() {
         <div>
           <Input
             value={address}
-            placeholder={t(translations.addressConverter.inputPlaceholder)}
+            placeholder={'cfx:... / cfxtest:... / hex'}
             size="small"
             variant="solid"
             className="convert-address-input input-address"
